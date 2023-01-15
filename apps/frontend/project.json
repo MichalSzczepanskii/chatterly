@@ -85,7 +85,8 @@
         "parallel": true,
         "commands": [
           "nx serve api",
-          "nx serve frontend"
+          "nx serve frontend",
+          "docker-compose up"
         ]
       }
     }

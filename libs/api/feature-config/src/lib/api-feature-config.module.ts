@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { appConfiguration } from '@chatterly/api/utils-config';
+import { appConfiguration, pgConfiguration } from '@chatterly/api/utils-config';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-    load: [appConfiguration]
+    load: [appConfiguration, pgConfiguration]
   })]
 })
 export class ApiFeatureConfigModule {}
