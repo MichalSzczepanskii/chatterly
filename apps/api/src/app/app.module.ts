@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-
-import { AppController } from './app.controller';
+import { ApiFeatureConfigModule } from '@chatterly/api/feature-config';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
+  imports: [ApiFeatureConfigModule],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}
