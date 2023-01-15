@@ -1,14 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ApiFeatureConfigModule } from '@chatterly/api/feature-config';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { PgConfiguration, pgConfiguration } from '@chatterly/api/utils-config';
+import { ApiCoreFeatureModule } from '@chatterly/api/core-module';
 
 @Module({
-  imports: [ApiFeatureConfigModule,
-            TypeOrmModule.forRootAsync({
-              inject: [pgConfiguration.KEY],
-              useFactory: (config: PgConfiguration) => (config as TypeOrmModuleOptions)
-            })],
+  imports: [ApiCoreFeatureModule],
   controllers: [],
   providers: [],
 })

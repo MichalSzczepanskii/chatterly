@@ -15,8 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@chatterly/api/feature-config": ["libs/api/feature-config/src/index.ts"],
-      "@chatterly/api/utils-config": ["libs/api/utils-config/src/index.ts"]
+      "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
+      "@chatterly/api/users/data-access": [
+        "libs/api/users/data-access/src/index.ts"
+      ],
+      "@chatterly/api/users/feature": ["libs/api/users/feature/src/index.ts"],
+      "@chatterly/api/users/utils": ["libs/api/users/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

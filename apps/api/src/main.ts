@@ -7,7 +7,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
-import { AppConfiguration, appConfiguration } from '@chatterly/api/utils-config';
+import { appConfiguration, AppConfiguration } from '@chatterly/api/core-module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
