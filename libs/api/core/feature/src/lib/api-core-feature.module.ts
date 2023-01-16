@@ -4,6 +4,7 @@ import { appConfiguration } from './app.configuration';
 import { PgConfiguration, pgConfiguration } from './postgres.configuration';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ApiUsersFeatureModule } from '@chatterly/api/users/feature';
+import { ApiAuthFeatureModule } from '@chatterly/api/auth/feature';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ApiUsersFeatureModule } from '@chatterly/api/users/feature';
       useFactory: (config: PgConfiguration) => (config as TypeOrmModuleOptions)
     }),
     ApiUsersFeatureModule,
+    ApiAuthFeatureModule,
   ]
 })
 export class ApiCoreFeatureModule {}

@@ -15,6 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@chatterly/api/auth/data-access": [
+        "libs/api/auth/data-access/src/index.ts"
+      ],
+      "@chatterly/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
+      "@chatterly/api/auth/utils": ["libs/api/auth/utils/src/index.ts"],
       "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
       "@chatterly/api/users/data-access": [
         "libs/api/users/data-access/src/index.ts"
