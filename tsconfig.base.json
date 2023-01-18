@@ -15,17 +15,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@chatterly/api/auth/data-access": [
-        "libs/api/auth/data-access/src/index.ts"
-      ],
+      "@chatterly/api/auth/data-access": ["libs/api/auth/data-access/src/index.ts"],
       "@chatterly/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
       "@chatterly/api/auth/utils": ["libs/api/auth/utils/src/index.ts"],
       "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
-      "@chatterly/api/users/data-access": [
-        "libs/api/users/data-access/src/index.ts"
-      ],
+      "@chatterly/api/users/data-access": ["libs/api/users/data-access/src/index.ts"],
       "@chatterly/api/users/feature": ["libs/api/users/feature/src/index.ts"],
-      "@chatterly/api/users/utils": ["libs/api/users/utils/src/index.ts"]
+      "@chatterly/api/users/utils": ["libs/api/users/utils/src/index.ts"],
+      "@chatterly/frontend/shell/feature": ["libs/frontend/shell/feature/src/index.ts"],
+      "@chatterly/frontend/shell/ui/layouts/guest-layout": ["libs/frontend/shell/ui/layouts/guest-layout/src/index.ts"],
+      "@chatterly/frontend/shell/ui/layouts/main-layout": ["libs/frontend/shell/ui/layouts/main-layout/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

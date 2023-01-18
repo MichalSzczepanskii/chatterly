@@ -83,11 +83,7 @@
       "executor": "nx:run-commands",
       "options": {
         "parallel": true,
-        "commands": [
-          "nx serve api",
-          "nx serve frontend",
-          "docker-compose up"
-        ]
+        "commands": ["nx serve api", "nx serve frontend", "docker-compose up"]
       }
     }
   },
