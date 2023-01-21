@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: GuestLayoutComponent,
-    children: [],
+    children: [
+      {
+        path: '',
+        loadChildren: async () => (await import('@chatterly/frontend/auth/feature/shell')).AuthShellModule,
+      },
+    ],
   },
   {
     path: 'app',
