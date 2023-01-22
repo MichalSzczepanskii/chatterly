@@ -10,14 +10,12 @@ import { AppModule } from './app/app.module';
 import { appConfiguration, AppConfiguration } from '@chatterly/api/core-module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   const appConfig = app.get<AppConfiguration>(appConfiguration.KEY);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   await app.listen(appConfig.port);
-  Logger.log(
-    `🚀 Listening on: ${appConfig.domain}/${globalPrefix}`
-  );
+  Logger.log(`🚀 Listening on: ${appConfig.domain}/${globalPrefix}`);
 }
 
 bootstrap();

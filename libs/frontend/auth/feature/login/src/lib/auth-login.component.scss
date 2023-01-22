@@ -1,0 +1,50 @@
+@import 'variables';
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem 0;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .logo {
+    height: 4rem;
+  }
+
+  h1 {
+    font-weight: 500;
+    font-size: 1.6rem;
+  }
+  .form-container {
+    width: 27rem;
+  }
+  .title-container {
+    text-align: center;
+    p {
+      color: gray;
+    }
+  }
+  .login-form {
+    margin: 2rem 0;
+  }
+  .submit-container {
+    margin-top: 2rem;
+    display: flex;
+    input {
+      flex: 2;
+    }
+  }
+  .register-nav {
+    display: flex;
+    gap: 0 5px;
+    span {
+      font-weight: bold;
+      color: $main;
+      &:hover {
+        color: $main-hover;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -49,6 +49,13 @@
         "jestConfig": "apps/api/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "serve-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": true,
+        "commands": ["nx serve api", "docker-compose up"]
+      }
     }
   },
   "tags": []

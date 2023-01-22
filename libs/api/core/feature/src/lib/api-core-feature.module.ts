@@ -9,15 +9,15 @@ import { ApiAuthFeatureModule } from '@chatterly/api/auth/feature';
 @Module({
   imports: [
     ConfigModule.forRoot({
-    isGlobal: true,
-    load: [appConfiguration, pgConfiguration]
-  }),
+      isGlobal: true,
+      load: [appConfiguration, pgConfiguration],
+    }),
     TypeOrmModule.forRootAsync({
       inject: [pgConfiguration.KEY],
-      useFactory: (config: PgConfiguration) => (config as TypeOrmModuleOptions)
+      useFactory: (config: PgConfiguration) => config as TypeOrmModuleOptions,
     }),
     ApiUsersFeatureModule,
     ApiAuthFeatureModule,
-  ]
+  ],
 })
 export class ApiCoreFeatureModule {}
