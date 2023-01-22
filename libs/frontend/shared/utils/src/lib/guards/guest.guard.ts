@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '@chatterly/frontend/auth/data-access';
+import { AuthService } from '@chatterly/frontend/shared/data-access';
 
 @Injectable({
   providedIn: 'root',

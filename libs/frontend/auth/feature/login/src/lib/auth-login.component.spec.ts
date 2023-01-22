@@ -3,13 +3,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthLoginComponent } from './auth-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockDeclarations, MockProviders } from 'ng-mocks';
-import { AuthService } from '@chatterly/frontend/auth/data-access';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { AuthCardComponent } from '@chatterly/frontend/auth/ui/card';
 import { BlankComponent, FixNavigationModule, getTranslocoModule } from '@chatterly/frontend/shared/spec-utils';
+import { AuthService } from '@chatterly/frontend/shared/data-access';
 
 describe('FrontendAuthFeatureLoginComponent', () => {
   let component: AuthLoginComponent;

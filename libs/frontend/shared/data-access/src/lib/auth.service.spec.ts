@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-
 import { AuthService } from './auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import * as dayjs from 'dayjs';
-import { AuthStorageKeys } from '@chatterly/frontend/shared/utils';
+import { AuthStorageKeys } from '@chatterly/frontend/shared/constants';
 
 describe('AuthService', () => {
   const apiUrl = process.env['NX_API_URL'];

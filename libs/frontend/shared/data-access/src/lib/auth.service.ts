@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 import jwtDecode from 'jwt-decode';
 import * as dayjs from 'dayjs';
-import { AuthStorageKeys } from '@chatterly/frontend/shared/utils';
+import { AuthStorageKeys } from '@chatterly/frontend/shared/constants';
 
 @Injectable({
   providedIn: 'root',

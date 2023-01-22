@@ -1,15 +1,15 @@
 {
-  "name": "frontend-auth-data-access",
+  "name": "frontend-shared-data-access",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/frontend/auth/data-access/src",
+  "sourceRoot": "libs/frontend/shared/data-access/src",
   "prefix": "chatterly",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/frontend/auth/data-access/jest.config.ts",
+        "jestConfig": "libs/frontend/shared/data-access/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -17,7 +17,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/frontend/auth/data-access/**/*.ts", "libs/frontend/auth/data-access/**/*.html"]
+        "lintFilePatterns": ["libs/frontend/shared/data-access/**/*.ts", "libs/frontend/shared/data-access/**/*.html"]
       }
     }
   },

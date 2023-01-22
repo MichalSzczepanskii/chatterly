@@ -1,9 +1,9 @@
 import { AuthGuard } from './auth.guard';
-import { AuthService } from '@chatterly/frontend/auth/data-access';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockProvider } from 'ng-mocks';
+import { AuthService } from '@chatterly/frontend/shared/data-access';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;

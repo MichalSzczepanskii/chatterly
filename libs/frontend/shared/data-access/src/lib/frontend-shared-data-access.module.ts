@@ -5,6 +5,5 @@ import { AuthService } from './auth.service';
 @NgModule({
   imports: [CommonModule],
   providers: [AuthService],
-  exports: [],
 })
-export class FrontendAuthDataAccessModule {}
+export class FrontendSharedDataAccessModule {}

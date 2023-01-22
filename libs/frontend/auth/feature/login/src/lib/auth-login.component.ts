@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '@chatterly/frontend/auth/data-access';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslocoService } from '@ngneat/transloco';
+import { AuthService } from '@chatterly/frontend/shared/data-access';
 
 @Component({
   selector: 'chatterly-frontend-auth-feature-login',

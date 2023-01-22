@@ -3,7 +3,7 @@ import { ApiUsersDataAccessModule } from '@chatterly/api/users/data-access';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '@chatterly/api/auth/utils';
+import { jwtConstants } from '@chatterly/api/auth/constants';
 
 @Module({
   imports: [
