@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import * as dayjs from 'dayjs';
+import { AuthStorageKeys } from '@chatterly/frontend/shared/utils';
 
 describe('AuthService', () => {
   const apiUrl = process.env['NX_API_URL'];
@@ -54,7 +55,7 @@ describe('AuthService', () => {
         expect(token).toEqual(mockToken);
       });
 
-      const req = httpTestingController.expectOne(`${apiUrl}/auth/login`);
+      const req = httpTestingController.expectOne(`${apiUrl}/api/auth/login`);
       expect(req.request.method).toEqual('POST');
       req.flush(mockToken);
     });
@@ -62,7 +63,7 @@ describe('AuthService', () => {
     it('should set access token in localStorage', () => {
       const loginMethod = service.login({ email: 'test@gmail.com', password: 'root12' });
       loginMethod.subscribe();
-      const req = httpTestingController.expectOne(`${apiUrl}/auth/login`);
+      const req = httpTestingController.expectOne(`${apiUrl}/api/auth/login`);
       req.flush(mockToken);
       expect(localStorage.getItem(AuthStorageKeys.ACCESS_TOKEN)).toEqual(mockToken.access_token);
       expect(localStorage.getItem(AuthStorageKeys.EXPIRES_AT)).toEqual('2023-01-20T12:17:19.000Z');

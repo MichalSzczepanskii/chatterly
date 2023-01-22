@@ -18,8 +18,12 @@
         "stylePreprocessorOptions": {
           "includePaths": ["libs/frontend/shared/style/src/lib"]
         },
-        "assets": ["apps/frontend/src/favicon.ico", "apps/frontend/src/assets"],
-        "styles": ["apps/frontend/src/styles.scss"],
+        "assets": ["apps/frontend/src/favicon.ico", "apps/frontend/src/assets", {
+          "glob": "**/*",
+          "input": "./libs/frontend/shared/assets/src/lib",
+          "output": "./assets"
+        }],
+        "styles": ["apps/frontend/src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/frontend/webpack.config.js"

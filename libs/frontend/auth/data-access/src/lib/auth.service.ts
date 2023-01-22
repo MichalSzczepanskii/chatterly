@@ -13,12 +13,14 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(data: { password: string; email: string }) {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, data).pipe(tap(data => this.setSession(data)));
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/api/auth/login`, data)
+      .pipe(tap(data => this.setSession(data)));
   }
 
   private setSession(data: LoginResponse) {
-    const decodedToken = jwtDecode(data.access_token);
-    const expiresAt = dayjs.unix(decodedToken['exp']);
+    const decodedToken = jwtDecode<{ exp: number }>(data.access_token);
+    const expiresAt = dayjs.unix(decodedToken.exp);
     localStorage.setItem(AuthStorageKeys.ACCESS_TOKEN, data.access_token);
     localStorage.setItem(AuthStorageKeys.EXPIRES_AT, expiresAt.toISOString());
   }

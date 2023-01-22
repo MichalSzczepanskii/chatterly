@@ -6,15 +6,25 @@
       <p>{{ 'login.subtitle' | transloco }}</p>
     </div>
     <div class='login-form'>
-      <form action=''>
+      <form action='' [formGroup]='form' (ngSubmit)='login()'>
         <div class='input-field'>
-          <input type='text' placeholder='{{ "login.emailPlaceholder" | transloco }}' />
+          <input type='text'
+                 placeholder='{{ "login.emailPlaceholder" | transloco }}'
+                 data-cy='emailField'
+                 formControlName='email'/>
         </div>
         <div class='input-field'>
-          <input type='password' placeholder='{{ "login.passwordPlaceholder" | transloco }}' />
+          <input type='password'
+                 placeholder='{{ "login.passwordPlaceholder" | transloco }}'
+                 formControlName='password'
+                 data-cy='passwordField'/>
         </div>
         <div class='submit-container'>
-          <input type='submit' value='{{ "login.submitButton" | transloco }}' class='btn btn-primary' />
+          <input type='submit'
+                 value='{{ "login.submitButton" | transloco }}'
+                 class='btn btn-primary'
+                 data-cy='loginButton'
+          />
         </div>
       </form>
     </div>

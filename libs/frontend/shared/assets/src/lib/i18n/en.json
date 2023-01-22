@@ -6,6 +6,8 @@
     "passwordPlaceholder": "Enter your password",
     "submitButton": "Sign in",
     "registerTooltip": "Don't have an account?",
-    "registerLink": "Sign up for free"
+    "registerLink": "Sign up for free",
+    "badCredentials": "Bad credentials.",
+    "error": "Error occurred."
   }
 }
