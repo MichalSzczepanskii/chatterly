@@ -6,10 +6,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from '@chatterly/api/auth/utils';
 
 @Module({
-  imports: [ApiUsersDataAccessModule, PassportModule, JwtModule.register({
-    secret: jwtConstants.secret,
-    signOptions: { expiresIn: jwtConstants.expiresIn},
-  })],
+  imports: [
+    ApiUsersDataAccessModule,
+    PassportModule,
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: jwtConstants.expiresIn },
+    }),
+  ],
   providers: [AuthService],
   exports: [AuthService],
 })

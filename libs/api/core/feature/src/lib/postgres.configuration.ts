@@ -11,7 +11,7 @@ export const pgConfiguration = registerAs('postgres', () => ({
   entities: [],
   autoLoadEntities: true,
   synchronize: true,
-}))
+}));
 
-export type PgConfiguration = ConfigType<typeof pgConfiguration>
+export type PgConfiguration = ConfigType<typeof pgConfiguration>;
 export const InjectPgConfig = () => Inject(pgConfiguration.KEY);

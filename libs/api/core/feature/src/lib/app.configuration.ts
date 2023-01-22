@@ -7,8 +7,8 @@ export const appConfiguration = registerAs('app', () => ({
   port: Number(process.env.NX_APP_PORT) || 3000,
   get domain() {
     return `${this.protocol}://${this.host}:${this.port}`;
-  }
-}))
+  },
+}));
 
 export type AppConfiguration = ConfigType<typeof appConfiguration>;
 export const InjectAppConfig = () => Inject(appConfiguration.KEY);

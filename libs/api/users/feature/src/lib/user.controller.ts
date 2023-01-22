@@ -4,8 +4,7 @@ import { CreateUserDto } from '@chatterly/api/users/utils';
 
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService) {}
 
   @Get()
   async getAll() {

@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 :host {
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@
       font-weight: bold;
       color: $main;
       &:hover {
-       color: $main-hover;
+        color: $main-hover;
         text-decoration: underline;
         cursor: pointer;
       }

@@ -1,36 +1,38 @@
-<img src='/assets/img/chatterly-logo.svg' class='logo'>
+<img src="/assets/img/chatterly-logo.svg" class="logo" />
 <chatterly-auth-card>
-  <div class='form-container'>
-    <div class='title-container'>
+  <div class="form-container">
+    <div class="title-container">
       <h1>{{ 'login.welcome' | transloco }}</h1>
       <p>{{ 'login.subtitle' | transloco }}</p>
     </div>
-    <div class='login-form'>
-      <form action='' [formGroup]='form' (ngSubmit)='login()'>
-        <div class='input-field'>
-          <input type='text'
-                 placeholder='{{ "login.emailPlaceholder" | transloco }}'
-                 data-cy='emailField'
-                 formControlName='email'/>
+    <div class="login-form">
+      <form action="" [formGroup]="form" (ngSubmit)="login()">
+        <div class="input-field">
+          <input
+            type="text"
+            placeholder="{{ 'login.emailPlaceholder' | transloco }}"
+            data-cy="emailField"
+            formControlName="email" />
         </div>
-        <div class='input-field'>
-          <input type='password'
-                 placeholder='{{ "login.passwordPlaceholder" | transloco }}'
-                 formControlName='password'
-                 data-cy='passwordField'/>
+        <div class="input-field">
+          <input
+            type="password"
+            placeholder="{{ 'login.passwordPlaceholder' | transloco }}"
+            formControlName="password"
+            data-cy="passwordField" />
         </div>
-        <div class='submit-container'>
-          <input type='submit'
-                 value='{{ "login.submitButton" | transloco }}'
-                 class='btn btn-primary'
-                 data-cy='loginButton'
-          />
+        <div class="submit-container">
+          <input
+            type="submit"
+            value="{{ 'login.submitButton' | transloco }}"
+            class="btn btn-primary"
+            data-cy="loginButton" />
         </div>
       </form>
     </div>
   </div>
 </chatterly-auth-card>
-<div class='register-nav'>
+<div class="register-nav">
   <p>{{ 'login.registerTooltip' | transloco }}</p>
   <span>{{ 'login.registerLink' | transloco }}</span>
 </div>

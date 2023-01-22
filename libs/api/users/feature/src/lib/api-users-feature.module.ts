@@ -3,9 +3,7 @@ import { ApiUsersDataAccessModule } from '@chatterly/api/users/data-access';
 import { UserController } from './user.controller';
 
 @Module({
-  imports: [
-    ApiUsersDataAccessModule
-  ],
+  imports: [ApiUsersDataAccessModule],
   controllers: [UserController],
   exports: [],
 })
