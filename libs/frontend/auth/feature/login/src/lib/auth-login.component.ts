@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { TranslocoService } from '@ngneat/transloco';
-import { AuthService } from '@chatterly/frontend/shared/data-access';
+import { loginRequest } from '@chatterly/frontend/shared/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'chatterly-frontend-auth-feature-login',
@@ -13,13 +11,7 @@ import { AuthService } from '@chatterly/frontend/shared/data-access';
 export class AuthLoginComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    private toastService: ToastrService,
-    private translocoService: TranslocoService
-  ) {}
+  constructor(private formBuilder: FormBuilder, private store: Store) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -29,16 +21,6 @@ export class AuthLoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.form.value).subscribe({
-      next: () => {
-        this.router.navigate(['/app']);
-      },
-      error: err => {
-        let msg = '';
-        if (err?.error?.statusCode === 401) msg = this.translocoService.translate('login.badCredentials');
-        else msg = err?.error?.message || this.translocoService.translate('login.error');
-        this.toastService.error(msg);
-      },
-    });
+    this.store.dispatch(loginRequest(this.form.value));
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User, UserService } from '@chatterly/api/users/data-access';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { AuthLoginResponse } from '@chatterly/shared/data-access';
 
 @Injectable()
 export class AuthService {
@@ -18,8 +19,8 @@ export class AuthService {
     return null;
   }
 
-  async login(user: Omit<User, 'password'>) {
+  async login(user: Omit<User, 'password'>): Promise<AuthLoginResponse> {
     const payload = { email: user.email, sub: user.id };
-    return { access_token: this.jwtService.sign(payload) };
+    return { access_token: this.jwtService.sign(payload), user: user };
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AuthService } from '@chatterly/frontend/shared/data-access';
 
 @Injectable({
@@ -8,12 +8,14 @@ import { AuthService } from '@chatterly/frontend/shared/data-access';
 })
 export class GuestGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const loggedIn = this.authService.isLoggedIn();
-    if (loggedIn) return this.router.navigate(['/app']);
-    return true;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+    return this.authService.isLoggedIn().pipe(
+      map((isLogged: boolean) => {
+        if (isLogged) {
+          this.router.navigateByUrl('/app');
+          return false;
+        } else return true;
+      })
+    );
   }
 }
