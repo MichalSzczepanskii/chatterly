@@ -35,7 +35,8 @@
       "@chatterly/frontend/shared/utils": ["libs/frontend/shared/utils/src/index.ts"],
       "@chatterly/frontend/shell/feature": ["libs/frontend/shell/feature/src/index.ts"],
       "@chatterly/frontend/shell/ui/layouts/guest-layout": ["libs/frontend/shell/ui/layouts/guest-layout/src/index.ts"],
-      "@chatterly/frontend/shell/ui/layouts/main-layout": ["libs/frontend/shell/ui/layouts/main-layout/src/index.ts"]
+      "@chatterly/frontend/shell/ui/layouts/main-layout": ["libs/frontend/shell/ui/layouts/main-layout/src/index.ts"],
+      "@chatterly/shared/data-access": ["libs/shared/data-access/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
