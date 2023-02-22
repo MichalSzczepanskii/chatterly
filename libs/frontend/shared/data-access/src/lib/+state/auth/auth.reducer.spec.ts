@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import * as AuthActions from './auth.actions';
-import { authReducer, initialState, State } from './auth.reducer';
+import { authReducer, AuthState, initialState } from './auth.reducer';
 import { User } from '@chatterly/shared/data-access';
 
 describe('Auth Reducer', () => {
@@ -18,7 +18,7 @@ describe('Auth Reducer', () => {
   describe('valid Auth actions', () => {
     it('LoginRequest should return pending as true', () => {
       const action = AuthActions.loginRequest({ email: 'test', password: 'test' });
-      const result: State = authReducer(initialState, action);
+      const result: AuthState = authReducer(initialState, action);
       expect(result.pending).toBe(true);
       expect(result.user).toEqual(null);
       expect(result.token).toEqual(null);
@@ -34,7 +34,7 @@ describe('Auth Reducer', () => {
         },
       });
 
-      const result: State = authReducer(initialState, action);
+      const result: AuthState = authReducer(initialState, action);
 
       expect(result.pending).toBe(false);
       expect(result.user).toBe(testUser);
@@ -45,12 +45,21 @@ describe('Auth Reducer', () => {
 
     it('LoginFailure should return loginError', () => {
       const action = AuthActions.loginFailure({ error: testError });
-      const result: State = authReducer(initialState, action);
+      const result: AuthState = authReducer(initialState, action);
       expect(result.pending).toBe(false);
       expect(result.user).toEqual(null);
       expect(result.token).toEqual(null);
       expect(result.expiresAt).toEqual(null);
       expect(result.loginError).toBe(testError);
+    });
+
+    it('Logout should clear state', () => {
+      const actionLogin = AuthActions.loginRequest({ email: 'test', password: 'test' });
+      let result: AuthState = authReducer(initialState, actionLogin);
+      expect(result.pending).toBe(true);
+      const actionLogout = AuthActions.logout();
+      result = authReducer(initialState, actionLogout);
+      expect(result).toEqual(initialState);
     });
   });
 

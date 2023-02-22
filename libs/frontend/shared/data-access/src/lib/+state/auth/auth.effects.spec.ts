@@ -8,7 +8,7 @@ import { Observable, of, throwError } from 'rxjs';
 import * as AuthActions from './auth.actions';
 import { AuthEffects } from './auth.effects';
 import { MockProviders } from 'ng-mocks';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { TranslocoService } from '@ngneat/transloco';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -71,13 +71,10 @@ describe('AuthEffects', () => {
   describe('loginSuccess$', () => {
     it('should navigate to /app', () => {
       jest.spyOn(router, 'navigateByUrl');
-      actions = hot('-a-|', {
-        a: AuthActions.loginSuccess({ loginSuccessResponse: { user: {} as User, access_token: 'test' } }),
-      });
+      actions = of(AuthActions.loginSuccess({ loginSuccessResponse: { user: {} as User, access_token: 'test' } }));
 
-      effects.loginSuccess$.subscribe(() => {
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/app');
-      });
+      effects.loginSuccess$.subscribe();
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/app');
     });
   });
 
@@ -115,6 +112,15 @@ describe('AuthEffects', () => {
         expect(toastService.error).toHaveBeenCalled();
         expect(translocoService.translate).toHaveBeenCalledWith('login.error');
       });
+    });
+  });
+
+  describe('logout', () => {
+    it('should navigate to root page', () => {
+      jest.spyOn(router, 'navigateByUrl');
+      actions = of(AuthActions.logout());
+      effects.logout$.subscribe();
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/');
     });
   });
 });

@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import * as dayjs from 'dayjs';
 import { AuthLoginResponse } from '@chatterly/shared/data-access';
 import { Store } from '@ngrx/store';
-import { State } from './+state/auth.reducer';
-import { selectExpiresAt, selectToken } from './+state/auth.selectors';
+import { AuthState } from './+state/auth/auth.reducer';
+import { selectExpiresAt, selectToken } from './+state/auth/auth.selectors';
 import { combineLatest, first, map, Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { combineLatest, first, map, Observable } from 'rxjs';
 })
 export class AuthService {
   readonly apiUrl = process.env['NX_API_URL'];
-  constructor(private http: HttpClient, private store: Store<State>) {}
+  constructor(private http: HttpClient, private store: Store<AuthState>) {}
 
   login(data: { password: string; email: string }) {
     return this.http.post<AuthLoginResponse>(`${this.apiUrl}/api/auth/login`, data);

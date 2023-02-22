@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import * as dayjs from 'dayjs';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { selectExpiresAt, selectToken } from './+state/auth.selectors';
+import { selectExpiresAt, selectToken } from './+state/auth/auth.selectors';
 
 describe('AuthService', () => {
   const apiUrl = process.env['NX_API_URL'];
