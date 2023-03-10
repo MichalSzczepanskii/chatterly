@@ -4,7 +4,7 @@ import { ApiError, User } from '@chatterly/shared/data-access';
 import jwtDecode from 'jwt-decode';
 import * as dayjs from 'dayjs';
 
-export interface State {
+export interface AuthState {
   token: string | null;
   user: User | null;
   expiresAt: string | null;
@@ -12,7 +12,7 @@ export interface State {
   pending: boolean;
 }
 
-export const initialState: State = {
+export const initialState: AuthState = {
   token: null,
   expiresAt: null,
   user: null,
@@ -47,9 +47,9 @@ export function authReducer(state = initialState, action: Action) {
   return _authReducer(state, action);
 }
 
-export function persistStateReducer(_reducer: ActionReducer<State>) {
+export function persistStateReducer(_reducer: ActionReducer<AuthState>) {
   const localStorageKey = '__auth';
-  return (state: State | undefined, action: Action) => {
+  return (state: AuthState | undefined, action: Action) => {
     if (state === undefined) {
       const persisted = localStorage.getItem(localStorageKey);
       return persisted ? JSON.parse(persisted) : _reducer(state, action);
@@ -60,4 +60,13 @@ export function persistStateReducer(_reducer: ActionReducer<State>) {
     return nextState;
   };
 }
-export const metaReducers: Array<MetaReducer<any, any>> = [persistStateReducer];
+
+function clearStateMetaReducer<AuthState>(reducer: ActionReducer<AuthState>): ActionReducer<AuthState> {
+  return (state: AuthState | undefined, action: Action) => {
+    if (action.type === '[Auth] Logout') {
+      state = {} as AuthState;
+    }
+    return reducer(state, action);
+  };
+}
+export const metaReducers: Array<MetaReducer<AuthState>> = [clearStateMetaReducer, persistStateReducer];

@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as AuthActions from './auth.actions';
 
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
-import { AuthService } from './../auth.service';
+import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 import { ToastrService } from 'ngx-toastr';
@@ -59,6 +59,18 @@ export class AuthEffects {
           if (error?.error?.statusCode === 401) msg = this.translocoService.translate('login.badCredentials');
           else msg = error?.error?.message || this.translocoService.translate('login.error');
           this.toastService.error(msg);
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  logout$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.logout),
+        tap(() => {
+          this.router.navigateByUrl('/');
         })
       );
     },

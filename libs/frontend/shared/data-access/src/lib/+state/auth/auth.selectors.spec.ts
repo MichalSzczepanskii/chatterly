@@ -1,9 +1,9 @@
-import { State } from './auth.reducer';
+import { AuthState } from './auth.reducer';
 import * as AuthSelectors from './auth.selectors';
 import { User } from '@chatterly/shared/data-access';
 
 describe('Auth Selectors', () => {
-  let state: State;
+  let state: AuthState;
   const testUser: User = {
     id: 0,
     name: 'testUser',
