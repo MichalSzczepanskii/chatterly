@@ -393,3 +393,69 @@ body {
     background-color: $main-hover;
   }
 }
+
+.auth-container, chatterly-auth-login, chatterly-auth-register {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-container {
+  height: 100%;
+  width: 100%;
+  gap: 1.4rem 0;
+  background-color: #ebf4fb;
+
+  .logo {
+    height: 4rem;
+  }
+
+  h1 {
+    font-weight: 500;
+    font-size: 1.6rem;
+  }
+
+  .form-container {
+    width: 27rem;
+  }
+
+  .title-container {
+    text-align: center;
+
+    p {
+      color: gray;
+    }
+  }
+
+  .login-form {
+    margin: 2rem 0;
+  }
+
+  .submit-container {
+    margin-top: 2rem;
+    display: flex;
+
+    input {
+      flex: 2;
+    }
+  }
+
+  .auth-nav {
+    display: flex;
+    gap: 0 5px;
+
+    span {
+      font-weight: bold;
+      color: $main;
+
+      &:hover {
+        color: $main-hover;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}
+

@@ -9,5 +9,15 @@
     "registerLink": "Sign up for free",
     "badCredentials": "Bad credentials.",
     "error": "Error occurred."
+  },
+  "register": {
+    "welcome": "Connect with the World!",
+    "subtitle": "Join our chat app and discover new people, ideas and experiences.",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "passwordConfirmationPlaceholder": "Repeat your password",
+    "submitButton": "Sign up",
+    "loginTooltip": "Already have an account?",
+    "loginLink": "Sign in now"
   }
 }

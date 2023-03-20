@@ -1,1 +1,1 @@
-export * from './lib/frontend-auth-feature-register.module';
+export * from './lib/auth-register.module';

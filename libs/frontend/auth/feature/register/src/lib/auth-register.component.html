@@ -1,0 +1,14 @@
+<chatterly-auth-card>
+  <div class="form-container">
+    <div class="title-container">
+      <h1>{{ 'register.welcome' | transloco }}</h1>
+      <p>{{ 'register.subtitle' | transloco }}</p>
+    </div>
+    <div class="login-form">
+    </div>
+  </div>
+</chatterly-auth-card>
+<div class="auth-nav">
+  <p>{{ 'register.loginTooltip' | transloco }}</p>
+  <span [routerLink]="['/login']">{{ 'register.loginLink' | transloco }}</span>
+</div>
