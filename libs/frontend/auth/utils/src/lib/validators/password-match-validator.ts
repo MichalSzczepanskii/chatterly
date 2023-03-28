@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
-export default class PasswordMatchValidator {
+export class PasswordMatchValidator {
   public static checkPassword(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('passwordConfirmation')?.value;

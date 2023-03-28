@@ -6,9 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { RegisterService } from '@chatterly/frontend/auth/data-access';
-import { EmailValidator } from '@chatterly/frontend/auth/utils';
+import {
+  EmailValidator,
+  PasswordMatchValidator,
+} from '@chatterly/frontend/auth/utils';
 import { AlertService } from '@chatterly/frontend/shared/services/alert';
-import PasswordMatchValidator from '../../../../utils/src/lib/validators/password-match-validator';
 
 const { required, email, minLength } = Validators;
 @Component({
