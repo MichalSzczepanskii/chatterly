@@ -5,7 +5,7 @@
   "scripts": {
     "test-all": "nx run-many --all --target=test --parrarell",
     "lint-all": "nx run-many --all --target=lint",
-    "format-check": "nx format:check --verbose"
+    "format-write": "nx format:write"
   },
   "private": true,
   "dependencies": {

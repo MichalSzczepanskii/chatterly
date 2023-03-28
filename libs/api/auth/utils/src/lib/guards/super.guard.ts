@@ -5,18 +5,22 @@ import { IS_ADMIN_KEY } from '@chatterly/api/shared/utils';
 
 @Injectable()
 export class SuperGuard implements CanActivate {
-  constructor(private readonly jwtAuthGuard: JwtAuthGuard,
-              private reflector: Reflector) {
-  }
+  constructor(
+    private readonly jwtAuthGuard: JwtAuthGuard,
+    private reflector: Reflector
+  ) {}
 
-  canActivate(context: ExecutionContext){
+  canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     const isAdmin = this.reflector.getAllAndOverride<boolean>(IS_ADMIN_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
-    if(isAdmin) {
-      return process.env.NX_ADMIN_ENABLE === 'true' && req.body['password'] === process.env.NX_ADMIN
+    if (isAdmin) {
+      return (
+        process.env.NX_ADMIN_ENABLE === 'true' &&
+        req.body['password'] === process.env.NX_ADMIN
+      );
     } else {
       return this.jwtAuthGuard.canActivate(context);
     }

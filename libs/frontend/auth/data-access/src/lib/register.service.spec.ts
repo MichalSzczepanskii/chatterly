@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RegisterService } from './register.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { SignupData } from '@chatterly/shared/data-access';
 
 describe('RegisterService', () => {
@@ -29,7 +32,9 @@ describe('RegisterService', () => {
         expect(response).toEqual(responseId);
       });
 
-      const req = httpTestingController.expectOne('http://localhost:3000/api/users');
+      const req = httpTestingController.expectOne(
+        'http://localhost:3000/api/users'
+      );
       expect(req.request.method).toEqual('POST');
       req.flush(responseId);
     });
@@ -42,7 +47,9 @@ describe('RegisterService', () => {
         expect(response).toEqual(emailTakenResponse);
       });
 
-      const req = httpTestingController.expectOne('http://localhost:3000/api/users/email');
+      const req = httpTestingController.expectOne(
+        'http://localhost:3000/api/users/email'
+      );
       expect(req.request.method).toEqual('POST');
       req.flush(emailTakenResponse);
     });

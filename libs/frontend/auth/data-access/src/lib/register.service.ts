@@ -11,7 +11,9 @@ export class RegisterService {
   constructor(private httpClient: HttpClient) {}
 
   isEmailTaken(email: string): Observable<boolean> {
-    return this.httpClient.post<boolean>(`${this.apiUrl}/api/users/email`, { email });
+    return this.httpClient.post<boolean>(`${this.apiUrl}/api/users/email`, {
+      email,
+    });
   }
 
   register(data: SignupData): Observable<number> {

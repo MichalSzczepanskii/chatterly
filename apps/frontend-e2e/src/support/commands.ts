@@ -1,8 +1,4 @@
-import {
-  getEmailField,
-  getLoginButton,
-  getPasswordField,
-} from './utils';
+import { getEmailField, getLoginButton, getPasswordField } from './utils';
 
 Cypress.Commands.add('login', (fixture: string) => {
   cy.fixture(fixture).then(admin => {

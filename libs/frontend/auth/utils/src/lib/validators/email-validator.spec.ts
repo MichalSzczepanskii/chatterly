@@ -25,7 +25,9 @@ describe('EmailValidator', () => {
     });
 
     it('should return null if email is not taken', done => {
-      const spy = jest.spyOn(registerService, 'isEmailTaken').mockReturnValue(of(false));
+      const spy = jest
+        .spyOn(registerService, 'isEmailTaken')
+        .mockReturnValue(of(false));
       formControl.setValue('test123@gmail.com');
       validator.isEmailTaken(formControl).subscribe(value => {
         expect(spy).toHaveBeenCalledWith('test123@gmail.com');
@@ -35,7 +37,9 @@ describe('EmailValidator', () => {
     });
 
     it('should return validation error if email is taken', done => {
-      const spy = jest.spyOn(registerService, 'isEmailTaken').mockReturnValue(of(true));
+      const spy = jest
+        .spyOn(registerService, 'isEmailTaken')
+        .mockReturnValue(of(true));
       formControl.setValue('test123@gmail.com');
       validator.isEmailTaken(formControl).subscribe(value => {
         expect(spy).toHaveBeenCalledWith('test123@gmail.com');

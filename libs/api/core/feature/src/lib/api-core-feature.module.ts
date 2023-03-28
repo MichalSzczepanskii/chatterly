@@ -11,7 +11,7 @@ import { ApiAuthFeatureModule } from '@chatterly/api/auth/feature';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [appConfiguration, pgConfiguration],
-      envFilePath: ['.env.local']
+      envFilePath: ['.env.local'],
     }),
     TypeOrmModule.forRootAsync({
       inject: [pgConfiguration.KEY],
