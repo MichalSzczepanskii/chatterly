@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "test-all": "nx run-many --all --target=test --parrarell",
-    "lint-all": "nx run-many --all --target=lint"
+    "lint-all": "nx run-many --all --target=lint",
+    "format-write": "nx format:write"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +32,10 @@
     "@ngrx/store": "~15.0.0",
     "@types/jwt-decode": "^3.1.0",
     "bcrypt": "^5.1.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "dayjs": "^1.11.7",
+    "dotenv": "^16.0.3",
     "jwt-decode": "^3.1.2",
     "ngrx-store-localstorage": "^15.0.0",
     "ngx-toastr": "^16.0.2",
@@ -39,6 +43,8 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pg": "^8.8.0",
+    "primeicons": "^6.0.1",
+    "primeng": "^15.1.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

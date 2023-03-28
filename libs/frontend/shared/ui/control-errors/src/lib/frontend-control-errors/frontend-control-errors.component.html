@@ -1,0 +1,11 @@
+<p
+  *ngIf="
+    internalControl &&
+    internalControl.invalid &&
+    (internalControl.touched || internalControl.dirty)
+  "
+  class="error-text"
+  [attr.data-cy]="'control-error-' + controlName">
+  <ng-container
+    *ngTemplateOutlet="template; context: templateContext"></ng-container>
+</p>

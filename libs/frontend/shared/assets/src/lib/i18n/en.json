@@ -2,12 +2,49 @@
   "login": {
     "welcome": "Welcome back",
     "subtitle": "Enter your credentials to access your account.",
-    "emailPlaceholder": "Enter your email",
+    "emailPlaceholder": "Enter your e-mail",
     "passwordPlaceholder": "Enter your password",
     "submitButton": "Sign in",
     "registerTooltip": "Don't have an account?",
     "registerLink": "Sign up for free",
     "badCredentials": "Bad credentials.",
     "error": "Error occurred."
+  },
+  "register": {
+    "welcome": "Connect with the World!",
+    "subtitle": "Join our chat app and discover new people, ideas and experiences.",
+    "namePlaceholder": "Name",
+    "emailPlaceholder": "E-mail",
+    "passwordPlaceholder": "Password",
+    "passwordConfirmationPlaceholder": "Password confirmation",
+    "submitButton": "Sign up",
+    "loginTooltip": "Already have an account?",
+    "loginLink": "Sign in now",
+    "error": "Sorry, your sign up was unsuccessful. Please try again later.",
+    "success": "Welcome aboard! Please log in to continue."
+  },
+  "error": {
+    "title": "Error"
+  },
+  "success": {
+    "title": "Success"
+  },
+  "validation": {
+    "email": {
+      "required": "Email must be given.",
+      "taken": "Email is already in use.",
+      "invalid": "Email is not valid."
+    },
+    "name": {
+      "required": "Name must be given.",
+      "minLength": "Name must be at least {{minLength}} characters long."
+    },
+    "password": {
+      "required": "Password must be given."
+    },
+    "passwordConfirmation": {
+      "required": "Password confirmation must be given.",
+      "mismatch": "Passwords are not the same."
+    }
   }
 }

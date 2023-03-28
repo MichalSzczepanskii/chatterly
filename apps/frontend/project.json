@@ -27,7 +27,10 @@
             "output": "./assets"
           }
         ],
-        "styles": ["apps/frontend/src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
+        "styles": [
+          "apps/frontend/src/styles.scss",
+          "node_modules/ngx-toastr/toastr.css"
+        ],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/frontend/webpack.config.js"

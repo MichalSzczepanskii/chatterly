@@ -1,7 +1,8 @@
 import { Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { LocalAuthGuard, Public } from '@chatterly/api/auth/utils';
+import { LocalAuthGuard } from '@chatterly/api/auth/utils';
 import { AuthService } from '@chatterly/api/auth/data-access';
 import { AuthLoginResponse } from '@chatterly/shared/data-access';
+import { Public } from '@chatterly/api/shared/utils';
 
 @Controller('auth')
 export class AuthController {

@@ -1,0 +1,109 @@
+<chatterly-auth-card>
+  <div class="form-container">
+    <div class="title-container">
+      <h1>{{ 'register.welcome' | transloco }}</h1>
+      <p>{{ 'register.subtitle' | transloco }}</p>
+    </div>
+    <div class="register-form">
+      <form
+        [formGroup]="form"
+        data-cy="form"
+        (ngSubmit)="register(formDirective)"
+        #formDirective="ngForm">
+        <div class="input-field">
+          <input
+            type="text"
+            placeholder="{{ 'register.emailPlaceholder' | transloco }}"
+            data-cy="emailField"
+            formControlName="email" />
+          <chatterly-frontend-control-errors controlName="email">
+            <ng-template let-errors>
+              <ng-container *ngIf="errors.required">
+                {{ 'validation.email.required' | transloco }}
+              </ng-container>
+              <ng-container *ngIf="errors.isEmailTaken">
+                {{ 'validation.email.taken' | transloco }}
+              </ng-container>
+              <ng-container *ngIf="errors.email">
+                {{ 'validation.email.invalid' | transloco }}
+              </ng-container>
+            </ng-template>
+          </chatterly-frontend-control-errors>
+        </div>
+        <div class="input-field">
+          <input
+            type="text"
+            placeholder="{{ 'register.namePlaceholder' | transloco }}"
+            data-cy="nameField"
+            formControlName="name" />
+          <chatterly-frontend-control-errors controlName="name">
+            <ng-template let-errors>
+              <ng-container *ngIf="errors.required">
+                {{ 'validation.name.required' | transloco }}
+              </ng-container>
+              <ng-container *ngIf="errors.minlength">
+                {{
+                  'validation.name.minLength'
+                    | transloco : { minLength: errors.minlength.requiredLength }
+                }}
+              </ng-container>
+            </ng-template>
+          </chatterly-frontend-control-errors>
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            placeholder="{{ 'register.passwordPlaceholder' | transloco }}"
+            data-cy="passwordField"
+            formControlName="password" />
+          <chatterly-frontend-control-errors controlName="password">
+            <ng-template let-errors>
+              <ng-container *ngIf="errors.required">
+                {{ 'validation.password.required' | transloco }}
+              </ng-container>
+            </ng-template>
+          </chatterly-frontend-control-errors>
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            placeholder="{{
+              'register.passwordConfirmationPlaceholder' | transloco
+            }}"
+            data-cy="passwordConfirmationField"
+            formControlName="passwordConfirmation" />
+          <chatterly-frontend-control-errors controlName="passwordConfirmation">
+            <ng-template let-errors>
+              <ng-container *ngIf="errors.required">
+                {{ 'validation.passwordConfirmation.required' | transloco }}
+              </ng-container>
+            </ng-template>
+          </chatterly-frontend-control-errors>
+          <p
+            class="error-text"
+            data-cy="control-error-password-validation"
+            *ngIf="
+              (form.controls['passwordConfirmation'].dirty ||
+                formDirective.submitted) &&
+              form.hasError('passwordMismatch')
+            ">
+            {{ 'validation.passwordConfirmation.mismatch' | transloco }}
+          </p>
+        </div>
+        <div class="submit-container">
+          <input
+            type="submit"
+            value="{{ 'register.submitButton' | transloco }}"
+            class="btn btn-primary"
+            data-cy="registerButton" />
+        </div>
+      </form>
+    </div>
+  </div>
+</chatterly-auth-card>
+<div class="auth-nav">
+  <p>{{ 'register.loginTooltip' | transloco }}</p>
+  <a [routerLink]="['/login']" data-cy="loginRedirect">{{
+    'register.loginLink' | transloco
+  }}</a>
+</div>

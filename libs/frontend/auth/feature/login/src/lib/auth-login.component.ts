@@ -4,7 +4,7 @@ import { loginRequest } from '@chatterly/frontend/shared/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'chatterly-frontend-auth-feature-login',
+  selector: 'chatterly-auth-login',
   templateUrl: './auth-login.component.html',
   styleUrls: ['./auth-login.component.scss'],
 })

@@ -17,7 +17,10 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/frontend/shell/feature/**/*.ts", "libs/frontend/shell/feature/**/*.html"]
+        "lintFilePatterns": [
+          "libs/frontend/shell/feature/**/*.ts",
+          "libs/frontend/shell/feature/**/*.html"
+        ]
       }
     }
   },

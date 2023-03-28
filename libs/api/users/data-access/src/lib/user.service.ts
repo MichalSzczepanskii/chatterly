@@ -7,7 +7,9 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>
+  ) {}
 
   async getAll(): Promise<User[] | undefined> {
     return await this.userRepository.find();
@@ -18,13 +20,22 @@ export class UserService {
   }
 
   async createUser(dto: CreateUserDto) {
-    const user = this.userRepository.create({ ...dto, ...{ password: await bcrypt.hash(dto.password, 10) } });
+    const user = this.userRepository.create({
+      ...dto,
+      ...{ password: await bcrypt.hash(dto.password, 10) },
+    });
     await this.userRepository.insert(user).catch(e => {
       if (/(email)[\s\S]+(already exists)/.test(e.detail)) {
-        throw new BadRequestException('Account with this email already exists.');
+        throw new BadRequestException(
+          'Account with this email already exists.'
+        );
       }
       return e;
     });
     return user;
+  }
+
+  async deleteUserById(id: number) {
+    return await this.userRepository.delete(id);
   }
 }
