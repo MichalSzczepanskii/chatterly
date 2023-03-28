@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "test-all": "nx run-many --all --target=test --parrarell",
-    "lint-all": "nx run-many --all --target=lint"
+    "lint-all": "nx run-many --all --target=lint",
+    "format-check": "nx format:check --verbose"
   },
   "private": true,
   "dependencies": {
