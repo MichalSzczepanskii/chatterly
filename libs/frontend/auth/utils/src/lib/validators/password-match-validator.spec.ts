@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import PasswordMatchValidator from './password-match-validator';
+import { PasswordMatchValidator } from './password-match-validator';
 
 describe('PasswordMatchValidator', () => {
   let formGroup: FormGroup;
