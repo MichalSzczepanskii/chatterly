@@ -1,8 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { UserService } from '@chatterly/api/users/data-access';
 import { CreateUserDto } from '@chatterly/api/users/utils';
-import { Public } from '@chatterly/api/shared/utils';
-import { Admin } from '@chatterly/api/shared/utils';
+import { Admin, Public } from '@chatterly/api/shared/utils';
 
 @Controller('users')
 export class UserController {
@@ -18,6 +25,13 @@ export class UserController {
   async createUser(@Body() user: CreateUserDto) {
     const { id } = await this.userService.createUser(user);
     return id;
+  }
+
+  @Public()
+  @Post('/email')
+  async checkEmail(@Body('email') email: string) {
+    const user = await this.userService.findOneByEmail(email);
+    return !!user;
   }
 
   @Admin()

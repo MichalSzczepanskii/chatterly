@@ -17,7 +17,10 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/frontend/shared/ui/tooltip/**/*.ts", "libs/frontend/shared/ui/tooltip/**/*.html"]
+        "lintFilePatterns": [
+          "libs/frontend/shared/ui/tooltip/**/*.ts",
+          "libs/frontend/shared/ui/tooltip/**/*.html"
+        ]
       }
     }
   },

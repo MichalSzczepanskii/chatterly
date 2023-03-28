@@ -33,5 +33,5 @@
 </chatterly-auth-card>
 <div class="auth-nav">
   <p>{{ 'login.registerTooltip' | transloco }}</p>
-  <span [routerLink]="['/register']">{{ 'login.registerLink' | transloco }}</span>
+  <a [routerLink]="['/register']" data-cy="registerRedirect">{{ 'login.registerLink' | transloco }}</a>
 </div>

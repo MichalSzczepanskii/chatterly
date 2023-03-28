@@ -8,6 +8,7 @@ import { loginRequest } from '@chatterly/frontend/shared/data-access';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { getTranslocoModule } from '@chatterly/frontend/shared/spec-utils';
+import { By } from '@angular/platform-browser';
 
 describe('FrontendAuthFeatureLoginComponent', () => {
   let component: AuthLoginComponent;
@@ -54,6 +55,17 @@ describe('FrontendAuthFeatureLoginComponent', () => {
           password: mockUser.password,
         })
       );
+    });
+  });
+
+  describe('interface interactions', () => {
+    it('should redirect to /register after click to register button', () => {
+      fixture.detectChanges();
+      const href = fixture.debugElement
+        .query(By.css('[data-cy="registerRedirect"]'))
+        .nativeElement.getAttribute('href');
+      fixture.detectChanges();
+      expect(href).toEqual('/register');
     });
   });
 });

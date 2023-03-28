@@ -8,13 +8,14 @@ import {
   HostListener,
   Injector,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { FrontendTooltipComponent } from './frontend-tooltip.component';
 
 @Directive({
   selector: '[chatterlyTooltip]',
 })
-export class TooltipDirective {
+export class TooltipDirective implements OnDestroy {
   @Input() chatterlyTooltip = '';
   @Input() position: string = TooltipPosition.DEFAULT;
   private componentRef: ComponentRef<any> | null = null;
@@ -28,10 +29,14 @@ export class TooltipDirective {
   @HostListener('mouseenter')
   onMouseEnter(): void {
     if (this.componentRef === null) {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FrontendTooltipComponent);
+      const componentFactory =
+        this.componentFactoryResolver.resolveComponentFactory(
+          FrontendTooltipComponent
+        );
       this.componentRef = componentFactory.create(this.injector);
       this.appRef.attachView(this.componentRef.hostView);
-      const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+      const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>)
+        .rootNodes[0] as HTMLElement;
       document.body.appendChild(domElem);
       this.setTooltipComponentProperties();
     }
@@ -41,15 +46,20 @@ export class TooltipDirective {
     if (this.componentRef !== null) {
       this.componentRef.instance.tooltip = this.chatterlyTooltip;
       this.componentRef.instance.position = this.position;
-      const { left, right, top, bottom } = this.elementRef.nativeElement.getBoundingClientRect();
+      const { left, right, top, bottom } =
+        this.elementRef.nativeElement.getBoundingClientRect();
       switch (this.position) {
         case TooltipPosition.BELOW: {
-          this.componentRef.instance.left = Math.round((right - left) / 2 + left);
+          this.componentRef.instance.left = Math.round(
+            (right - left) / 2 + left
+          );
           this.componentRef.instance.top = Math.round(bottom);
           break;
         }
         case TooltipPosition.ABOVE: {
-          this.componentRef.instance.left = Math.round((right - left) / 2 + left);
+          this.componentRef.instance.left = Math.round(
+            (right - left) / 2 + left
+          );
           this.componentRef.instance.top = Math.round(top);
           break;
         }

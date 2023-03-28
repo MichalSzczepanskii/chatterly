@@ -4,6 +4,8 @@ import { AuthRegisterComponent } from './auth-register.component';
 import { RouterModule } from '@angular/router';
 import { AuthCardComponent } from '@chatterly/frontend/auth/ui/card';
 import { TranslocoModule } from '@ngneat/transloco';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FrontendControlErrorsComponent } from '@chatterly/frontend/shared/ui/control-errors';
 
 @NgModule({
   imports: [
@@ -16,6 +18,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     ]),
     AuthCardComponent,
     TranslocoModule,
+    ReactiveFormsModule,
+    FrontendControlErrorsComponent,
   ],
   declarations: [AuthRegisterComponent],
 })
