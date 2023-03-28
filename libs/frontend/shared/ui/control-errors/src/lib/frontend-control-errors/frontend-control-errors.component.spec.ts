@@ -69,7 +69,6 @@ describe('FrontendSharedUiControlErrorsComponent', () => {
       it('should renders the template', () => {
         input.dispatchEvent(new FocusEvent('blur'));
         fixture.detectChanges();
-        console.log(fixture.nativeElement.textContent);
         expectContent(fixture, 'required');
       });
     });

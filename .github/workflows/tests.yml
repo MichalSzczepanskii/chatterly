@@ -5,6 +5,9 @@ on:
       - main
   pull_request:
 
+env:
+  NX_API_URL: http://localhost:3000
+
 jobs:
   main:
     runs-on: ubuntu-latest

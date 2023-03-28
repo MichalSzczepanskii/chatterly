@@ -263,7 +263,6 @@ describe('AuthRegisterComponent', () => {
         );
       }
       expect(errorMessageEl.textContent).toBeTruthy();
-      console.log(errorMessageEl.textContent);
       expect(translocoSpy).toHaveBeenCalledWith('validation.name.minLength', {
         minLength: 5,
       });
