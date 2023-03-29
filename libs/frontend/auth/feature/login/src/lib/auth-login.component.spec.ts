@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthLoginComponent } from './auth-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MockDeclarations } from 'ng-mocks';
+import { MockDeclarations, MockModule } from 'ng-mocks';
 import { AuthCardComponent } from '@chatterly/frontend/auth/ui/card';
 import { loginRequest } from '@chatterly/frontend/shared/data-access';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { getTranslocoModule } from '@chatterly/frontend/shared/spec-utils';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AuthLoginModule } from './auth-login.module';
 
 describe('FrontendAuthFeatureLoginComponent', () => {
   let component: AuthLoginComponent;
@@ -23,7 +24,12 @@ describe('FrontendAuthFeatureLoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthLoginComponent, MockDeclarations(AuthCardComponent)],
-      imports: [getTranslocoModule(), ReactiveFormsModule, RouterTestingModule],
+      imports: [
+        getTranslocoModule(),
+        ReactiveFormsModule,
+        RouterTestingModule,
+        MockModule(AuthLoginModule),
+      ],
       providers: [provideMockStore()],
     }).compileComponents();
 

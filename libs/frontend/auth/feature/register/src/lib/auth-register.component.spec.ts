@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { AuthRegisterComponent } from './auth-register.component';
-import { MockDeclarations, MockProviders } from 'ng-mocks';
+import { MockDeclarations, MockModule, MockProviders } from 'ng-mocks';
 import { AuthCardComponent } from '@chatterly/frontend/auth/ui/card';
 import {
   findEl,
@@ -18,6 +18,7 @@ import { of, throwError } from 'rxjs';
 import { AlertService } from '@chatterly/frontend/shared/services/alert';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { FrontendControlErrorsComponent } from '@chatterly/frontend/shared/ui/control-errors';
+import { AuthRegisterModule } from './auth-register.module';
 
 describe('AuthRegisterComponent', () => {
   let component: AuthRegisterComponent;
@@ -37,6 +38,7 @@ describe('AuthRegisterComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule.withRoutes([]),
         FrontendControlErrorsComponent,
+        MockModule(AuthRegisterModule),
       ],
       providers: [MockProviders(RegisterService, EmailValidator, AlertService)],
     }).compileComponents();
