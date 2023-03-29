@@ -39,7 +39,7 @@ describe('Guest', () => {
       });
     });
 
-    it.only('can register', () => {
+    it('can register', () => {
       cy.visit('/register');
       cy.fixture('users/new-user').then(account => {
         cy.intercept('POST', Cypress.env('backendUrl') + '/users').as(

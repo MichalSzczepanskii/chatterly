@@ -22,5 +22,6 @@ import { FrontendControlErrorsComponent } from '@chatterly/frontend/shared/ui/co
     FrontendControlErrorsComponent,
   ],
   declarations: [AuthRegisterComponent],
+  exports: [AuthRegisterComponent],
 })
 export class AuthRegisterModule {}

@@ -3,15 +3,17 @@ export default {
   displayName: 'frontend-shell-ui-layouts-guest-layout',
   preset: '../../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-      stringifyContentPathRegex: '\\.(html|svg)$',
-    },
-  },
-  coverageDirectory: '../../../../../../coverage/libs/frontend/shell/ui/layouts/guest-layout',
+  globals: {},
+  coverageDirectory:
+    '../../../../../../coverage/libs/frontend/shell/ui/layouts/guest-layout',
   transform: {
-    '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
+    '^.+\\.(ts|mjs|js|html)$': [
+      'jest-preset-angular',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.(html|svg)$',
+      },
+    ],
   },
   transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   snapshotSerializers: [
