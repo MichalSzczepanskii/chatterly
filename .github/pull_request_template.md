@@ -1,12 +1,3 @@
----
-name: Pull Request
-about: Pull Request Template
-title: 'CHAT- '
-labels: enhancement
-assignees: MichalSzczepanskii
-
----
-
 ## Summary 
 (...)
 
