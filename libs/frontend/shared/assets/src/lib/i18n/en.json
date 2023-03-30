@@ -29,6 +29,23 @@
   "success": {
     "title": "Success"
   },
+  "settings": {
+    "title": "Settings",
+    "account": {
+      "title": "Account",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in tempor nibh. Suspendisse potenti.",
+      "nameField": "Name",
+      "avatarField": "Avatar"
+    },
+    "security": {
+      "title": "Security",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in tempor nibh. Suspendisse potenti."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in tempor nibh. Suspendisse potenti."
+    }
+  },
   "validation": {
     "email": {
       "required": "Email must be given.",
@@ -46,5 +63,8 @@
       "required": "Password confirmation must be given.",
       "mismatch": "Passwords are not the same."
     }
-  }
+  },
+  "save": "Save",
+  "cancel": "Cancel",
+  "change": "Change"
 }

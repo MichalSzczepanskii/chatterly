@@ -1,0 +1,15 @@
+@import 'variables';
+:host {
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+
+  .nameField {
+    width: 18rem;
+  }
+
+  .image-field {
+    display: inline-block;
+  }
+}

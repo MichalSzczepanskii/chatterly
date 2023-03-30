@@ -46,6 +46,21 @@
       "@chatterly/frontend/auth/utils": [
         "libs/frontend/auth/utils/src/index.ts"
       ],
+      "@chatterly/frontend/settings/data-access": [
+        "libs/frontend/settings/data-access/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/feature/account": [
+        "libs/frontend/settings/feature/account/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/feature/shell": [
+        "libs/frontend/settings/feature/shell/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/ui/input-avatar": [
+        "libs/frontend/settings/ui/input-avatar/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/ui/layout": [
+        "libs/frontend/settings/ui/layout/src/index.ts"
+      ],
       "@chatterly/frontend/shared/assets": [
         "libs/frontend/shared/assets/src/index.ts"
       ],

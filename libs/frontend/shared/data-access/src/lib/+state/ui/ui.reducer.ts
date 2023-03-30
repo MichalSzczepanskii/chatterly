@@ -7,7 +7,7 @@ export interface UiState {
 
 export const initialUiState: UiState = {
   navItems: [
-    { label: 'Home', path: '', icon: 'las la-sms' },
+    { label: 'Home', path: '', icon: 'las la-sms', exact: true },
     { label: 'Profile', path: '', icon: 'las la-user', exact: true },
     { label: 'Test', path: '', icon: 'las la-bell', exact: true },
   ],
