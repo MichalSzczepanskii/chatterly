@@ -28,6 +28,7 @@
       "@chatterly/api/settings/feature": [
         "libs/api/settings/feature/src/index.ts"
       ],
+      "@chatterly/api/settings/utils": ["libs/api/settings/utils/src/index.ts"],
       "@chatterly/api/shared/utils": ["libs/api/shared/utils/src/index.ts"],
       "@chatterly/api/users/data-access": [
         "libs/api/users/data-access/src/index.ts"
