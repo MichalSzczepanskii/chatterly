@@ -22,6 +22,12 @@
       "@chatterly/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
       "@chatterly/api/auth/utils": ["libs/api/auth/utils/src/index.ts"],
       "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
+      "@chatterly/api/settings/data-access": [
+        "libs/api/settings/data-access/src/index.ts"
+      ],
+      "@chatterly/api/settings/feature": [
+        "libs/api/settings/feature/src/index.ts"
+      ],
       "@chatterly/api/shared/utils": ["libs/api/shared/utils/src/index.ts"],
       "@chatterly/api/users/data-access": [
         "libs/api/users/data-access/src/index.ts"
