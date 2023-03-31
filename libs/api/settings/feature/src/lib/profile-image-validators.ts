@@ -9,4 +9,5 @@ export const profileImageValidators = new ParseFilePipe({
     new MaxFileSizeValidator({ maxSize: 2500000 }),
     new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/ }),
   ],
+  fileIsRequired: false,
 });

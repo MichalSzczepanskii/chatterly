@@ -2,28 +2,35 @@ import {
   Body,
   Controller,
   Patch,
+  Request,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { Public } from '@chatterly/api/shared/utils';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { profileImageStorage } from './profile-image-storage';
 import { profileImageValidators } from './profile-image-validators';
-import { AccountSettingsDto } from '@chatterly/api/settings/data-access';
+import {
+  AccountSettingsDto,
+  SettingsService,
+} from '@chatterly/api/settings/data-access';
+import { OptionalFileInterceptor } from './optional-file.interceptor';
 
 @Controller('settings')
 export class SettingsController {
-  @Public()
+  constructor(private settingsService: SettingsService) {}
+
   @Patch('account')
   @UseInterceptors(
-    FileInterceptor('profilePicture', {
-      storage: profileImageStorage,
-    })
+    new OptionalFileInterceptor('profilePicture', profileImageStorage)
   )
-  updateAccountSettings(
-    @UploadedFile(profileImageValidators) imageFile: Express.Multer.File,
-    @Body() accountSettings: AccountSettingsDto
+  async updateAccountSettings(
+    @Body() accountSettings: AccountSettingsDto,
+    @Request() req,
+    @UploadedFile(profileImageValidators) imageFile?: Express.Multer.File
   ) {
-    return { imageFile };
+    const user = req.user;
+    return await this.settingsService.updateAccountSettings(user.userId, {
+      ...accountSettings,
+      profileImage: imageFile?.filename,
+    });
   }
 }
