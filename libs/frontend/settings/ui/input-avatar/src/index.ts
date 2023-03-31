@@ -1,1 +1,1 @@
-export * from './lib/input-avatar/input-avatar.component';
+export * from './lib/input-avatar.component';
