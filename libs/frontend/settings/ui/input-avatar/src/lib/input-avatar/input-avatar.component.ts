@@ -2,12 +2,12 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { convertFileToBase64 } from '@chatterly/frontend/shared/utils';
+import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/ui/file-image';
 
 @Component({
   selector: 'chatterly-input-avatar',
   standalone: true,
-  imports: [CommonModule, TranslocoModule],
+  imports: [CommonModule, TranslocoModule, FrontendSettingsUiFileImageModule],
   template: `
     <input
       type="file"
@@ -20,7 +20,7 @@ import { convertFileToBase64 } from '@chatterly/frontend/shared/utils';
       <img
         [src]="
           uploadedFile
-            ? (showImageFromFile(uploadedFile) | async)
+            ? (uploadedFile | fileImage | async)
             : 'https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png'
         " />
       <button class="btn" data-cy="uploadButton" (click)="openFilePicker()">
@@ -77,9 +77,5 @@ export class InputAvatarComponent implements ControlValueAccessor {
 
   writeValue(image: File): void {
     this.uploadedFile = image;
-  }
-
-  async showImageFromFile(file: File): Promise<string> {
-    return await convertFileToBase64(file);
   }
 }

@@ -61,6 +61,9 @@
       "@chatterly/frontend/settings/feature/shell": [
         "libs/frontend/settings/feature/shell/src/index.ts"
       ],
+      "@chatterly/frontend/settings/ui/file-image": [
+        "libs/frontend/settings/ui/file-image/src/index.ts"
+      ],
       "@chatterly/frontend/settings/ui/input-avatar": [
         "libs/frontend/settings/ui/input-avatar/src/index.ts"
       ],
