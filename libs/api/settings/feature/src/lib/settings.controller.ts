@@ -31,9 +31,11 @@ export class SettingsController {
     @UploadedFile(profileImageValidators) imageFile?: Express.Multer.File
   ) {
     const user = req.user;
-    return await this.settingsService.updateAccountSettings(user.userId, {
+    await this.settingsService.updateAccountSettings(user.userId, {
       ...accountSettings,
       profileImage: imageFile?.filename,
     });
+
+    return;
   }
 }
