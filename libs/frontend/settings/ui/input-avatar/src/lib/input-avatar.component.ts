@@ -1,7 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+} from '@angular/forms';
 import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/ui/file-image';
 
 @Component({
@@ -36,6 +42,11 @@ import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/
       multi: true,
       useExisting: InputAvatarComponent,
     },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: InputAvatarComponent,
+    },
   ],
 })
 export class InputAvatarComponent implements ControlValueAccessor {
@@ -45,8 +56,10 @@ export class InputAvatarComponent implements ControlValueAccessor {
   };
   @ViewChild('imageUpload', { static: false }) imageUploadEl!: ElementRef;
   uploadedFile!: File;
-  onChange: (value: File) => void;
-  onTouched: () => void;
+  onChange!: (value: File) => void;
+  onTouched!: () => void;
+  isExtensionDisallowed!: boolean;
+  isMaxFileSizeExceeded!: boolean;
 
   openFilePicker(): void {
     this.imageUploadEl.nativeElement.click();
@@ -57,10 +70,10 @@ export class InputAvatarComponent implements ControlValueAccessor {
     if (!element.files) return;
     const file = element.files[0];
     const fileExtension = file.type.split('/')[1];
-    if (!this.fileRestrictions.allowedExtensions.includes(fileExtension)) {
-      alert('wrong extension');
-      return;
-    }
+    this.isExtensionDisallowed =
+      !this.fileRestrictions.allowedExtensions.includes(fileExtension);
+    this.isMaxFileSizeExceeded = file.size > this.fileRestrictions.maxFileSize;
+    if (this.isExtensionDisallowed || this.isMaxFileSizeExceeded) return;
     this.uploadedFile = file;
     this.onChange(file);
     this.onTouched();
@@ -76,5 +89,11 @@ export class InputAvatarComponent implements ControlValueAccessor {
 
   writeValue(image: File): void {
     this.uploadedFile = image;
+  }
+
+  validate({ value }: FormControl): ValidationErrors | null {
+    if (this.isExtensionDisallowed) return { extensionDisallowed: true };
+    else if (this.isMaxFileSizeExceeded) return { maxFileSizeExceeded: true };
+    return null;
   }
 }
