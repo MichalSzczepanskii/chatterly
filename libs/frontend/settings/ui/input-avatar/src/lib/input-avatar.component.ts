@@ -22,7 +22,8 @@ import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/
           uploadedFile
             ? (uploadedFile | fileImage | async)
             : 'https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png'
-        " />
+        "
+        alt="profile image" />
       <button class="btn" data-cy="uploadButton" (click)="openFilePicker()">
         {{ 'change' | transloco }}
       </button>
@@ -44,12 +45,8 @@ export class InputAvatarComponent implements ControlValueAccessor {
   };
   @ViewChild('imageUpload', { static: false }) imageUploadEl!: ElementRef;
   uploadedFile!: File;
-  onChange = (file: File) => {
-    return;
-  };
-  onTouched = () => {
-    return;
-  };
+  onChange: (value: File) => void;
+  onTouched: () => void;
 
   openFilePicker(): void {
     this.imageUploadEl.nativeElement.click();
@@ -65,13 +62,15 @@ export class InputAvatarComponent implements ControlValueAccessor {
       return;
     }
     this.uploadedFile = file;
+    this.onChange(file);
+    this.onTouched();
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: File) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
