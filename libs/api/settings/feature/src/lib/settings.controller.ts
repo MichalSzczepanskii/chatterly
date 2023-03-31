@@ -12,7 +12,7 @@ import {
   AccountSettingsDto,
   SettingsService,
 } from '@chatterly/api/settings/data-access';
-import { OptionalFileInterceptor } from './optional-file.interceptor';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('settings')
 export class SettingsController {
@@ -20,7 +20,7 @@ export class SettingsController {
 
   @Patch('account')
   @UseInterceptors(
-    new OptionalFileInterceptor('profilePicture', profileImageStorage)
+    FileInterceptor('profilePicture', { storage: profileImageStorage })
   )
   async updateAccountSettings(
     @Body() accountSettings: AccountSettingsDto,
