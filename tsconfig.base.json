@@ -27,7 +27,6 @@
         "libs/api/users/data-access/src/index.ts"
       ],
       "@chatterly/api/users/feature": ["libs/api/users/feature/src/index.ts"],
-      "@chatterly/api/users/utils": ["libs/api/users/utils/src/index.ts"],
       "@chatterly/frontend/auth/data-access": [
         "libs/frontend/auth/data-access/src/index.ts"
       ],
