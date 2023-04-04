@@ -52,7 +52,7 @@ import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/
 export class InputAvatarComponent implements ControlValueAccessor {
   readonly fileRestrictions = {
     allowedExtensions: ['jpeg', 'png'],
-    maxFileSize: 2500000,
+    maxFileSize: 1024 * 1024 * 2.5,
   };
   @ViewChild('imageUpload', { static: false }) imageUploadEl!: ElementRef;
   uploadedFile!: File;
@@ -73,7 +73,6 @@ export class InputAvatarComponent implements ControlValueAccessor {
     this.isExtensionDisallowed =
       !this.fileRestrictions.allowedExtensions.includes(fileExtension);
     this.isMaxFileSizeExceeded = file.size > this.fileRestrictions.maxFileSize;
-    if (this.isExtensionDisallowed || this.isMaxFileSizeExceeded) return;
     this.uploadedFile = file;
     this.onChange(file);
     this.onTouched();
