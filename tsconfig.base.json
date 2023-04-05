@@ -52,6 +52,9 @@
       "@chatterly/frontend/auth/utils": [
         "libs/frontend/auth/utils/src/index.ts"
       ],
+      "@chatterly/frontend/core/feature": [
+        "libs/frontend/core/feature/src/index.ts"
+      ],
       "@chatterly/frontend/settings/data-access": [
         "libs/frontend/settings/data-access/src/index.ts"
       ],
