@@ -5,7 +5,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, take } from 'rxjs';
 import { AuthState, selectToken } from '@chatterly/frontend/shared/data-access';
 import { Store } from '@ngrx/store';
 
@@ -18,6 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return this.authStore.select(selectToken).pipe(
+      take(1),
       switchMap(token => {
         if (token) {
           const clonedRequest = request.clone({
