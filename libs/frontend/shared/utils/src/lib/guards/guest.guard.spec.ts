@@ -2,10 +2,15 @@ import { TestBed } from '@angular/core/testing';
 
 import { GuestGuard } from './guest.guard';
 import { AuthService } from '@chatterly/frontend/shared/data-access';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
+import { BlankComponent } from '@chatterly/frontend/shared/spec-utils';
 
 describe('GuestGuard', () => {
   let guard: GuestGuard;
@@ -16,7 +21,11 @@ describe('GuestGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'app', component: BlankComponent },
+        ]),
+      ],
       providers: [GuestGuard, MockProvider(AuthService)],
     }).compileComponents();
   });
@@ -37,10 +46,12 @@ describe('GuestGuard', () => {
     });
 
     it('should return true if user is not logged in', () => {
-      guard.canActivate(dummyRoute, dummyStateSnapshot).subscribe(canActivate => {
-        expect(canActivate).toEqual(true);
-        expect(router.navigate).not.toHaveBeenCalled();
-      });
+      guard
+        .canActivate(dummyRoute, dummyStateSnapshot)
+        .subscribe(canActivate => {
+          expect(canActivate).toEqual(true);
+          expect(router.navigate).not.toHaveBeenCalled();
+        });
     });
 
     it('should navigate to app page if user is logged in', () => {
