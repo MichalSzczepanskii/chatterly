@@ -35,7 +35,8 @@
       "title": "Account",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in tempor nibh. Suspendisse potenti.",
       "nameField": "Name",
-      "avatarField": "Avatar"
+      "profilePictureField": "Profile picture",
+      "success": "Account settings updated successfully."
     },
     "security": {
       "title": "Security",

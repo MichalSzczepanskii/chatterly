@@ -4,6 +4,7 @@ import { InputAvatarComponent } from './input-avatar.component';
 import {
   findEl,
   getTranslocoModule,
+  setFileFieldValue,
 } from '@chatterly/frontend/shared/spec-utils';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -13,22 +14,6 @@ describe('FrontendSettingsUiInputAvatarComponent', () => {
   let inputAvatarComponent: InputAvatarComponent;
   let hostComponent: HostComponent;
   let fixture: ComponentFixture<HostComponent>;
-
-  const fileCache = new WeakMap();
-
-  Object.defineProperty(HTMLInputElement.prototype, 'files', {
-    set(fileList) {
-      fileCache.set(this, fileList);
-      Object.defineProperty(this, 'files', {
-        get() {
-          return fileCache.get(this);
-        },
-        set(value) {
-          fileCache.set(this, value);
-        },
-      });
-    },
-  });
 
   @Component({
     template: `
@@ -71,14 +56,8 @@ describe('FrontendSettingsUiInputAvatarComponent', () => {
       expect(inputEl.click).toHaveBeenCalled();
     });
 
-    function addFileToInput(mockFile: File) {
-      const fileInput = findEl(fixture, 'imageUploadField');
-      fileInput.nativeElement.files = [mockFile];
-      fileInput.nativeElement.dispatchEvent(new Event('change'));
-    }
-
     function expectUpload(mockFile: File) {
-      addFileToInput(mockFile);
+      setFileFieldValue(fixture, 'imageUploadField', [mockFile]);
       fixture.detectChanges();
       expect(inputAvatarComponent.uploadedFile).toBe(mockFile);
       expect(inputAvatarComponent.selectFile).toHaveBeenCalled();
@@ -113,7 +92,7 @@ describe('FrontendSettingsUiInputAvatarComponent', () => {
       fixture.detectChanges();
       jest.spyOn(inputAvatarComponent, 'selectFile');
       const mockFile = new File([''], 'testImage.png', { type: 'image/gif' });
-      addFileToInput(mockFile);
+      setFileFieldValue(fixture, 'imageUploadField', [mockFile]);
       fixture.detectChanges();
       expect(inputAvatarComponent.selectFile).toHaveBeenCalled();
       expect(hostComponent.form.invalid).toBeTruthy();
@@ -127,7 +106,7 @@ describe('FrontendSettingsUiInputAvatarComponent', () => {
       jest.spyOn(inputAvatarComponent, 'selectFile');
       const mockFile = new File([''], 'testImage.png', { type: 'image/png' });
       Object.defineProperty(mockFile, 'size', { value: 1024 * 1024 * 2.5 + 1 });
-      addFileToInput(mockFile);
+      setFileFieldValue(fixture, 'imageUploadField', [mockFile]);
       fixture.detectChanges();
       expect(inputAvatarComponent.selectFile).toHaveBeenCalled();
       expect(hostComponent.form.invalid).toBeTruthy();

@@ -1,22 +1,32 @@
-<div class="settings-options-container">
+<div class="settings-options-container" *ngIf="user">
   <div>
     <h1>{{ 'settings.account.title' | transloco }}</h1>
     <p class="description">{{ 'settings.account.description' | transloco }}</p>
   </div>
   <div class="options">
-    <div class="input-field">
-      <label for="name">{{ 'settings.account.nameField' | transloco }}</label>
-      <input type="text" id="name" class="nameField" />
-    </div>
-    <div class="input-field image-field">
-      <label for="avatar" class="image-label"
-        >{{ 'settings.account.avatarField' | transloco }}
-      </label>
-      <chatterly-input-avatar id="avatar"></chatterly-input-avatar>
-    </div>
-    <div class="buttons-container">
-      <button class="btn">{{ 'cancel' | transloco }}</button>
-      <button class="btn btn-primary">{{ 'save' | transloco }}</button>
-    </div>
+    <form data-cy="form" [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="input-field">
+        <label for="name">{{ 'settings.account.nameField' | transloco }}</label>
+        <input
+          type="text"
+          id="name"
+          class="nameField"
+          data-cy="nameField"
+          formControlName="name" />
+      </div>
+      <div class="input-field image-field">
+        <label for="profilePicture" class="image-label"
+          >{{ 'settings.account.profilePictureField' | transloco }}
+        </label>
+        <chatterly-input-avatar
+          id="profilePicture"
+          data-cy="profilePictureField"
+          formControlName="profilePicture"></chatterly-input-avatar>
+      </div>
+      <div class="buttons-container">
+        <button class="btn">{{ 'cancel' | transloco }}</button>
+        <button class="btn btn-primary">{{ 'save' | transloco }}</button>
+      </div>
+    </form>
   </div>
 </div>
