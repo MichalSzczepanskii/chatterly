@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '@chatterly/api/users/data-access';
-import { AccountSettingsDto } from '@chatterly/api/settings/data-access';
+import { AccountSettingsDto } from './dto/account-settings.dto';
 
 @Injectable()
 export class SettingsService {

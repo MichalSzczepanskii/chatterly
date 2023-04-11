@@ -4,11 +4,7 @@ import { FileImagePipe } from './file-image.pipe';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [
-    FileImagePipe
-  ],
-  exports: [
-    FileImagePipe
-  ],
+  declarations: [FileImagePipe],
+  exports: [FileImagePipe],
 })
 export class FrontendSettingsUiFileImageModule {}

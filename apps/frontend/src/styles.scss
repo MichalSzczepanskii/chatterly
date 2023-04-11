@@ -380,7 +380,9 @@ body {
     color: $grey;
     padding: 0.15rem;
   }
-  input[type='text'], input[type='password'], input[type='number'] {
+  input[type='text'],
+  input[type='password'],
+  input[type='number'] {
     padding: 0.5rem 1rem;
     flex: 2;
     border: 1px solid #e0e0e0;

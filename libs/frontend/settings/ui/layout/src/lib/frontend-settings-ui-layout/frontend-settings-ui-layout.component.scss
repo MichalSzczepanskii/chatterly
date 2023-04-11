@@ -29,7 +29,8 @@ $padding-x: 1.5rem;
           padding: 1.5rem $padding-x;
           border-bottom: 1px solid $light-grey;
           cursor: pointer;
-          &:hover,&.active {
+          &:hover,
+          &.active {
             background-color: $lighter-grey;
           }
           &.active {
