@@ -2,8 +2,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { CreateUserDto } from '@chatterly/api/users/utils';
+import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -37,5 +38,14 @@ export class UserService {
 
   async deleteUserById(id: number) {
     return await this.userRepository.delete(id);
+  }
+
+  async updateUser(userId: number, dto: UpdateUserDto) {
+    return await this.userRepository.update(
+      {
+        id: userId,
+      },
+      dto
+    );
   }
 }

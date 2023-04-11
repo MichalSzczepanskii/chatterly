@@ -22,12 +22,18 @@
       "@chatterly/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
       "@chatterly/api/auth/utils": ["libs/api/auth/utils/src/index.ts"],
       "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
+      "@chatterly/api/settings/data-access": [
+        "libs/api/settings/data-access/src/index.ts"
+      ],
+      "@chatterly/api/settings/feature": [
+        "libs/api/settings/feature/src/index.ts"
+      ],
+      "@chatterly/api/settings/utils": ["libs/api/settings/utils/src/index.ts"],
       "@chatterly/api/shared/utils": ["libs/api/shared/utils/src/index.ts"],
       "@chatterly/api/users/data-access": [
         "libs/api/users/data-access/src/index.ts"
       ],
       "@chatterly/api/users/feature": ["libs/api/users/feature/src/index.ts"],
-      "@chatterly/api/users/utils": ["libs/api/users/utils/src/index.ts"],
       "@chatterly/frontend/auth/data-access": [
         "libs/frontend/auth/data-access/src/index.ts"
       ],
@@ -45,6 +51,27 @@
       ],
       "@chatterly/frontend/auth/utils": [
         "libs/frontend/auth/utils/src/index.ts"
+      ],
+      "@chatterly/frontend/core/feature": [
+        "libs/frontend/core/feature/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/data-access": [
+        "libs/frontend/settings/data-access/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/feature/account": [
+        "libs/frontend/settings/feature/account/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/feature/shell": [
+        "libs/frontend/settings/feature/shell/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/ui/file-image": [
+        "libs/frontend/settings/ui/file-image/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/ui/input-avatar": [
+        "libs/frontend/settings/ui/input-avatar/src/index.ts"
+      ],
+      "@chatterly/frontend/settings/ui/layout": [
+        "libs/frontend/settings/ui/layout/src/index.ts"
       ],
       "@chatterly/frontend/shared/assets": [
         "libs/frontend/shared/assets/src/index.ts"

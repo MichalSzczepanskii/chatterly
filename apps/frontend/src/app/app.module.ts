@@ -8,6 +8,7 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FrontendSharedServicesAlertModule } from '@chatterly/frontend/shared/services/alert';
 import { ToastModule } from 'primeng/toast';
+import { FrontendCoreModule } from '@chatterly/frontend/core/feature';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
     BrowserAnimationsModule,
     ToastModule,
     FrontendSharedServicesAlertModule,
+    FrontendCoreModule,
   ],
   bootstrap: [AppComponent],
 })

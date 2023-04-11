@@ -374,7 +374,15 @@ body {
   margin: 1rem 0;
   display: flex;
   flex-direction: column;
-  input {
+  label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: $grey;
+    padding: 0.15rem;
+  }
+  input[type='text'],
+  input[type='password'],
+  input[type='number'] {
     padding: 0.5rem 1rem;
     flex: 2;
     border: 1px solid #e0e0e0;
@@ -399,8 +407,12 @@ input[type='submit'].btn {
 .btn-primary {
   color: white;
   background-color: $main;
-  &:hover {
+  &:hover:not([disabled]) {
     background-color: $main-hover;
+  }
+  &:disabled {
+    opacity: 0.85;
+    cursor: default;
   }
 }
 
@@ -469,5 +481,25 @@ chatterly-auth-register {
         cursor: pointer;
       }
     }
+  }
+}
+
+.settings-options-container {
+  margin: 3.5rem 6rem;
+  width: 100%;
+  h1 {
+    margin: 0.2rem 0 0.25rem;
+  }
+  .description {
+    color: $grey;
+  }
+  .options {
+    margin-top: 2rem;
+  }
+  .buttons-container {
+    display: flex;
+    margin-top: 5rem;
+    gap: 0 0.5rem;
+    justify-content: end;
   }
 }

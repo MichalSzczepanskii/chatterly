@@ -1,32 +1,45 @@
-<div class='nav-container'>
-  <div class='user-section'>
-    <ng-container *ngIf='user$ | async as vm'>
-      <img src='https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png' alt='{{vm.name}}'/>
+<div class="nav-container">
+  <div class="user-section">
+    <ng-container *ngIf="user$ | async as vm">
+      <img
+        src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
+        [chatterlyTooltip]="vm.name"
+        position="right"
+        alt="{{ vm.name }}" />
     </ng-container>
   </div>
-  <div class='links-section'>
+  <div class="links-section">
     <ul>
-      <li *ngFor='let item of navItems$ | async'>
-        <a [routerLink]='item.path'
-           [chatterlyTooltip]='item.label'
-           position='right'
-           routerLinkActive='active'
-           [routerLinkActiveOptions]='{ exact: item.exact! }'>
-          <i [class]='item.icon'></i>
+      <li *ngFor="let item of navItems$ | async">
+        <a
+          [routerLink]="item.path"
+          [chatterlyTooltip]="item.label"
+          position="right"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.exact! }">
+          <i [class]="item.icon"></i>
         </a>
       </li>
     </ul>
   </div>
-  <div class='bottom-section'>
+  <div class="bottom-section">
     <ul>
       <li>
-        <a routerLink='' chatterlyTooltip='Settings' position='right'>
-          <i class='las la-cog'></i>
+        <a
+          routerLink="settings"
+          routerLinkActive="active"
+          chatterlyTooltip="Settings"
+          position="right">
+          <i class="las la-cog"></i>
         </a>
       </li>
       <li>
-        <a routerLink='' chatterlyTooltip='Logout' position='right' (click)='logout()'>
-          <i class='las la-sign-out-alt'></i>
+        <a
+          routerLink=""
+          chatterlyTooltip="Logout"
+          position="right"
+          (click)="logout()">
+          <i class="las la-sign-out-alt"></i>
         </a>
       </li>
     </ul>

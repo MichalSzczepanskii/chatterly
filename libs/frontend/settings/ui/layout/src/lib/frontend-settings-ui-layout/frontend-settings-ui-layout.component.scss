@@ -1,0 +1,60 @@
+@import 'variables';
+$padding-x: 1.5rem;
+:host {
+  width: 100%;
+  .settings-container {
+    height: 100vh;
+    display: flex;
+
+    .settings-nav-container {
+      width: $left-column-width;
+      height: 100%;
+      background-color: $secondary;
+
+      .settings-header {
+        height: 4.5rem;
+        background-color: $secondary-darker;
+        display: flex;
+        align-items: center;
+        padding: 0 $padding-x;
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      .settings-nav {
+        .link {
+          text-decoration: none;
+          color: inherit;
+          display: flex;
+          padding: 1.5rem $padding-x;
+          border-bottom: 1px solid $light-grey;
+          cursor: pointer;
+          &:hover,
+          &.active {
+            background-color: $lighter-grey;
+          }
+          &.active {
+            cursor: default;
+          }
+          i.las {
+            font-size: 1.8rem;
+            color: $grey;
+            padding-right: 0.6rem;
+          }
+          .title {
+            padding: 0.33rem 0;
+            font-weight: 500;
+          }
+          .description {
+            color: $grey;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+
+    .settings {
+      flex: 1;
+    }
+  }
+}

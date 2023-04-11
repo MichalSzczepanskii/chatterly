@@ -14,7 +14,9 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: async () => (await import('@chatterly/frontend/auth/feature/shell')).AuthShellModule,
+        loadChildren: async () =>
+          (await import('@chatterly/frontend/auth/feature/shell'))
+            .AuthShellModule,
       },
     ],
   },
@@ -22,11 +24,22 @@ const routes: Routes = [
     path: 'app',
     component: MainLayoutComponent,
     canActivate: [AuthGuard],
-    children: [],
+    children: [
+      {
+        path: 'settings',
+        loadChildren: async () =>
+          (await import('@chatterly/frontend/settings/feature/shell'))
+            .FrontendSettingsFeatureShellModule,
+      },
+    ],
   },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes), BrowserAnimationsModule, ToastrModule.forRoot()],
+  imports: [
+    RouterModule.forRoot(routes),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+  ],
   exports: [RouterModule],
 })
 export class FrontendShellRoutingModules {}

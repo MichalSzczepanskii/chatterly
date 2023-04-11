@@ -1,0 +1,26 @@
+<div class="settings-container">
+  <div class="settings-nav-container">
+    <div class="settings-header">
+      {{ 'settings.title' | transloco }}
+    </div>
+    <div class="settings-nav">
+      <a
+        class="link"
+        *ngFor="let item of $links | async"
+        routerLinkActive="active"
+        [routerLink]="item.path"
+        [routerLinkActiveOptions]="{ exact: item.exact! }">
+        <i [class]="item.icon"></i>
+        <div>
+          <div class="title">{{ item.label | transloco }}</div>
+          <div class="description">
+            {{ item.description | transloco }}
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="settings">
+    <router-outlet></router-outlet>
+  </div>
+</div>

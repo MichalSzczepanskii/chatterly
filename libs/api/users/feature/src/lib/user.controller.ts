@@ -7,8 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { UserService } from '@chatterly/api/users/data-access';
-import { CreateUserDto } from '@chatterly/api/users/utils';
+import { CreateUserDto, UserService } from '@chatterly/api/users/data-access';
 import { Admin, Public } from '@chatterly/api/shared/utils';
 
 @Controller('users')

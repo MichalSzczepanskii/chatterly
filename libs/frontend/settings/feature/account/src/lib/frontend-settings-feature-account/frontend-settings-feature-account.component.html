@@ -1,0 +1,66 @@
+<div class="settings-options-container" *ngIf="user">
+  <div>
+    <h1>{{ 'settings.account.title' | transloco }}</h1>
+    <p class="description">{{ 'settings.account.description' | transloco }}</p>
+  </div>
+  <div class="options">
+    <form
+      data-cy="form"
+      [formGroup]="form"
+      (ngSubmit)="submitForm()"
+      #formDirective="ngForm">
+      <div class="input-field">
+        <label for="name">{{ 'settings.account.nameField' | transloco }}</label>
+        <input
+          type="text"
+          id="name"
+          class="nameField"
+          data-cy="nameField"
+          formControlName="name" />
+        <chatterly-frontend-control-errors controlName="name">
+          <ng-template let-errors>
+            <ng-container *ngIf="errors.required">
+              {{ 'validation.name.required' | transloco }}
+            </ng-container>
+            <ng-container *ngIf="errors.minlength">
+              {{
+                'validation.name.minLength'
+                  | transloco : { minLength: errors.minlength.requiredLength }
+              }}
+            </ng-container>
+          </ng-template>
+        </chatterly-frontend-control-errors>
+      </div>
+      <div class="input-field image-field">
+        <label for="profilePicture" class="image-label"
+          >{{ 'settings.account.profilePictureField' | transloco }}
+        </label>
+        <chatterly-input-avatar
+          id="profilePicture"
+          data-cy="profilePictureField"
+          formControlName="profilePicture"></chatterly-input-avatar>
+        <chatterly-frontend-control-errors controlName="profilePicture">
+          <ng-template let-errors>
+            <ng-container *ngIf="errors.extensionDisallowed">
+              {{ 'validation.profilePicture.extensionDisallowed' | transloco }}
+            </ng-container>
+            <ng-container *ngIf="errors.maxFileSizeExceeded">
+              {{ 'validation.profilePicture.maxFileSizeExceeded' | transloco }}
+            </ng-container>
+          </ng-template>
+        </chatterly-frontend-control-errors>
+      </div>
+      <div class="buttons-container">
+        <button class="btn" data-cy="cancelButton" (click)="form.reset()">
+          {{ 'cancel' | transloco }}
+        </button>
+        <button
+          class="btn btn-primary"
+          data-cy="submitButton"
+          [disabled]="!(form.valid && form.dirty)">
+          {{ 'save' | transloco }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
