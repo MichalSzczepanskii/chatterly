@@ -11,13 +11,22 @@ describe('Auth Reducer', () => {
     email: 'test@localhost',
     isActive: true,
   };
+  const anotherTestUser: User = {
+    id: 1,
+    name: 'TestUser2',
+    email: 'test2@localhost',
+    isActive: true,
+  };
   const testError = { error: { statusCode: 401, message: 'test' } };
   const testToken =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1ZXN0QGxvY2FsaG9zdCIsInN1YiI6MiwiaWF0IjoxNjc0MjEzNDM5LCJleHAiOjE2NzQyMTcwMzl9.6s-v2yPht59pZUrjKlsI3sygWpVfJbAabhwtWdaj3uM';
 
   describe('valid Auth actions', () => {
     it('LoginRequest should return pending as true', () => {
-      const action = AuthActions.loginRequest({ email: 'test', password: 'test' });
+      const action = AuthActions.loginRequest({
+        email: 'test',
+        password: 'test',
+      });
       const result: AuthState = authReducer(initialState, action);
       expect(result.pending).toBe(true);
       expect(result.user).toEqual(null);
@@ -54,12 +63,38 @@ describe('Auth Reducer', () => {
     });
 
     it('Logout should clear state', () => {
-      const actionLogin = AuthActions.loginRequest({ email: 'test', password: 'test' });
+      const actionLogin = AuthActions.loginRequest({
+        email: 'test',
+        password: 'test',
+      });
       let result: AuthState = authReducer(initialState, actionLogin);
       expect(result.pending).toBe(true);
       const actionLogout = AuthActions.logout();
       result = authReducer(initialState, actionLogout);
       expect(result).toEqual(initialState);
+    });
+
+    it('UserDataRefresh should not update the state', () => {
+      const action = AuthActions.userDataRefresh();
+      const result: AuthState = authReducer(initialState, action);
+      expect(result).toStrictEqual(initialState);
+    });
+
+    it('UserDataRefreshSuccess should update state with a new user data', () => {
+      const action = AuthActions.loginSuccess({
+        loginSuccessResponse: {
+          access_token: testToken,
+          user: testUser,
+        },
+      });
+
+      const result: AuthState = authReducer(initialState, action);
+      const udrSuccessAction = AuthActions.userDataRefreshSuccess({
+        user: anotherTestUser,
+      });
+      const udrSuccessResult: AuthState = authReducer(result, udrSuccessAction);
+      expect(result.user).not.toBe(anotherTestUser);
+      expect(udrSuccessResult.user).toBe(anotherTestUser);
     });
   });
 

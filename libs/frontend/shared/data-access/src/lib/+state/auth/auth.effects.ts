@@ -56,8 +56,12 @@ export class AuthEffects {
         ofType(AuthActions.loginFailure),
         tap(({ error }) => {
           let msg = '';
-          if (error?.error?.statusCode === 401) msg = this.translocoService.translate('login.badCredentials');
-          else msg = error?.error?.message || this.translocoService.translate('login.error');
+          if (error?.error?.statusCode === 401)
+            msg = this.translocoService.translate('login.badCredentials');
+          else
+            msg =
+              error?.error?.message ||
+              this.translocoService.translate('login.error');
           this.toastService.error(msg);
         })
       );
@@ -76,4 +80,15 @@ export class AuthEffects {
     },
     { dispatch: false }
   );
+
+  userDataRefresh$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.userDataRefresh),
+      exhaustMap(() => {
+        return this.authService
+          .getMe()
+          .pipe(map(user => AuthActions.userDataRefreshSuccess({ user })));
+      })
+    );
+  });
 }

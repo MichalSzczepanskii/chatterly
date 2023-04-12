@@ -154,4 +154,27 @@ describe('AuthEffects', () => {
       expect(router.navigateByUrl).toHaveBeenCalledWith('/');
     });
   });
+
+  describe('userDataRefresh$', () => {
+    it('should return UserDataRefreshSuccess', () => {
+      const testUser: User = {
+        id: 1,
+        name: 'TestUser2',
+        email: 'test2@localhost',
+        isActive: true,
+      };
+      jest
+        .spyOn(authService, 'getMe')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockReturnValue(of(testUser));
+      actions = hot('-a-|', {
+        a: AuthActions.userDataRefresh(),
+      });
+      const expected = hot('-a-|', {
+        a: AuthActions.userDataRefreshSuccess({ user: testUser }),
+      });
+      expect(effects.userDataRefresh$).toBeObservable(expected);
+    });
+  });
 });

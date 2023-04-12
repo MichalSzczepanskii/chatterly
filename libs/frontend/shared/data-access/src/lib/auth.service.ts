@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as dayjs from 'dayjs';
-import { AuthLoginResponse } from '@chatterly/shared/data-access';
+import { AuthLoginResponse, User } from '@chatterly/shared/data-access';
 import { Store } from '@ngrx/store';
 import { AuthState } from './+state/auth/auth.reducer';
 import { selectExpiresAt, selectToken } from './+state/auth/auth.selectors';
@@ -15,7 +15,10 @@ export class AuthService {
   constructor(private http: HttpClient, private store: Store<AuthState>) {}
 
   login(data: { password: string; email: string }) {
-    return this.http.post<AuthLoginResponse>(`${this.apiUrl}/api/auth/login`, data);
+    return this.http.post<AuthLoginResponse>(
+      `${this.apiUrl}/api/auth/login`,
+      data
+    );
   }
 
   isLoggedIn(): Observable<boolean> {
@@ -28,5 +31,9 @@ export class AuthService {
         return dayjs(expiresAtText).isAfter(dayjs());
       })
     );
+  }
+
+  getMe() {
+    return this.http.get<User>(`${this.apiUrl}/api/auth/me`);
   }
 }

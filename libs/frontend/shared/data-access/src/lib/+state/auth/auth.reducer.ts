@@ -1,4 +1,10 @@
-import { Action, ActionReducer, createReducer, MetaReducer, on } from '@ngrx/store';
+import {
+  Action,
+  ActionReducer,
+  createReducer,
+  MetaReducer,
+  on,
+} from '@ngrx/store';
 import * as AuthActions from './auth.actions';
 import { ApiError, User } from '@chatterly/shared/data-access';
 import jwtDecode from 'jwt-decode';
@@ -28,7 +34,9 @@ const _authReducer = createReducer(
     };
   }),
   on(AuthActions.loginSuccess, (state, { loginSuccessResponse }) => {
-    const decodedToken = jwtDecode<{ exp: number }>(loginSuccessResponse.access_token);
+    const decodedToken = jwtDecode<{ exp: number }>(
+      loginSuccessResponse.access_token
+    );
     const expiresAt = dayjs.unix(decodedToken.exp).toISOString();
     return {
       ...state,
@@ -40,6 +48,12 @@ const _authReducer = createReducer(
   }),
   on(AuthActions.loginFailure, (state, { error }) => {
     return { ...state, loginError: error, token: null, user: null };
+  }),
+  on(AuthActions.userDataRefresh, state => {
+    return { ...state };
+  }),
+  on(AuthActions.userDataRefreshSuccess, (state, { user }) => {
+    return { ...state, user };
   })
 );
 
@@ -61,7 +75,9 @@ export function persistStateReducer(_reducer: ActionReducer<AuthState>) {
   };
 }
 
-function clearStateMetaReducer<AuthState>(reducer: ActionReducer<AuthState>): ActionReducer<AuthState> {
+function clearStateMetaReducer<AuthState>(
+  reducer: ActionReducer<AuthState>
+): ActionReducer<AuthState> {
   return (state: AuthState | undefined, action: Action) => {
     if (action.type === '[Auth] Logout') {
       state = {} as AuthState;
@@ -69,4 +85,7 @@ function clearStateMetaReducer<AuthState>(reducer: ActionReducer<AuthState>): Ac
     return reducer(state, action);
   };
 }
-export const metaReducers: Array<MetaReducer<AuthState>> = [clearStateMetaReducer, persistStateReducer];
+export const metaReducers: Array<MetaReducer<AuthState>> = [
+  clearStateMetaReducer,
+  persistStateReducer,
+];
