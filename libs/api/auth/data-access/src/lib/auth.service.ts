@@ -6,12 +6,21 @@ import { AuthLoginResponse } from '@chatterly/shared/data-access';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private jwtService: JwtService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService
+  ) {}
 
-  async validateUser(data: { email: string; password: string }): Promise<Omit<User, 'password'>> {
+  async validateUser(data: {
+    email: string;
+    password: string;
+  }): Promise<Omit<User, 'password'>> {
     const user = await this.userService.findOneByEmail(data.email);
     if (user) {
-      const isPasswordMatch = await bcrypt.compare(data.password, user.password);
+      const isPasswordMatch = await bcrypt.compare(
+        data.password,
+        user.password
+      );
       if (!isPasswordMatch) return null;
       delete user['password'];
       return user;
@@ -22,5 +31,9 @@ export class AuthService {
   async login(user: Omit<User, 'password'>): Promise<AuthLoginResponse> {
     const payload = { email: user.email, sub: user.id };
     return { access_token: this.jwtService.sign(payload), user: user };
+  }
+
+  async getLoggedUser(userId: number): Promise<User> {
+    return this.userService.findOneById(userId);
   }
 }
