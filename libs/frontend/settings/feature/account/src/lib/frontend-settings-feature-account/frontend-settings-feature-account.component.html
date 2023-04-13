@@ -32,20 +32,20 @@
         </chatterly-frontend-control-errors>
       </div>
       <div class="input-field image-field">
-        <label for="profilePicture" class="image-label"
-          >{{ 'settings.account.profilePictureField' | transloco }}
+        <label for="profileImage" class="image-label"
+          >{{ 'settings.account.profileImageField' | transloco }}
         </label>
         <chatterly-input-avatar
-          id="profilePicture"
-          data-cy="profilePictureField"
-          formControlName="profilePicture"></chatterly-input-avatar>
-        <chatterly-frontend-control-errors controlName="profilePicture">
+          id="profileImage"
+          data-cy="profileImageField"
+          formControlName="profileImage"></chatterly-input-avatar>
+        <chatterly-frontend-control-errors controlName="profileImage">
           <ng-template let-errors>
             <ng-container *ngIf="errors.extensionDisallowed">
-              {{ 'validation.profilePicture.extensionDisallowed' | transloco }}
+              {{ 'validation.profileImage.extensionDisallowed' | transloco }}
             </ng-container>
             <ng-container *ngIf="errors.maxFileSizeExceeded">
-              {{ 'validation.profilePicture.maxFileSizeExceeded' | transloco }}
+              {{ 'validation.profileImage.maxFileSizeExceeded' | transloco }}
             </ng-container>
           </ng-template>
         </chatterly-frontend-control-errors>

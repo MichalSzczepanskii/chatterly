@@ -35,7 +35,7 @@
       "title": "Account",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in tempor nibh. Suspendisse potenti.",
       "nameField": "Name",
-      "profilePictureField": "Profile picture",
+      "profileImageField": "Profile picture",
       "success": "Account settings updated successfully.",
       "error": "Sorry, failed to update account settings. Please try again later."
     },
@@ -65,7 +65,7 @@
       "required": "Password confirmation must be given.",
       "mismatch": "Passwords are not the same."
     },
-    "profilePicture": {
+    "profileImage": {
       "extensionDisallowed": "Invalid file extension for profile picture. Choose a valid file (.jpg, .png).",
       "maxFileSizeExceeded": "Profile picture size exceeds 2.5MB. Please choose a file with a smaller size."
     }

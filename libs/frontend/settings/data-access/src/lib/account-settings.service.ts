@@ -12,9 +12,14 @@ export class AccountSettingsService {
   constructor(private httpClient: HttpClient) {}
 
   updateSettings(settings: AccountSettings): Observable<null> {
+    const formData = new FormData();
+    for (const key of Object.keys(settings)) {
+      const value = settings[key as keyof AccountSettings];
+      if (value) formData.append(key, value);
+    }
     return this.httpClient.patch<null>(
       `${this.apiUrl}/api/settings/account`,
-      settings
+      formData
     );
   }
 }
