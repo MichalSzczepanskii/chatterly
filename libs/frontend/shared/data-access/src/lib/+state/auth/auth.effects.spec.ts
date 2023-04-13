@@ -18,6 +18,7 @@ import {
   BlankComponent,
   getTranslocoModule,
 } from '@chatterly/frontend/shared/spec-utils';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AuthEffects', () => {
   let actions: Observable<Action>;
@@ -35,6 +36,7 @@ describe('AuthEffects', () => {
           { path: 'app', component: BlankComponent },
         ]),
         ToastrModule.forRoot(),
+        HttpClientTestingModule,
       ],
       providers: [
         AuthEffects,
