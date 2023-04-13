@@ -1,4 +1,7 @@
-import { TranslocoTestingModule, TranslocoTestingOptions } from '@ngneat/transloco';
+import {
+  TranslocoTestingModule,
+  TranslocoTestingOptions,
+} from '@ngneat/transloco';
 import { en, pl } from '@chatterly/frontend/shared/assets';
 
 export function getTranslocoModule(options: TranslocoTestingOptions = {}) {

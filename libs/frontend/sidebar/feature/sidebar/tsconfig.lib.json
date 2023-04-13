@@ -13,7 +13,5 @@
     "sidebar/jest.config.ts",
     "sidebar/src/**/*.test.ts"
   ],
-  "include": [
-    "sidebar/src/**/*.ts"
-  ]
+  "include": ["sidebar/src/**/*.ts"]
 }

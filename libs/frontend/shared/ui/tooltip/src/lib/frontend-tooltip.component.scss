@@ -14,7 +14,7 @@
     border: 5px solid black;
   }
   &--below {
-    transform:translateX(-50%);
+    transform: translateX(-50%);
     margin-top: 7px;
     &::before {
       border-left-color: transparent;
@@ -26,7 +26,7 @@
   }
 
   &--above {
-    transform:translate(-50%, -100%);
+    transform: translate(-50%, -100%);
     margin-bottom: 7px;
     &::before {
       border-left-color: transparent;
@@ -38,7 +38,7 @@
   }
 
   &--left {
-    transform:translate(calc(-100% - 7px), -50%);
+    transform: translate(calc(-100% - 7px), -50%);
     &::before {
       border-top-color: transparent;
       border-bottom-color: transparent;
@@ -49,7 +49,7 @@
   }
 
   &--right {
-    transform:translateY(-70%);
+    transform: translateY(-70%);
     margin-left: 7px;
     &::before {
       border-top-color: transparent;

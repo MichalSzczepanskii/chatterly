@@ -23,6 +23,8 @@ function getClientEnvironment(configuration) {
 }
 
 module.exports = (config, options, context) => {
-  config.plugins.push(new webpack.DefinePlugin(getClientEnvironment(context.configuration)));
+  config.plugins.push(
+    new webpack.DefinePlugin(getClientEnvironment(context.configuration))
+  );
   return config;
 };

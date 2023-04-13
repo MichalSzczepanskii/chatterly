@@ -1,5 +1,9 @@
 import { AuthGuard } from './auth.guard';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockProvider } from 'ng-mocks';
@@ -36,10 +40,12 @@ describe('AuthGuard', () => {
     });
 
     it('should return true if user is logged in', () => {
-      guard.canActivate(dummyRoute, dummyStateSnapshot).subscribe(canActivate => {
-        expect(canActivate).toEqual(true);
-        expect(router.navigate).not.toHaveBeenCalled();
-      });
+      guard
+        .canActivate(dummyRoute, dummyStateSnapshot)
+        .subscribe(canActivate => {
+          expect(canActivate).toEqual(true);
+          expect(router.navigate).not.toHaveBeenCalled();
+        });
     });
 
     it('should navigate to root page if user is not logged in', () => {
