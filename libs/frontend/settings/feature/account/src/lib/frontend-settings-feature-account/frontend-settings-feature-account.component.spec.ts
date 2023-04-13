@@ -14,6 +14,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
   FrontendSharedDataAccessModule,
   selectUser,
+  userDataRefresh,
 } from '@chatterly/frontend/shared/data-access';
 import { MockModule, MockProviders } from 'ng-mocks';
 import { AccountSettingsService } from '@chatterly/frontend/settings/data-access';
@@ -91,6 +92,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
         .spyOn(accountSettingsService, 'updateSettings')
         .mockReturnValue(of(null));
       jest.spyOn(alertService, 'showSuccess');
+      jest.spyOn(mockStore, 'dispatch');
       fixture.detectChanges();
       fillForm();
       fixture.detectChanges();
@@ -103,6 +105,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
       expect(alertService.showSuccess).toHaveBeenCalledWith({
         message: 'settings.account.success',
       });
+      expect(mockStore.dispatch).toHaveBeenCalledWith(userDataRefresh());
     });
 
     it('should handle form failure', () => {
@@ -110,6 +113,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
         .spyOn(accountSettingsService, 'updateSettings')
         .mockReturnValue(throwError(() => new Error('error')));
       jest.spyOn(alertService, 'showError');
+      jest.spyOn(mockStore, 'dispatch');
       fixture.detectChanges();
       fillForm();
       findEl(fixture, 'form').triggerEventHandler('submit', {});
@@ -117,6 +121,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
       expect(alertService.showError).toHaveBeenCalledWith({
         message: 'settings.account.error',
       });
+      expect(mockStore.dispatch).not.toHaveBeenCalledWith(userDataRefresh());
     });
 
     it('should not submit the form if data did not changed', () => {

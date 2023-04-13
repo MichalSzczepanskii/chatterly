@@ -12,7 +12,7 @@ import * as dayjs from 'dayjs';
 
 export interface AuthState {
   token: string | null;
-  user: User | null;
+  user: (User & { profileImageFile?: File }) | null;
   expiresAt: string | null;
   loginError?: ApiError;
   pending: boolean;

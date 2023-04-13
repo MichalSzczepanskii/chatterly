@@ -2,7 +2,11 @@
   <div class="user-section">
     <ng-container *ngIf="user$ | async as vm">
       <img
-        src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
+        [src]="
+          vm.profileImageFile
+            ? (vm.profileImageFile | fileImage | async)
+            : 'https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png'
+        "
         [chatterlyTooltip]="vm.name"
         position="right"
         alt="{{ vm.name }}" />

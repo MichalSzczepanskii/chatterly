@@ -12,6 +12,7 @@ import {
   AuthState,
   FrontendSharedDataAccessModule,
   selectUser,
+  userDataRefresh,
 } from '@chatterly/frontend/shared/data-access';
 import { Store } from '@ngrx/store';
 import { AccountSettings, User } from '@chatterly/shared/data-access';
@@ -61,6 +62,7 @@ export class FrontendSettingsFeatureAccountComponent implements OnInit {
     if (!this.form.dirty) return;
     this.asService.updateSettings(this.getDirtyControlsValue()).subscribe({
       next: () => {
+        this.authStore.dispatch(userDataRefresh());
         this.alertService.showSuccess({
           message: 'settings.account.success',
         });

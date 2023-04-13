@@ -30,7 +30,11 @@ import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/
             : 'https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png'
         "
         alt="profile image" />
-      <button class="btn" data-cy="uploadButton" (click)="openFilePicker()">
+      <button
+        class="btn"
+        type="button"
+        data-cy="uploadButton"
+        (click)="openFilePicker()">
         {{ 'change' | transloco }}
       </button>
     </div>
