@@ -16,9 +16,6 @@ export class AuthController {
 
   @Get('me')
   async me(@Request() req) {
-    const { password, ...user } = await this.authService.getLoggedUser(
-      req.user.userId
-    );
-    return user;
+    return await this.authService.getLoggedUser(req.user.userId);
   }
 }

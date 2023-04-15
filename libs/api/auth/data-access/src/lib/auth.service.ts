@@ -15,7 +15,7 @@ export class AuthService {
     email: string;
     password: string;
   }): Promise<Omit<User, 'password'>> {
-    const user = await this.userService.findOneByEmail(data.email);
+    const user = await this.userService.findOneWithPasswordByEmail(data.email);
     if (user) {
       const isPasswordMatch = await bcrypt.compare(
         data.password,
