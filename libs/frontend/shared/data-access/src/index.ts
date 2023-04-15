@@ -6,3 +6,4 @@ export * from './lib/+state/ui/ui.selectors';
 export * from './lib/frontend-shared-data-access.module';
 export * from './lib/auth.service';
 export * from './lib/models/nav-item';
+export * from './lib/user.service';

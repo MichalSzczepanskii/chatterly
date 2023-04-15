@@ -10,11 +10,19 @@ import {
 } from '@chatterly/frontend/shared/data-access';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FrontendTooltipModule } from '@chatterly/frontend/shared/ui/tooltip';
+import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/ui/file-image';
 
 @Component({
   selector: 'chatterly-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, FrontendTooltipModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    FrontendTooltipModule,
+    FrontendSettingsUiFileImageModule,
+    FrontendSettingsUiFileImageModule,
+  ],
   templateUrl: './frontend-sidebar.component.html',
   styleUrls: ['./frontend-sidebar.component.scss'],
 })

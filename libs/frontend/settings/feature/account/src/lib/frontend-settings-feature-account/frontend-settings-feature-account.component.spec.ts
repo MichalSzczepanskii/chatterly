@@ -14,6 +14,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
   FrontendSharedDataAccessModule,
   selectUser,
+  userDataRefresh,
 } from '@chatterly/frontend/shared/data-access';
 import { MockModule, MockProviders } from 'ng-mocks';
 import { AccountSettingsService } from '@chatterly/frontend/settings/data-access';
@@ -61,12 +62,12 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
     const mockFile = new File([''], 'testImage.png', { type: 'image/png' });
     const accountSettingsData = {
       name: 'testUser',
-      profilePicture: mockFile,
+      profileImage: mockFile,
     };
     const fillForm = () => {
       setFieldValue(fixture, 'nameField', accountSettingsData.name);
       setFileFieldValue(fixture, 'imageUploadField', [
-        accountSettingsData.profilePicture,
+        accountSettingsData.profileImage,
       ]);
     };
 
@@ -91,6 +92,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
         .spyOn(accountSettingsService, 'updateSettings')
         .mockReturnValue(of(null));
       jest.spyOn(alertService, 'showSuccess');
+      jest.spyOn(mockStore, 'dispatch');
       fixture.detectChanges();
       fillForm();
       fixture.detectChanges();
@@ -103,6 +105,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
       expect(alertService.showSuccess).toHaveBeenCalledWith({
         message: 'settings.account.success',
       });
+      expect(mockStore.dispatch).toHaveBeenCalledWith(userDataRefresh());
     });
 
     it('should handle form failure', () => {
@@ -110,6 +113,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
         .spyOn(accountSettingsService, 'updateSettings')
         .mockReturnValue(throwError(() => new Error('error')));
       jest.spyOn(alertService, 'showError');
+      jest.spyOn(mockStore, 'dispatch');
       fixture.detectChanges();
       fillForm();
       findEl(fixture, 'form').triggerEventHandler('submit', {});
@@ -117,6 +121,7 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
       expect(alertService.showError).toHaveBeenCalledWith({
         message: 'settings.account.error',
       });
+      expect(mockStore.dispatch).not.toHaveBeenCalledWith(userDataRefresh());
     });
 
     it('should not submit the form if data did not changed', () => {
@@ -162,11 +167,11 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
       fixture.detectChanges();
       const errorMessageEl = findEl(
         fixture,
-        'control-error-profilePicture'
+        'control-error-profileImage'
       ).nativeElement;
       expect(errorMessageEl.textContent).toBeTruthy();
       expect(translocoSpy).toHaveBeenCalledWith(
-        'validation.profilePicture.extensionDisallowed'
+        'validation.profileImage.extensionDisallowed'
       );
       expect(findEl(fixture, 'submitButton').properties.disabled).toBe(true);
     });
@@ -179,11 +184,11 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
       fixture.detectChanges();
       const errorMessageEl = findEl(
         fixture,
-        'control-error-profilePicture'
+        'control-error-profileImage'
       ).nativeElement;
       expect(errorMessageEl.textContent).toBeTruthy();
       expect(translocoSpy).toHaveBeenCalledWith(
-        'validation.profilePicture.maxFileSizeExceeded'
+        'validation.profileImage.maxFileSizeExceeded'
       );
       expect(findEl(fixture, 'submitButton').properties.disabled).toBe(true);
     });
@@ -209,16 +214,16 @@ describe('FrontendSettingsFeatureAccountComponent', () => {
         });
       });
 
-      it('should only send profilePicture field if its the only field that changed', () => {
+      it('should only send profileImage field if its the only field that changed', () => {
         fixture.detectChanges();
         setFileFieldValue(fixture, 'imageUploadField', [
-          accountSettingsData.profilePicture,
+          accountSettingsData.profileImage,
         ]);
         fixture.detectChanges();
         findEl(fixture, 'form').triggerEventHandler('submit', {});
         expect(findEl(fixture, 'submitButton').properties.disabled).toBe(false);
         expect(accountSettingsService.updateSettings).toHaveBeenCalledWith({
-          profilePicture: accountSettingsData.profilePicture,
+          profileImage: accountSettingsData.profileImage,
         });
       });
     });

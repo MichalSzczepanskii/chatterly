@@ -6,9 +6,12 @@ import {
   HttpCode,
   Param,
   Post,
+  Res,
 } from '@nestjs/common';
 import { CreateUserDto, UserService } from '@chatterly/api/users/data-access';
 import { Admin, Public } from '@chatterly/api/shared/utils';
+import * as path from 'path';
+import * as process from 'process';
 
 @Controller('users')
 export class UserController {
@@ -38,5 +41,13 @@ export class UserController {
   @Delete(':id')
   async deleteUser(@Param() params) {
     return await this.userService.deleteUserById(params.id);
+  }
+
+  @Public()
+  @Get('profile-image/:imagename')
+  findProfileImage(@Param('imagename') imagename, @Res() res): File {
+    return res.sendFile(
+      path.join(process.cwd(), 'uploads/profile-images', imagename)
+    );
   }
 }

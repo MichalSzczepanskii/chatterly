@@ -14,7 +14,11 @@ import { TranslocoService } from '@ngneat/transloco';
 import { RouterTestingModule } from '@angular/router/testing';
 import { User } from '@chatterly/shared/data-access';
 import { Router } from '@angular/router';
-import { getTranslocoModule } from '@chatterly/frontend/shared/spec-utils';
+import {
+  BlankComponent,
+  getTranslocoModule,
+} from '@chatterly/frontend/shared/spec-utils';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AuthEffects', () => {
   let actions: Observable<Action>;
@@ -26,7 +30,14 @@ describe('AuthEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [getTranslocoModule(), RouterTestingModule, ToastrModule.forRoot()],
+      imports: [
+        getTranslocoModule(),
+        RouterTestingModule.withRoutes([
+          { path: 'app', component: BlankComponent },
+        ]),
+        ToastrModule.forRoot(),
+        HttpClientTestingModule,
+      ],
       providers: [
         AuthEffects,
         provideMockActions(() => actions),
@@ -44,11 +55,17 @@ describe('AuthEffects', () => {
 
   describe('loginRequest$', () => {
     it('should return LoginSuccessAction', () => {
-      jest.spyOn(authService, 'login').mockReturnValue(of({ user: {} as User, access_token: 'test' }));
-      actions = hot('-a-|', { a: AuthActions.loginRequest({ email: 'test', password: 'test' }) });
+      jest
+        .spyOn(authService, 'login')
+        .mockReturnValue(of({ user: {} as User, access_token: 'test' }));
+      actions = hot('-a-|', {
+        a: AuthActions.loginRequest({ email: 'test', password: 'test' }),
+      });
 
       const expected = hot('-a-|', {
-        a: AuthActions.loginSuccess({ loginSuccessResponse: { user: {} as User, access_token: 'test' } }),
+        a: AuthActions.loginSuccess({
+          loginSuccessResponse: { user: {} as User, access_token: 'test' },
+        }),
       });
 
       expect(effects.loginRequest$).toBeObservable(expected);
@@ -57,11 +74,17 @@ describe('AuthEffects', () => {
     it('should return LoginFailureAction', () => {
       jest
         .spyOn(authService, 'login')
-        .mockReturnValue(throwError(() => ({ error: { message: 'test', statusCode: 401 } })));
-      actions = hot('-a-|', { a: AuthActions.loginRequest({ email: 'test', password: 'test' }) });
+        .mockReturnValue(
+          throwError(() => ({ error: { message: 'test', statusCode: 401 } }))
+        );
+      actions = hot('-a-|', {
+        a: AuthActions.loginRequest({ email: 'test', password: 'test' }),
+      });
 
       const expected = hot('-a-|', {
-        a: AuthActions.loginFailure({ error: { error: { message: 'test', statusCode: 401 } } }),
+        a: AuthActions.loginFailure({
+          error: { error: { message: 'test', statusCode: 401 } },
+        }),
       });
 
       expect(effects.loginRequest$).toBeObservable(expected);
@@ -71,7 +94,11 @@ describe('AuthEffects', () => {
   describe('loginSuccess$', () => {
     it('should navigate to /app', () => {
       jest.spyOn(router, 'navigateByUrl');
-      actions = of(AuthActions.loginSuccess({ loginSuccessResponse: { user: {} as User, access_token: 'test' } }));
+      actions = of(
+        AuthActions.loginSuccess({
+          loginSuccessResponse: { user: {} as User, access_token: 'test' },
+        })
+      );
 
       effects.loginSuccess$.subscribe();
       expect(router.navigateByUrl).toHaveBeenCalledWith('/app');
@@ -85,18 +112,24 @@ describe('AuthEffects', () => {
     });
     it('should display alert with transloco.translate("login.badCredentials")', () => {
       actions = hot('-a-|', {
-        a: AuthActions.loginFailure({ error: { error: { message: 'test', statusCode: 401 } } }),
+        a: AuthActions.loginFailure({
+          error: { error: { message: 'test', statusCode: 401 } },
+        }),
       });
 
       effects.loginFailure$.subscribe(() => {
         expect(toastService.error).toHaveBeenCalled();
-        expect(translocoService.translate).toHaveBeenCalledWith('login.badCredentials');
+        expect(translocoService.translate).toHaveBeenCalledWith(
+          'login.badCredentials'
+        );
       });
     });
 
     it('should display alert with error message when statusCode is different than 401', () => {
       actions = hot('-a-|', {
-        a: AuthActions.loginFailure({ error: { error: { message: 'test', statusCode: 403 } } }),
+        a: AuthActions.loginFailure({
+          error: { error: { message: 'test', statusCode: 403 } },
+        }),
       });
       effects.loginFailure$.subscribe(() => {
         expect(toastService.error).toHaveBeenCalledWith('test');
@@ -121,6 +154,29 @@ describe('AuthEffects', () => {
       actions = of(AuthActions.logout());
       effects.logout$.subscribe();
       expect(router.navigateByUrl).toHaveBeenCalledWith('/');
+    });
+  });
+
+  describe('userDataRefresh$', () => {
+    it('should return UserDataRefreshSuccess', () => {
+      const testUser: User = {
+        id: 1,
+        name: 'TestUser2',
+        email: 'test2@localhost',
+        isActive: true,
+      };
+      jest
+        .spyOn(authService, 'getMe')
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .mockReturnValue(of(testUser));
+      actions = hot('-a-|', {
+        a: AuthActions.userDataRefresh(),
+      });
+      const expected = hot('-a-|', {
+        a: AuthActions.userDataRefreshSuccess({ user: testUser }),
+      });
+      expect(effects.userDataRefresh$).toBeObservable(expected);
     });
   });
 });

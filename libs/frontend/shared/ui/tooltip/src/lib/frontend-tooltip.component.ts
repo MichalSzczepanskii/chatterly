@@ -4,7 +4,11 @@ import { TooltipPosition } from './tooltip.directive';
 @Component({
   selector: 'chatterly-frontend-tooltip',
   template: `
-    <div class="tooltip" [ngClass]="['tooltip--' + position]" [style.left]="left + 'px'" [style.top]="top + 'px'">
+    <div
+      class="tooltip"
+      [ngClass]="['tooltip--' + position]"
+      [style.left]="left + 'px'"
+      [style.top]="top + 'px'">
       {{ tooltip }}
     </div>
   `,

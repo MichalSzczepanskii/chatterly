@@ -7,6 +7,7 @@ export async function convertFileToBase64(file: File): Promise<string> {
     reader.addEventListener('error', err => {
       reject(err);
     });
+    if (!['Blob', 'File'].includes(file.constructor.name)) return;
     reader.readAsDataURL(file);
   });
 }

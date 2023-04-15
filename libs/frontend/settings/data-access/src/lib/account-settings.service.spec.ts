@@ -13,7 +13,7 @@ describe('AccountSettingsService', () => {
   const mockFile = new File([''], 'testImage.png', { type: 'image/png' });
   const accountsData: AccountSettings = {
     name: 'newName',
-    profilePicture: mockFile,
+    profileImage: mockFile,
   };
 
   beforeEach(() => {

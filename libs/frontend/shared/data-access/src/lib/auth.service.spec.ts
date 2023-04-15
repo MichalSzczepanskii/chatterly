@@ -1,9 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import * as dayjs from 'dayjs';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { selectExpiresAt, selectToken } from './+state/auth/auth.selectors';
+import { User } from '@chatterly/shared/data-access';
 
 describe('AuthService', () => {
   const apiUrl = process.env['NX_API_URL'];
@@ -36,13 +40,32 @@ describe('AuthService', () => {
 
   describe('#login()', () => {
     it('returned Observable should contain jwt token', () => {
-      service.login({ email: 'test@gmail.com', password: 'root12' }).subscribe(token => {
-        expect(token).toEqual(mockToken);
-      });
+      service
+        .login({ email: 'test@gmail.com', password: 'root12' })
+        .subscribe(token => {
+          expect(token).toEqual(mockToken);
+        });
 
       const req = httpTestingController.expectOne(`${apiUrl}/api/auth/login`);
       expect(req.request.method).toEqual('POST');
       req.flush(mockToken);
+    });
+  });
+
+  describe('#getMe()', () => {
+    it('should returns observable with user data', () => {
+      const testUser: User = {
+        id: 1,
+        name: 'TestUser2',
+        email: 'test2@localhost',
+        isActive: true,
+      };
+      service.getMe().subscribe(result => {
+        expect(result).toEqual(testUser);
+      });
+      const req = httpTestingController.expectOne(`${apiUrl}/api/auth/me`);
+      expect(req.request.method).toEqual('GET');
+      req.flush(testUser);
     });
   });
 
@@ -55,7 +78,10 @@ describe('AuthService', () => {
 
     it('should return true if token did not expire', () => {
       mockStore.overrideSelector(selectToken, 'test');
-      mockStore.overrideSelector(selectExpiresAt, dayjs().add(7, 'days').toISOString());
+      mockStore.overrideSelector(
+        selectExpiresAt,
+        dayjs().add(7, 'days').toISOString()
+      );
       service.isLoggedIn().subscribe(isLoggedIn => {
         expect(isLoggedIn).toEqual(true);
       });
@@ -63,7 +89,10 @@ describe('AuthService', () => {
 
     it('should return false if token expired', () => {
       mockStore.overrideSelector(selectToken, 'test');
-      mockStore.overrideSelector(selectExpiresAt, dayjs().subtract(7, 'days').toISOString());
+      mockStore.overrideSelector(
+        selectExpiresAt,
+        dayjs().subtract(7, 'days').toISOString()
+      );
       service.isLoggedIn().subscribe(isLoggedIn => {
         expect(isLoggedIn).toEqual(false);
       });
@@ -71,7 +100,10 @@ describe('AuthService', () => {
 
     it('should return false if access token is undefined but expires at is valid', () => {
       mockStore.overrideSelector(selectToken, null);
-      mockStore.overrideSelector(selectExpiresAt, dayjs().add(7, 'days').toISOString());
+      mockStore.overrideSelector(
+        selectExpiresAt,
+        dayjs().add(7, 'days').toISOString()
+      );
       service.isLoggedIn().subscribe(isLoggedIn => {
         expect(isLoggedIn).toEqual(false);
       });
@@ -79,7 +111,10 @@ describe('AuthService', () => {
 
     it('should return false if access token is undefined and token expired', () => {
       mockStore.overrideSelector(selectToken, null);
-      mockStore.overrideSelector(selectExpiresAt, dayjs().subtract(7, 'days').toISOString());
+      mockStore.overrideSelector(
+        selectExpiresAt,
+        dayjs().subtract(7, 'days').toISOString()
+      );
       service.isLoggedIn().subscribe(isLoggedIn => {
         expect(isLoggedIn).toEqual(false);
       });

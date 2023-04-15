@@ -6,6 +6,7 @@ import { authReducer, metaReducers } from './+state/auth/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './+state/auth/auth.effects';
 import { uiReducer } from './+state/ui/ui.reducer';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { uiReducer } from './+state/ui/ui.reducer';
     StoreModule.forFeature('ui', uiReducer),
     EffectsModule.forFeature([AuthEffects]),
   ],
-  providers: [AuthService],
+  providers: [AuthService, UserService],
 })
 export class FrontendSharedDataAccessModule {}

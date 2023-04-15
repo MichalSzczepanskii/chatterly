@@ -22,7 +22,7 @@ export class SettingsController {
 
   @Patch('account')
   @UseInterceptors(
-    FileInterceptor('profilePicture', { storage: profileImageStorage })
+    FileInterceptor('profileImage', { storage: profileImageStorage })
   )
   @UseFilters(new BadRequestFileUploadFilter())
   async updateAccountSettings(
