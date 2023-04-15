@@ -52,4 +52,13 @@ export class UserService {
       dto
     );
   }
+
+  async getUsersByPartialName(name: string): Promise<User[]> {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.name like :name and user.isActive = true', {
+        name: `%${name}%`,
+      })
+      .getMany();
+  }
 }

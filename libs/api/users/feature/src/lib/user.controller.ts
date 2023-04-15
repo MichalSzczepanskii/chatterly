@@ -50,4 +50,9 @@ export class UserController {
       path.join(process.cwd(), 'uploads/profile-images', imagename)
     );
   }
+
+  @Get('search/name/:name')
+  getUsersByPartialName(@Param('name') name: string) {
+    return this.userService.getUsersByPartialName(name);
+  }
 }
