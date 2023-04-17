@@ -26,6 +26,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: '',
+        loadChildren: async () =>
+          (await import('@chatterly/frontend/home/feature/home'))
+            .FrontendHomeFeatureHomeModule,
+      },
+      {
         path: 'settings',
         loadChildren: async () =>
           (await import('@chatterly/frontend/settings/feature/shell'))

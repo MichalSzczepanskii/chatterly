@@ -1,0 +1,125 @@
+<div class="home-container">
+  <div class="home-nav">
+    <header>
+      <form>
+        <div class="input-field">
+          <input type="text" placeholder="Search..." />
+        </div>
+      </form>
+    </header>
+    <div class="contact-list">
+      <ng-container *ngFor="let n of [1, 2, 3, 4]">
+        <div class="contact-container" [class.active]="n === 2">
+          <div class="contact">
+            <img
+              class="profile-image"
+              src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
+              alt="profile-picture" />
+            <div class="details">
+              <div class="name">Chris Hemsworth</div>
+              <div class="last-message">Praesent at velit molestie leo</div>
+            </div>
+            <div class="time">1:10 PM</div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="contact-container">
+        <div class="contact">
+          <img
+            class="profile-image"
+            src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
+            alt="profile-picture" />
+          <div class="details">
+            <div class="name">Chris Hemsworth</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-container">
+        <div class="contact">
+          <img
+            class="profile-image"
+            src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
+            alt="profile-picture" />
+          <div class="details">
+            <div class="name">Chris Hemsworth</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="message-container">
+    <header>Chris Hemsworth</header>
+    <div class="messages">
+      <div class="message other">
+        <div class="time">Yesterday 2:26 PM</div>
+        <div class="wrapper">
+          <img
+            class="profile-image"
+            src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
+            alt="profile-picture" />
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            fringilla, ante vel.
+          </div>
+        </div>
+      </div>
+      <div class="message user">
+        <div class="wrapper">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            fringilla, ante vel.
+          </div>
+        </div>
+      </div>
+      <div class="message other">
+        <div class="wrapper">
+          <img
+            class="profile-image"
+            src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
+            alt="profile-picture" />
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            fringilla, ante vel.
+          </div>
+        </div>
+      </div>
+      <div class="message other no-profile-image">
+        <div class="wrapper">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            fringilla, ante vel.
+          </div>
+        </div>
+      </div>
+      <div class="message user">
+        <div class="time">Yesterday 2:26 PM</div>
+        <div class="wrapper">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            fringilla, ante vel.
+          </div>
+        </div>
+      </div>
+      <div class="message user">
+        <div class="wrapper">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+            fringilla, ante vel. Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Morbi fringilla, ante vel.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="control-panel">
+      <button type="button" class="emote btn-round btn-secondary">
+        <i class="las la-laugh-beam"></i>
+      </button>
+      <div class="message-input">
+        <input type="text" placeholder="Your message here..." />
+      </div>
+      <button type="button" class="message-submit btn-round btn-primary">
+        <i class="lab la-telegram-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>

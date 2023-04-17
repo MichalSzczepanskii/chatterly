@@ -55,6 +55,9 @@
       "@chatterly/frontend/core/feature": [
         "libs/frontend/core/feature/src/index.ts"
       ],
+      "@chatterly/frontend/home/feature/home": [
+        "libs/frontend/home/feature/home/src/index.ts"
+      ],
       "@chatterly/frontend/settings/data-access": [
         "libs/frontend/settings/data-access/src/index.ts"
       ],
