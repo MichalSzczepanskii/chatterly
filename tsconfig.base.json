@@ -100,6 +100,9 @@
       "@chatterly/frontend/shared/ui/tooltip": [
         "libs/frontend/shared/ui/tooltip/src/index.ts"
       ],
+      "@chatterly/frontend/shared/ui/user-avatar": [
+        "libs/frontend/shared/ui/user-avatar/src/index.ts"
+      ],
       "@chatterly/frontend/shared/utils": [
         "libs/frontend/shared/utils/src/index.ts"
       ],

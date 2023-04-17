@@ -11,6 +11,7 @@ import {
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FrontendTooltipModule } from '@chatterly/frontend/shared/ui/tooltip';
 import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/ui/file-image';
+import { FrontendSharedUiUserAvatarComponent } from '@chatterly/frontend/shared/ui/user-avatar';
 
 @Component({
   selector: 'chatterly-sidebar',
@@ -21,7 +22,7 @@ import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/
     RouterLinkActive,
     FrontendTooltipModule,
     FrontendSettingsUiFileImageModule,
-    FrontendSettingsUiFileImageModule,
+    FrontendSharedUiUserAvatarComponent,
   ],
   templateUrl: './frontend-sidebar.component.html',
   styleUrls: ['./frontend-sidebar.component.scss'],
