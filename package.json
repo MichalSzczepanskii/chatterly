@@ -5,7 +5,8 @@
   "scripts": {
     "test-all": "nx run-many --all --target=test --parrarell",
     "lint-all": "nx run-many --all --target=lint",
-    "format-write": "nx format:write"
+    "format-write": "nx format:write",
+    "start": "concurrently \"nx run api:serve-all\" \"nx run frontend-e2e:e2e\""
   },
   "private": true,
   "dependencies": {
