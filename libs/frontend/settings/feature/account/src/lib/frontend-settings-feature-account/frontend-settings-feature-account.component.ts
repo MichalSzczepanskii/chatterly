@@ -51,7 +51,6 @@ export class FrontendSettingsFeatureAccountComponent implements OnInit {
     this.authStore.select(selectUser).subscribe(user => {
       if (!user) return;
       this.user = user;
-      console.log(user);
       this.form = this.formBuilder.nonNullable.group({
         name: [user.name, [required, minLength(5)]],
         profileImage: [user?.profileImageFile ?? null],

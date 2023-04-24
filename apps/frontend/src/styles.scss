@@ -525,8 +525,18 @@ chatterly-auth-register {
   }
 }
 .profile-image {
+  display: block;
+  word-break: break-all;
+  overflow: hidden;
   width: 2.9rem;
   height: 2.9rem;
   border-radius: 100%;
-  border: 2px solid $main;
+  border: 2px solid $main
+}
+.profile-image.initials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  color: white;
 }
