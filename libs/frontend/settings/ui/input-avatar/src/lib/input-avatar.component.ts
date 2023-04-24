@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
 import {
@@ -9,11 +9,18 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/ui/file-image';
+import { User } from '@chatterly/shared/data-access';
+import { FrontendSharedUiUserAvatarComponent } from '@chatterly/frontend/shared/ui/user-avatar';
 
 @Component({
   selector: 'chatterly-input-avatar',
   standalone: true,
-  imports: [CommonModule, TranslocoModule, FrontendSettingsUiFileImageModule],
+  imports: [
+    CommonModule,
+    TranslocoModule,
+    FrontendSettingsUiFileImageModule,
+    FrontendSharedUiUserAvatarComponent,
+  ],
   template: `
     <input
       type="file"
@@ -24,12 +31,15 @@ import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/
       #imageUpload />
     <div class="button-wrapper">
       <img
-        [src]="
-          uploadedFile
-            ? (uploadedFile | fileImage | async)
-            : 'https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png'
+        *ngIf="
+          uploadedFile && (uploadedFile | fileImage | async) as vm;
+          else customAvatar
         "
+        [src]="vm"
         alt="profile image" />
+      <ng-template #customAvatar>
+        <chatterly-user-avatar [user]="user"></chatterly-user-avatar>
+      </ng-template>
       <button
         class="btn"
         type="button"
@@ -59,6 +69,7 @@ export class InputAvatarComponent implements ControlValueAccessor {
     maxFileSize: 1024 * 1024 * 2.5,
   };
   @ViewChild('imageUpload', { static: false }) imageUploadEl!: ElementRef;
+  @Input() user!: User;
   uploadedFile!: File;
   onChange!: (value: File) => void;
   onTouched!: () => void;
