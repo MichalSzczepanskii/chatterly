@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { debounceTime, distinctUntilChanged, Observable } from "rxjs";
-import { Store } from "@ngrx/store";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import {
   loadUsersSearch,
   selectUserSearchLoading,
   selectUserSearchUsers,
-  UserSearchState
-} from "@chatterly/frontend/home/data-access";
-import { User } from "@chatterly/shared/data-access";
+  UserSearchState,
+} from '@chatterly/frontend/home/data-access';
+import { User } from '@chatterly/shared/data-access';
 
 @Component({
   selector: 'chatterly-frontend-home-feature-home',

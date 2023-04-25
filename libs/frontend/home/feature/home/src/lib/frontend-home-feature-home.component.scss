@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 $padding-x: 1.4rem;
 :host {
   width: 100%;
@@ -25,16 +25,16 @@ $padding-x: 1.4rem;
         align-items: center;
         padding: 2.8rem calc($padding-x + 0.4rem);
 
-        .input-field, form {
+        .input-field,
+        form {
           width: 100%;
 
           input {
             border-radius: 3rem;
-            width: 100%
+            width: 100%;
           }
         }
       }
-
     }
 
     .contact-list {
@@ -96,7 +96,7 @@ $padding-x: 1.4rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        .message{
+        .message {
           > .wrapper {
             margin: 0.35rem 0;
             display: flex;
@@ -107,7 +107,7 @@ $padding-x: 1.4rem;
           }
           &.user {
             align-self: flex-end;
-            > .wrapper > .content  {
+            > .wrapper > .content {
               background-color: $main;
               color: white;
             }

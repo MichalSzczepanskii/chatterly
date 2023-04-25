@@ -426,7 +426,7 @@ input[type='submit'].btn {
 
 .btn-secondary {
   color: black;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   cursor: pointer;
   &:hover:not([disabled]) {
     background-color: #f4f4f4;
@@ -531,7 +531,7 @@ chatterly-auth-register {
   width: 2.9rem;
   height: 2.9rem;
   border-radius: 100%;
-  border: 2px solid $main
+  border: 2px solid $main;
 }
 .profile-image.initials {
   display: flex;

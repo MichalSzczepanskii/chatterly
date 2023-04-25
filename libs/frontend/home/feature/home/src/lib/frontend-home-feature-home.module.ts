@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FrontendHomeDataAccessModule } from '@chatterly/frontend/home/data-access';
 
 import { LoaderComponent } from '@chatterly/frontend/shared/ui/loader';
+import { ContactComponent } from '@chatterly/frontend/home/ui/contact';
 
 @NgModule({
   imports: [
