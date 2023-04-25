@@ -3,6 +3,12 @@ $padding-x: 1.4rem;
 :host {
   width: 100%;
 
+  .loader {
+    padding: 5rem 0;
+    display: flex;
+    justify-content: center;
+  }
+
   .home-container {
     height: 100vh;
     display: flex;
@@ -24,6 +30,7 @@ $padding-x: 1.4rem;
 
           input {
             border-radius: 3rem;
+            width: 100%
           }
         }
       }

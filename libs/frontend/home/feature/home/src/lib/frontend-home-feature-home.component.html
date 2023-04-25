@@ -3,48 +3,27 @@
     <header>
       <form>
         <div class="input-field">
-          <input type="text" placeholder="Search..." />
+          <form [formGroup]="searchForm">
+            <input
+              type="text"
+              placeholder="Search..."
+              data-cy="keywordField"
+              formControlName="keyword" />
+          </form>
         </div>
       </form>
     </header>
     <div class="contact-list">
-      <ng-container *ngFor="let n of [1, 2, 3, 4]">
-        <div class="contact-container" [class.active]="n === 2">
-          <div class="contact">
-            <img
-              class="profile-image"
-              src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
-              alt="profile-picture" />
-            <div class="details">
-              <div class="name">Chris Hemsworth</div>
-              <div class="last-message">Praesent at velit molestie leo</div>
-            </div>
-            <div class="time">1:10 PM</div>
-          </div>
+      <ng-container *ngIf="contactLoading | async; else contactList">
+        <div class="loader">
+          <chatterly-loader></chatterly-loader>
         </div>
       </ng-container>
-      <div class="contact-container">
-        <div class="contact">
-          <img
-            class="profile-image"
-            src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
-            alt="profile-picture" />
-          <div class="details">
-            <div class="name">Chris Hemsworth</div>
-          </div>
-        </div>
-      </div>
-      <div class="contact-container">
-        <div class="contact">
-          <img
-            class="profile-image"
-            src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"
-            alt="profile-picture" />
-          <div class="details">
-            <div class="name">Chris Hemsworth</div>
-          </div>
-        </div>
-      </div>
+      <ng-template #contactList>
+        <ng-container *ngFor="let contact of searchedUsers | async">
+          <chatterly-contact [user]="contact"></chatterly-contact>
+        </ng-container>
+      </ng-template>
     </div>
   </div>
   <div class="message-container">
