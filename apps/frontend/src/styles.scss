@@ -404,11 +404,32 @@ input[type='submit'].btn {
     cursor: pointer;
   }
 }
+.btn-round {
+  border: 0;
+  border-radius: 100rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  font-size: 1.3rem;
+}
 .btn-primary {
   color: white;
   background-color: $main;
+  cursor: pointer;
   &:hover:not([disabled]) {
     background-color: $main-hover;
+  }
+  &:disabled {
+    opacity: 0.85;
+    cursor: default;
+  }
+}
+
+.btn-secondary {
+  color: black;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  &:hover:not([disabled]) {
+    background-color: #f4f4f4;
   }
   &:disabled {
     opacity: 0.85;
@@ -502,4 +523,20 @@ chatterly-auth-register {
     gap: 0 0.5rem;
     justify-content: end;
   }
+}
+.profile-image {
+  display: block;
+  word-break: break-all;
+  overflow: hidden;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 100%;
+  border: 2px solid $main;
+}
+.profile-image.initials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  color: white;
 }

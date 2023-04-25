@@ -24,6 +24,14 @@ export class UserService {
     return await this.userRepository.findOneBy({ email });
   }
 
+  async findOneWithPasswordByEmail(email: string): Promise<User | null> {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.email like :email and user.isActive = true', { email })
+      .getOne();
+  }
+
   async createUser(dto: CreateUserDto) {
     const user = this.userRepository.create({
       ...dto,
@@ -51,5 +59,14 @@ export class UserService {
       },
       dto
     );
+  }
+
+  async getUsersByPartialName(name: string): Promise<User[]> {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.name like :name and user.isActive = true', {
+        name: `%${name}%`,
+      })
+      .getMany();
   }
 }

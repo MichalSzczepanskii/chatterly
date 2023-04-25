@@ -55,6 +55,15 @@
       "@chatterly/frontend/core/feature": [
         "libs/frontend/core/feature/src/index.ts"
       ],
+      "@chatterly/frontend/home/data-access": [
+        "libs/frontend/home/data-access/src/index.ts"
+      ],
+      "@chatterly/frontend/home/feature/home": [
+        "libs/frontend/home/feature/home/src/index.ts"
+      ],
+      "@chatterly/frontend/home/ui/contact": [
+        "libs/frontend/home/ui/contact/src/index.ts"
+      ],
       "@chatterly/frontend/settings/data-access": [
         "libs/frontend/settings/data-access/src/index.ts"
       ],
@@ -94,8 +103,14 @@
       "@chatterly/frontend/shared/ui/control-errors": [
         "libs/frontend/shared/ui/control-errors/src/index.ts"
       ],
+      "@chatterly/frontend/shared/ui/loader": [
+        "libs/frontend/shared/ui/loader/src/index.ts"
+      ],
       "@chatterly/frontend/shared/ui/tooltip": [
         "libs/frontend/shared/ui/tooltip/src/index.ts"
+      ],
+      "@chatterly/frontend/shared/ui/user-avatar": [
+        "libs/frontend/shared/ui/user-avatar/src/index.ts"
       ],
       "@chatterly/frontend/shared/utils": [
         "libs/frontend/shared/utils/src/index.ts"

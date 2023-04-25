@@ -5,7 +5,8 @@
   "scripts": {
     "test-all": "nx run-many --all --target=test --parrarell",
     "lint-all": "nx run-many --all --target=lint",
-    "format-write": "nx format:write"
+    "format-write": "nx format:write",
+    "start": "concurrently \"nx run api:serve-all\" \"nx run frontend-e2e:e2e\""
   },
   "private": true,
   "dependencies": {
@@ -17,6 +18,7 @@
     "@angular/platform-browser": "15.2.4",
     "@angular/platform-browser-dynamic": "15.2.4",
     "@angular/router": "15.2.4",
+    "@dicebear/collection": "^6.0.2",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
@@ -63,6 +65,7 @@
     "@angular/cli": "~15.2.0",
     "@angular/compiler-cli": "15.2.4",
     "@angular/language-service": "15.2.4",
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@ngrx/schematics": "15.3.0",
@@ -88,6 +91,7 @@
     "@types/passport-local": "^1.0.35",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
+    "concurrently": "^8.0.1",
     "cypress": "^12.2.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
@@ -105,7 +109,7 @@
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "ng-mocks": "^14.5.3",
+    "ng-mocks": "^14.10.0",
     "nx": "15.8.9",
     "prettier": "^2.6.2",
     "ts-jest": "29.0.5",

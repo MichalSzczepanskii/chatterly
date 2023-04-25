@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import * as AuthActions from './auth.actions';
 
-import { catchError, exhaustMap, map, mergeMap, of, tap } from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
@@ -87,17 +87,9 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthActions.userDataRefresh),
       exhaustMap(() => {
-        return this.authService.getMe().pipe(
-          mergeMap(user => {
-            if (!user?.profileImage) return of(user);
-            return this.userService.getProfileImage(user.profileImage).pipe(
-              map(profileImageFile => {
-                return { ...user, profileImageFile: profileImageFile };
-              })
-            );
-          }),
-          map(user => AuthActions.userDataRefreshSuccess({ user }))
-        );
+        return this.authService
+          .getMe()
+          .pipe(map(user => AuthActions.userDataRefreshSuccess({ user })));
       })
     );
   });

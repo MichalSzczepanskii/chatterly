@@ -36,6 +36,7 @@
           >{{ 'settings.account.profileImageField' | transloco }}
         </label>
         <chatterly-input-avatar
+          [user]="user"
           id="profileImage"
           data-cy="profileImageField"
           formControlName="profileImage"></chatterly-input-avatar>
