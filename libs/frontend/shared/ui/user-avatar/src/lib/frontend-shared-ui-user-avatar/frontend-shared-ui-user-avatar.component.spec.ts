@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FrontendSharedUiUserAvatarComponent } from './frontend-shared-ui-user-avatar.component';
+import { MockModule, MockProvider } from 'ng-mocks';
+import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/ui/file-image';
+import { UserService } from '@chatterly/frontend/shared/data-access';
 
 describe('FrontendSharedUiUserAvatarComponent', () => {
   let component: FrontendSharedUiUserAvatarComponent;
@@ -8,7 +11,11 @@ describe('FrontendSharedUiUserAvatarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FrontendSharedUiUserAvatarComponent],
+      imports: [
+        FrontendSharedUiUserAvatarComponent,
+        MockModule(FrontendSettingsUiFileImageModule),
+      ],
+      providers: [MockProvider(UserService)],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FrontendSharedUiUserAvatarComponent);

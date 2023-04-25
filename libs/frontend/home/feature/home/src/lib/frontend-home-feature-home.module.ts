@@ -5,7 +5,7 @@ import { frontendHomeFeatureHomeRoutes } from './lib.routes';
 import { FrontendHomeFeatureHomeComponent } from './frontend-home-feature-home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FrontendHomeDataAccessModule } from '@chatterly/frontend/home/data-access';
-import { ContactComponent } from '@chatterly/frontend/home/ui/contact';
+
 import { LoaderComponent } from '@chatterly/frontend/shared/ui/loader';
 
 @NgModule({

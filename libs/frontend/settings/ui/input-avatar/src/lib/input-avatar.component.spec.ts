@@ -9,6 +9,9 @@ import {
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { MockComponent, MockModule } from 'ng-mocks';
+import { FrontendSettingsUiFileImageModule } from '@chatterly/frontend/settings/ui/file-image';
+import { FrontendSharedUiUserAvatarComponent } from '@chatterly/frontend/shared/ui/user-avatar';
 
 describe('FrontendSettingsUiInputAvatarComponent', () => {
   let inputAvatarComponent: InputAvatarComponent;
@@ -35,6 +38,8 @@ describe('FrontendSettingsUiInputAvatarComponent', () => {
         InputAvatarComponent,
         ReactiveFormsModule,
         getTranslocoModule(),
+        MockModule(FrontendSettingsUiFileImageModule),
+        MockComponent(FrontendSharedUiUserAvatarComponent),
       ],
       declarations: [HostComponent],
     }).compileComponents();

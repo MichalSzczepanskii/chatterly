@@ -18,6 +18,8 @@ import {
 import { By } from '@angular/platform-browser';
 import { UserFactory } from '@chatterly/frontend/shared/spec-utils';
 import { LoaderComponent } from '@chatterly/frontend/shared/ui/loader';
+import { ContactComponent } from '@chatterly/frontend/home/ui/contact';
+import { MockComponent } from 'ng-mocks';
 
 describe('FrontendHomeFeatureHomeComponent', () => {
   let component: FrontendHomeFeatureHomeComponent;
@@ -28,7 +30,11 @@ describe('FrontendHomeFeatureHomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [FrontendHomeFeatureHomeComponent],
-      imports: [ReactiveFormsModule, LoaderComponent],
+      imports: [
+        ReactiveFormsModule,
+        MockComponent(LoaderComponent),
+        MockComponent(ContactComponent),
+      ],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
 
@@ -114,12 +120,14 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     store.overrideSelector(selectUserSearchUsers, mockUsers);
     fixture.detectChanges();
     const loader = fixture.debugElement.query(By.directive(LoaderComponent));
-    const contacts = fixture.debugElement.queryAll(By.css('chatterly-contact'));
+    const contacts = fixture.debugElement.queryAll(
+      By.directive(ContactComponent)
+    );
     expect(loader).toBeFalsy();
     expect(contacts.length).toEqual(5);
     contacts.forEach(contact => {
-      const username = contact.query(By.css('.name')).nativeElement.textContent;
-      expect(mockUsers).toContain(username);
+      const user = contact.componentInstance.user;
+      expect(mockUsers).toContain(user);
     });
   });
 });

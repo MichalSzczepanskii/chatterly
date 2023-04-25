@@ -6,7 +6,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { User } from '@chatterly/shared/data-access';
-import { UserFactory } from '../../../../shared/spec-utils/src/lib/factories/user-factory';
+import { UserFactory } from '@chatterly/frontend/shared/spec-utils';
 
 describe('UserSearchService', () => {
   const apiUrl = process.env['NX_API_URL'];

@@ -4,10 +4,10 @@ import { faker } from '@faker-js/faker';
 export class UserFactory {
   static create(user?: Partial<User>): User {
     return {
-      id: user.id ?? faker.datatype.number(),
-      email: user.email ?? faker.internet.email(),
-      name: user.name ?? faker.name.fullName(),
-      isActive: user.isActive ?? true,
+      id: user?.id ?? faker.datatype.number(),
+      email: user?.email ?? faker.internet.email(),
+      name: user?.name ?? faker.name.fullName(),
+      isActive: user?.isActive ?? true,
     };
   }
 

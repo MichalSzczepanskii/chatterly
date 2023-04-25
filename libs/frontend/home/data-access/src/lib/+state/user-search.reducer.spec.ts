@@ -1,11 +1,13 @@
+import { Action } from '@ngrx/store';
+
 import { initialState, reducer } from './user-search.reducer';
 import * as UserSearchActions from './user-search.actions';
-import { UserFactory } from '../../../../../shared/spec-utils/src/lib/factories/user-factory';
+import { UserFactory } from '@chatterly/frontend/shared/spec-utils';
 
 describe('UserSearch Reducer', () => {
   describe('an unknown action', () => {
     it('should return the previous state', () => {
-      const action = {} as any;
+      const action = {} as Action;
 
       const result = reducer(initialState, action);
 
