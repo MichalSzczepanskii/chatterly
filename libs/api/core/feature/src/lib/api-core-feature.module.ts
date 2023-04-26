@@ -6,6 +6,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ApiUsersFeatureModule } from '@chatterly/api/users/feature';
 import { ApiAuthFeatureModule } from '@chatterly/api/auth/feature';
 import { ApiSettingsFeatureModule } from '@chatterly/api/settings/feature';
+import { ApiConversationFeatureModule } from '@chatterly/api/conversation/feature';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ApiSettingsFeatureModule } from '@chatterly/api/settings/feature';
     ApiUsersFeatureModule,
     ApiAuthFeatureModule,
     ApiSettingsFeatureModule,
+    ApiConversationFeatureModule,
   ],
 })
 export class ApiCoreFeatureModule {}
