@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Conversation } from '../entities/conversation.entity';
 import { Repository } from 'typeorm';
 import { User } from '@chatterly/api/users/data-access';
+import { Message } from '../entities/message.entity';
 
 @Injectable()
 export class ConversationService {
@@ -33,5 +34,31 @@ export class ConversationService {
       (await this.getConversationByParticipants(participantsIds)) ??
       (await this.createNewConversation(participantsIds))
     );
+  }
+
+  getUserConversation(userId: number) {
+    return this.conversationRepository
+      .createQueryBuilder('conversation')
+      .innerJoinAndSelect('conversation.messages', 'message')
+      .innerJoinAndSelect('message.author', 'author')
+      .innerJoinAndSelect('conversation.users', 'users')
+      .where(qb => {
+        qb.where(
+          `message.id in` +
+            qb
+              .subQuery()
+              .select('MAX(message.id)')
+              .from(Message, 'message')
+              .groupBy('conversation_id, author.id')
+              .getSql()
+        );
+      })
+      .innerJoin(
+        'conversation.users',
+        'usersFilter',
+        'usersFilter.id = :userId',
+        { userId }
+      )
+      .getMany();
   }
 }

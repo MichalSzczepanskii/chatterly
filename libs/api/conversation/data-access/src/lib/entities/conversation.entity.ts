@@ -3,9 +3,11 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '@chatterly/api/users/data-access';
+import { Message } from './message.entity';
 
 @Entity()
 export class Conversation {
@@ -18,4 +20,7 @@ export class Conversation {
   @ManyToMany(() => User)
   @JoinTable()
   users: User[];
+
+  @OneToMany(() => Message, message => message.conversation)
+  messages: Message[];
 }

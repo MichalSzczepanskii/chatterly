@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   InternalServerErrorException,
   Param,
   Post,
@@ -11,7 +12,7 @@ import {
   MessageService,
 } from '@chatterly/api/conversation/data-access';
 
-@Controller('conversation')
+@Controller('conversations')
 export class ApiConversationFeatureController {
   constructor(
     private conversationService: ConversationService,
@@ -37,5 +38,11 @@ export class ApiConversationFeatureController {
       authorId: req.user.userId,
       content: body.message,
     });
+  }
+
+  @Get()
+  async getLoggedUserConversations(@Req() req) {
+    const { userId } = req.user;
+    return await this.conversationService.getUserConversation(userId);
   }
 }
