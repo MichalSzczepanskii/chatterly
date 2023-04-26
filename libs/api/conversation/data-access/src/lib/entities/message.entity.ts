@@ -31,6 +31,6 @@ export class Message {
   })
   createdAt: Date;
 
-  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  @CreateDateColumn({ type: 'timestamp', nullable: true, default: null })
   readAt: Date;
 }
