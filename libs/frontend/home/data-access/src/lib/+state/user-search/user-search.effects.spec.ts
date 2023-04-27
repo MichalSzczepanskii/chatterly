@@ -3,7 +3,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable, of, throwError } from 'rxjs';
 
 import { UserSearchEffects } from './user-search.effects';
-import { UserSearchService } from '../user-search.service';
+import { UserSearchService } from '../../services/user-search.service';
 import { UserFactory } from '@chatterly/frontend/shared/spec-utils';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import * as UserSearchActions from './user-search.actions';

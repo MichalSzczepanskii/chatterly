@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { catchError, exhaustMap, map } from 'rxjs/operators';
 import * as UserSearchActions from './user-search.actions';
-import { UserSearchService } from '../user-search.service';
+import { UserSearchService } from '../../services/user-search.service';
 import { of } from 'rxjs';
 
 @Injectable()

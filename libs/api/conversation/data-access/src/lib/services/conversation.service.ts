@@ -12,14 +12,28 @@ export class ConversationService {
     private conversationRepository: Repository<Conversation>
   ) {}
 
-  async getConversationByParticipants(participantIds: number[]) {
+  getConversationByParticipantsQueryBuilder(participantIds: number[]) {
     return this.conversationRepository
       .createQueryBuilder('conversation')
       .innerJoin('conversation.users', 'conversationUsers')
       .groupBy('conversation.id')
       .having('SUM((conversationUsers.id NOT IN (:...usersIds))::int) = 0', {
         usersIds: participantIds,
-      })
+      });
+  }
+
+  async getConversationByParticipants(participantIds: number[]) {
+    return this.getConversationByParticipantsQueryBuilder(
+      participantIds
+    ).getOne();
+  }
+
+  async getConversationByParticipantsWithRelations(participantIds: number[]) {
+    return this.getConversationByParticipantsQueryBuilder(participantIds)
+      .innerJoinAndSelect('conversation.messages', 'messages')
+      .innerJoinAndSelect('messages.author', 'messageAuthor')
+      .innerJoinAndSelect('conversation.users', 'users')
+      .groupBy('conversation.id, messages.id, messageAuthor.id, users.id')
       .getOne();
   }
 

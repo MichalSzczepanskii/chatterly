@@ -67,8 +67,14 @@
       "@chatterly/frontend/home/feature/home": [
         "libs/frontend/home/feature/home/src/index.ts"
       ],
+      "@chatterly/frontend/home/feature/message": [
+        "libs/frontend/home/feature/message/src/index.ts"
+      ],
       "@chatterly/frontend/home/ui/contact": [
         "libs/frontend/home/ui/contact/src/index.ts"
+      ],
+      "@chatterly/frontend/home/ui/message": [
+        "libs/frontend/home/ui/message/src/index.ts"
       ],
       "@chatterly/frontend/settings/data-access": [
         "libs/frontend/settings/data-access/src/index.ts"

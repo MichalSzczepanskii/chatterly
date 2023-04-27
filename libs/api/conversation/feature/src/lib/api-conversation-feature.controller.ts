@@ -40,6 +40,13 @@ export class ApiConversationFeatureController {
     });
   }
 
+  @Get('/user/:userId')
+  async getPrivateConversation(@Param() params, @Req() req) {
+    return await this.conversationService.getConversationByParticipantsWithRelations(
+      [req.user.userId, params.userId]
+    );
+  }
+
   @Get()
   async getLoggedUserConversations(@Req() req) {
     const { userId } = req.user;

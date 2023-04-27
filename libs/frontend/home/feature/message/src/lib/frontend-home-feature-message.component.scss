@@ -1,0 +1,83 @@
+@import "variables";
+$padding-x: 1.4rem;
+:host {
+  display: flex;
+  flex: 1;
+  .message-container {
+    padding: 0 $padding-x;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    > header {
+      font-weight: 600;
+      font-size: 1.3rem;
+      padding: 1.5rem 0;
+      width: 100%;
+      border-bottom: 1px solid $light-grey;
+    }
+    .messages {
+      flex: 1;
+      padding: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      .message {
+        > .wrapper {
+          margin: 0.35rem 0;
+          display: flex;
+          gap: 0 0.5rem;
+        }
+        img {
+          border-color: transparent;
+        }
+        &.user {
+          align-self: flex-end;
+          > .wrapper > .content {
+            background-color: $main;
+            color: white;
+          }
+        }
+        &.other > .wrapper > .content {
+          background-color: $secondary;
+        }
+        .content {
+          padding: 0.8rem 1.5rem;
+          border-radius: 1.2rem;
+          max-width: 25rem;
+          font-size: 0.95rem;
+        }
+        &.no-profile-image {
+          margin-left: 3.35rem;
+        }
+        &.other .time {
+          margin-left: 4rem;
+        }
+        &.user .time {
+          margin-left: 0.6rem;
+        }
+        .time {
+          font-size: 0.9rem;
+          color: $second-grey;
+        }
+      }
+    }
+    .control-panel {
+      border-top: 1px solid $light-grey;
+      padding: 1.5rem 0;
+      display: flex;
+      gap: 0 0.5rem;
+      align-items: center;
+      .message-input {
+        flex: 1;
+        > input {
+          width: 100%;
+          padding: 0.5rem 1rem;
+          border-radius: 1.5rem;
+          border: 0;
+        }
+      }
+      .message-submit {
+      }
+    }
+  }
+}

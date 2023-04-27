@@ -1,0 +1,59 @@
+<div class="message" [ngClass]="isWrittenByUser ? 'user' : 'other'">
+  <div class="time" *ngIf="showTime">
+    {{ message.createdAt | date : 'short' }}
+  </div>
+  <div class="wrapper">
+    <chatterly-user-avatar
+      [user]="message.author"
+      *ngIf="!isWrittenByUser"></chatterly-user-avatar>
+    <div class="content">
+      {{ message.text }}
+    </div>
+  </div>
+</div>
+<!--<div class="message user">-->
+<!--  <div class="wrapper">-->
+<!--    <div class="content">-->
+<!--      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi-->
+<!--      fringilla, ante vel.-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="message other">-->
+<!--  <div class="wrapper">-->
+<!--    <img-->
+<!--      class="profile-image"-->
+<!--      src="https://pbs.twimg.com/media/Dw4vhOaU0AwfOGj.png"-->
+<!--      alt="profile-picture" />-->
+<!--    <div class="content">-->
+<!--      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi-->
+<!--      fringilla, ante vel.-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="message other no-profile-image">-->
+<!--  <div class="wrapper">-->
+<!--    <div class="content">-->
+<!--      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi-->
+<!--      fringilla, ante vel.-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="message user">-->
+<!--  <div class="time">Yesterday 2:26 PM</div>-->
+<!--  <div class="wrapper">-->
+<!--    <div class="content">-->
+<!--      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi-->
+<!--      fringilla, ante vel.-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="message user">-->
+<!--  <div class="wrapper">-->
+<!--    <div class="content">-->
+<!--      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi-->
+<!--      fringilla, ante vel. Lorem ipsum dolor sit amet, consectetur-->
+<!--      adipiscing elit. Morbi fringilla, ante vel.-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
