@@ -21,6 +21,12 @@ $padding-x: 1.4rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      .loader {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+      }
       .message {
         > .wrapper {
           margin: 0.35rem 0;
@@ -61,7 +67,7 @@ $padding-x: 1.4rem;
         }
       }
     }
-    .control-panel {
+    .control-panel > form {
       border-top: 1px solid $light-grey;
       padding: 1.5rem 0;
       display: flex;

@@ -1,25 +1,37 @@
 <div class="message-container">
-  <header>{{ conversationName$ | async }}</header>
+  <header data-cy="conversationName">{{ conversationName$ | async }}</header>
   <div class="messages">
-    <!--    <pre>{{ conversation$ | async | json }}</pre>-->
-    <ng-container *ngIf="conversation$ | async as conversation">
-      <ng-container *ngIf="user$ | async as user">
-        <chatterly-message
-          *ngFor="let message of conversation.messages"
-          [user]="user"
-          [message]="message"></chatterly-message>
+    <ng-container *ngIf="(conversationLoading$ | async) === false; else loader">
+      <ng-container *ngIf="conversation$ | async as conversation">
+        <ng-container *ngIf="user$ | async as user">
+          <chatterly-message
+            *ngFor="let message of conversation.messages"
+            [user]="user"
+            [message]="message"></chatterly-message>
+        </ng-container>
       </ng-container>
     </ng-container>
+    <ng-template #loader>
+      <div class="loader">
+        <chatterly-loader></chatterly-loader>
+      </div>
+    </ng-template>
   </div>
   <div class="control-panel">
-    <button type="button" class="emote btn-round btn-secondary">
-      <i class="las la-laugh-beam"></i>
-    </button>
-    <div class="message-input">
-      <input type="text" placeholder="Your message here..." />
-    </div>
-    <button type="button" class="message-submit btn-round btn-primary">
-      <i class="lab la-telegram-plane"></i>
-    </button>
+    <form [formGroup]="form" (ngSubmit)="sendMessage()" data-cy="messageForm">
+      <button type="button" class="emote btn-round btn-secondary">
+        <i class="las la-laugh-beam"></i>
+      </button>
+      <div class="message-input">
+        <input
+          data-cy="messageField"
+          type="text"
+          placeholder="Your message here..."
+          formControlName="message" />
+      </div>
+      <button type="submit" class="message-submit btn-round btn-primary">
+        <i class="lab la-telegram-plane"></i>
+      </button>
+    </form>
   </div>
 </div>

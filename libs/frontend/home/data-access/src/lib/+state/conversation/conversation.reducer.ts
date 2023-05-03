@@ -23,6 +23,24 @@ export const conversationReducer = createReducer(
   })),
   on(
     ConversationActions.privateConversationSuccess,
-    (state, { conversation }) => ({ ...state, conversation, loading: false })
-  )
+    (state, { conversation }) => {
+      const messages = conversation?.messages
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
+        );
+      return {
+        ...state,
+        conversation: { ...conversation, messages: messages ?? [] },
+        loading: false,
+      };
+    }
+  ),
+  on(ConversationActions.sendPrivateMessage, (state, { message }) => {
+    const messages = [...(state.conversation?.messages ?? []), message];
+    const conversation = Object.assign({}, state.conversation);
+    conversation.messages = messages;
+    return { ...state, conversation };
+  })
 );

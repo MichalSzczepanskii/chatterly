@@ -1,12 +1,12 @@
 <div class="message" [ngClass]="isWrittenByUser ? 'user' : 'other'">
-  <div class="time" *ngIf="showTime">
+  <div class="time" *ngIf="showTime" data-cy="messageTime">
     {{ message.createdAt | date : 'short' }}
   </div>
   <div class="wrapper">
     <chatterly-user-avatar
       [user]="message.author"
       *ngIf="!isWrittenByUser"></chatterly-user-avatar>
-    <div class="content">
+    <div class="content" (click)="toggleTimeDisplay()" data-cy="messageContent">
       {{ message.text }}
     </div>
   </div>

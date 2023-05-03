@@ -26,7 +26,7 @@ describe('ConversationService', () => {
 
   describe('#getPrivateConversation', () => {
     it('should make a get request', () => {
-      const testData: Conversation = { id: 0, messages: [] };
+      const testData: Conversation = { id: 0, messages: [], users: [] };
       const userId = 0;
       service
         .getPrivateConversation(userId)

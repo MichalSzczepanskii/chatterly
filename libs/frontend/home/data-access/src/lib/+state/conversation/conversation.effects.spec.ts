@@ -43,6 +43,7 @@ describe('ConversationEffects', () => {
             text: 'test',
           },
         ],
+        users: UserFactory.createMany(2),
       };
       const userId = 0;
       jest

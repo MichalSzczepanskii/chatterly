@@ -15,4 +15,10 @@ export class ConversationService {
       `${this.apiUrl}/api/conversations/user/${userId}`
     );
   }
+
+  sendPrivateMessage(userId: number, text: string) {
+    return this.http.post(`${this.apiUrl}/api/conversations/user/${userId}`, {
+      message: text,
+    });
+  }
 }

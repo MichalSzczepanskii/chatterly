@@ -23,6 +23,21 @@ export class ConversationEffects {
     );
   });
 
+  sendPrivateMessage$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(ConversationActions.sendPrivateMessage),
+        exhaustMap(action =>
+          this.conversationService.sendPrivateMessage(
+            action.userId,
+            action.message.text
+          )
+        )
+      );
+    },
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private conversationService: ConversationService
