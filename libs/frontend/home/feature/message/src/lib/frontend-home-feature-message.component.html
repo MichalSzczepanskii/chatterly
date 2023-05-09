@@ -1,22 +1,22 @@
 <div class="message-container">
-  <header data-cy="conversationName">{{ conversationName$ | async }}</header>
-  <div class="messages">
-    <ng-container *ngIf="(conversationLoading$ | async) === false; else loader">
-      <ng-container *ngIf="conversation$ | async as conversation">
+  <ng-container *ngIf="(conversationLoading$ | async) === false; else loader">
+    <ng-container *ngIf="conversation$ | async as conversation">
+      <header data-cy="conversationName">{{ conversation.name }}</header>
+      <div class="messages">
         <ng-container *ngIf="user$ | async as user">
           <chatterly-message
             *ngFor="let message of conversation.messages"
             [user]="user"
             [message]="message"></chatterly-message>
         </ng-container>
-      </ng-container>
-    </ng-container>
-    <ng-template #loader>
-      <div class="loader">
-        <chatterly-loader></chatterly-loader>
       </div>
-    </ng-template>
-  </div>
+    </ng-container>
+  </ng-container>
+  <ng-template #loader>
+    <div class="loader">
+      <chatterly-loader></chatterly-loader>
+    </div>
+  </ng-template>
   <div class="control-panel">
     <form [formGroup]="form" (ngSubmit)="sendMessage()" data-cy="messageForm">
       <button type="button" class="emote btn-round btn-secondary">

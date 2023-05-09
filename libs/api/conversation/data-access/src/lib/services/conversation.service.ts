@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Conversation } from '../entities/conversation.entity';
 import { Repository } from 'typeorm';
-import { User } from '@chatterly/api/users/data-access';
+import { User, UserService } from '@chatterly/api/users/data-access';
 import { Message } from '../entities/message.entity';
 
 @Injectable()
 export class ConversationService {
   constructor(
     @InjectRepository(Conversation)
-    private conversationRepository: Repository<Conversation>
+    private conversationRepository: Repository<Conversation>,
+    private userService: UserService
   ) {}
 
   getConversationByParticipantsQueryBuilder(participantIds: number[]) {
@@ -35,6 +36,14 @@ export class ConversationService {
       .innerJoinAndSelect('conversation.users', 'users')
       .groupBy('conversation.id, messages.id, messageAuthor.id, users.id')
       .getOne();
+  }
+
+  async getUndefinedConversationParticipants(participantIds: number[]) {
+    return await Promise.all(
+      participantIds.map(
+        async participantId => await this.userService.getUserById(participantId)
+      )
+    );
   }
 
   async createNewConversation(participantIds: number[]) {

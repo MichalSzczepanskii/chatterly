@@ -131,11 +131,11 @@ describe('FrontendHomeFeatureMessageComponent', () => {
       jest.spyOn(mockConversationStore, 'dispatch');
       fixture.detectChanges();
       expect(mockConversationStore.dispatch).toHaveBeenCalledWith(
-        loadPrivateConversation({ userId: userMock.id })
+        loadPrivateConversation()
       );
     });
 
-    it('should display user name as conversation name if there are messages', () => {
+    it('should display user name as conversation name', () => {
       const message = MessageFactory.create({ author: userMock });
       mockConversationSelector.setResult({
         id: 0,
@@ -148,10 +148,9 @@ describe('FrontendHomeFeatureMessageComponent', () => {
       expect(header.nativeElement.textContent).toEqual(userMock.name);
     });
 
-    //TODO: test for displaying user name if there is no conversation started
-
     it('should dispatch sendPrivateMessage if form is valid', () => {
       jest.spyOn(mockConversationStore, 'dispatch');
+      jest.useFakeTimers().setSystemTime(new Date('2023-01-01'));
       fixture.detectChanges();
       const message = 'test message';
       setFieldValue(fixture, 'messageField', message);
@@ -161,7 +160,7 @@ describe('FrontendHomeFeatureMessageComponent', () => {
           message: {
             text: message,
             author: userMock,
-            createdAt: new Date(),
+            createdAt: new Date('2023-01-01'),
           },
           userId: userMock.id,
         })

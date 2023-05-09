@@ -69,4 +69,8 @@ export class UserService {
       })
       .getMany();
   }
+
+  async getUserById(id) {
+    return await this.userRepository.findOneBy({ id });
+  }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { combineLatest, map, Observable, of, switchMap, tap } from 'rxjs';
-import { ConversationType } from '@chatterly/frontend/shared/constants';
+import { ActivatedRoute, Params } from '@angular/router';
+import { combineLatest, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   ConversationState,
@@ -25,6 +24,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { LoaderComponent } from '@chatterly/frontend/shared/ui/loader';
+import { RouterReducerState } from '@ngrx/router-store';
+import { selectRouteParams } from '@chatterly/frontend/ngrx-routing/data-access';
 
 @Component({
   selector: 'chatterly-frontend-home-feature-message',
@@ -41,60 +42,25 @@ import { LoaderComponent } from '@chatterly/frontend/shared/ui/loader';
 })
 export class FrontendHomeFeatureMessageComponent implements OnInit {
   conversation$!: Observable<Conversation | null>;
-  conversationType$!: Observable<ConversationType>;
   conversationName$!: Observable<string | undefined>;
   conversationLoading$?: Observable<boolean>;
   user$!: Observable<(User & { profileImageFile?: File }) | null>;
   form!: FormGroup;
+  params!: Observable<Params>;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<ConversationState>,
     private authStore: Store<AuthState>,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private routerStore: Store<RouterReducerState>
   ) {}
 
   ngOnInit() {
-    this.conversationType$ = this.route.params.pipe(
-      map(params => params['type'] as ConversationType)
-    );
-
     this.conversationLoading$ = this.store.select(selectConversationLoading);
-    this.route.paramMap
-      .pipe(
-        tap(params => {
-          const type = params.get('type') as ConversationType;
-          const id = params.get('id');
-          if (!type || !id) throw Error('error');
-          if (type === ConversationType.PRIVATE)
-            this.store.dispatch(loadPrivateConversation({ userId: +id }));
-        })
-      )
-      .subscribe();
-
+    this.store.dispatch(loadPrivateConversation());
     this.conversation$ = this.store.select(selectConversation);
-
-    this.conversationName$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        const type = params.get('type') as ConversationType;
-        if (!type) throw Error('error');
-        return this.store.select(selectConversation).pipe(
-          switchMap(conversation => {
-            if (type === ConversationType.GROUP) return of(conversation?.name);
-            else
-              return this.user$.pipe(
-                map(
-                  loggedUser =>
-                    conversation?.users.filter(
-                      user => user.id !== loggedUser?.id
-                    )[0].name
-                )
-              );
-          })
-        );
-      })
-    );
-
+    this.params = this.routerStore.select(selectRouteParams);
     this.user$ = this.authStore.select(selectUser);
 
     this.form = this.formBuilder.group({
@@ -104,20 +70,16 @@ export class FrontendHomeFeatureMessageComponent implements OnInit {
 
   sendMessage() {
     if (this.form.invalid) return;
-    combineLatest([this.user$, this.route.paramMap]).subscribe(
-      ([user, params]) => {
-        const receiverId = params.get('id');
-        if (!user || !receiverId) return;
-        const message: Message = {
-          text: this.form.get('message')?.value,
-          author: user,
-          createdAt: new Date(),
-        };
-        this.store.dispatch(
-          sendPrivateMessage({ message, userId: +receiverId })
-        );
-        this.form.reset();
-      }
-    );
+    combineLatest([this.user$, this.params]).subscribe(([user, params]) => {
+      const receiverId = params['id'];
+      if (!user || !receiverId) return;
+      const message: Message = {
+        text: this.form.get('message')?.value,
+        author: user,
+        createdAt: new Date(),
+      };
+      this.store.dispatch(sendPrivateMessage({ message, userId: +receiverId }));
+      this.form.reset();
+    });
   }
 }

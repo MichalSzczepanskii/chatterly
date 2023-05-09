@@ -48,7 +48,7 @@ describe('Conversation Reducer', () => {
       });
       const previousState = conversationReducer(
         initialConversationState,
-        ConversationActions.loadPrivateConversation({ userId: 0 })
+        ConversationActions.loadPrivateConversation()
       );
       const result = conversationReducer(previousState, action);
       expect(result.conversation).toEqual(conversation);
@@ -64,16 +64,20 @@ describe('Conversation Reducer', () => {
         author: UserFactory.create(),
         createdAt: new Date(),
       };
+      const user = UserFactory.create();
 
       const previousAction = ConversationActions.privateConversationSuccess({
         conversation,
       });
       const initialState = conversationReducer(
         initialConversationState,
-        ConversationActions.loadPrivateConversation({ userId: 0 })
+        ConversationActions.loadPrivateConversation()
       );
       const previousState = conversationReducer(initialState, previousAction);
-      const action = ConversationActions.sendPrivateMessage({ message });
+      const action = ConversationActions.sendPrivateMessage({
+        message,
+        userId: user.id,
+      });
       const result = conversationReducer(previousState, action);
       expect(result.conversation.messages).toContain(message);
       conversation.messages.map(message =>

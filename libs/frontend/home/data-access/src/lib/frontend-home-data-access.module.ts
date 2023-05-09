@@ -6,6 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserSearchEffects } from './+state/user-search/user-search.effects';
 import * as fromConversation from './+state/conversation/conversation.reducer';
 import { ConversationEffects } from './+state/conversation/conversation.effects';
+import { FrontendSharedDataAccessModule } from '@chatterly/frontend/shared/data-access';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ConversationEffects } from './+state/conversation/conversation.effects'
       fromConversation.conversationFeatureKey,
       fromConversation.conversationReducer
     ),
+    FrontendSharedDataAccessModule,
   ],
 })
 export class FrontendHomeDataAccessModule {}

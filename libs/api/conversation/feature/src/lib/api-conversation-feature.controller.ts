@@ -11,6 +11,7 @@ import {
   ConversationService,
   MessageService,
 } from '@chatterly/api/conversation/data-access';
+import { Conversation } from '@chatterly/shared/data-access';
 
 @Controller('conversations')
 export class ApiConversationFeatureController {
@@ -41,10 +42,29 @@ export class ApiConversationFeatureController {
   }
 
   @Get('/user/:userId')
-  async getPrivateConversation(@Param() params, @Req() req) {
-    return await this.conversationService.getConversationByParticipantsWithRelations(
-      [req.user.userId, params.userId]
-    );
+  async getPrivateConversation(
+    @Param() params,
+    @Req() req
+  ): Promise<Conversation> {
+    const conversation =
+      await this.conversationService.getConversationByParticipantsWithRelations(
+        [req.user.userId, params.userId]
+      );
+    if (conversation) {
+      const user = conversation.users.filter(
+        user => user.id !== req.user.userId
+      );
+      return { ...conversation, name: user[0].name };
+    }
+    const participants =
+      await this.conversationService.getUndefinedConversationParticipants([
+        params.userId,
+      ]);
+    return {
+      messages: [],
+      users: participants,
+      name: participants[0].name,
+    };
   }
 
   @Get()

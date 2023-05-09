@@ -2,8 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Conversation, Message } from '@chatterly/shared/data-access';
 
 export const loadPrivateConversation = createAction(
-  '[Conversation] Load Private Conversation',
-  props<{ userId: number }>()
+  '[Conversation] Load Private Conversation'
 );
 
 export const privateConversationSuccess = createAction(
