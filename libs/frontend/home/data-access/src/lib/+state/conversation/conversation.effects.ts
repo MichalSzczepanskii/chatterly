@@ -16,7 +16,7 @@ export class ConversationEffects {
       switchMap(() => this.store.select(selectRouteParams)),
       exhaustMap(params =>
         this.conversationService
-          .getPrivateConversation(params['id'])
+          .getPrivateConversation(+params['id'])
           .pipe(
             map(conversation =>
               ConversationActions.privateConversationSuccess({ conversation })

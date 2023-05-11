@@ -32,7 +32,7 @@ describe('Conversation Reducer', () => {
 
   describe('LoadPrivateConversation action', () => {
     it('should set loading prop to true', () => {
-      const action = ConversationActions.loadPrivateConversation({ userId: 0 });
+      const action = ConversationActions.loadPrivateConversation();
       const result = conversationReducer(initialConversationState, action);
       expect(result.conversation).toEqual(
         initialConversationState.conversation

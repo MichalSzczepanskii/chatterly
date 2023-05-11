@@ -7,12 +7,24 @@ import { ConversationEffects } from './conversation.effects';
 import { MockProvider } from 'ng-mocks';
 import { ConversationService } from '../../services/conversation.service';
 import { Conversation } from '@chatterly/shared/data-access';
-import { UserFactory } from '@chatterly/frontend/shared/spec-utils';
+import {
+  MessageFactory,
+  ParamsFactory,
+  UserFactory,
+} from '@chatterly/frontend/shared/spec-utils';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { RouterReducerState } from '@ngrx/router-store';
+import { MemoizedSelector } from '@ngrx/store';
+import { Params } from '@angular/router';
+import { selectRouteParams } from '@chatterly/frontend/ngrx-routing/data-access';
+import { ConversationType } from '@chatterly/frontend/shared/constants';
 
 describe('ConversationEffects', () => {
   let actions$: Observable<any>;
   let effects: ConversationEffects;
   let conversationService: ConversationService;
+  let routerStore: MockStore<RouterReducerState>;
+  let selectParams: MemoizedSelector<RouterReducerState, Params>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,11 +32,20 @@ describe('ConversationEffects', () => {
         ConversationEffects,
         provideMockActions(() => actions$),
         MockProvider(ConversationService),
+        provideMockStore(),
       ],
     });
 
     effects = TestBed.inject(ConversationEffects);
     conversationService = TestBed.inject(ConversationService);
+    routerStore = TestBed.inject(MockStore<RouterReducerState>);
+    selectParams = routerStore.overrideSelector(
+      selectRouteParams,
+      ParamsFactory.create({
+        id: '1',
+        type: ConversationType.PRIVATE,
+      })
+    );
   });
 
   it('should be created', () => {
@@ -49,10 +70,15 @@ describe('ConversationEffects', () => {
       jest
         .spyOn(conversationService, 'getPrivateConversation')
         .mockReturnValue(of(conversation));
+      selectParams.setResult(
+        ParamsFactory.create({
+          id: userId.toString(),
+          type: ConversationType.PRIVATE,
+        })
+      );
 
       actions$ = of({
         type: ConversationActions.loadPrivateConversation.type,
-        userId,
       });
 
       effects.loadConversation$.subscribe(action => {
@@ -65,6 +91,26 @@ describe('ConversationEffects', () => {
         });
         done();
       });
+    });
+  });
+
+  describe('SendPrivateMessage', () => {
+    it('should call sendPrivateMessage from ConversationService', () => {
+      jest.spyOn(conversationService, 'sendPrivateMessage');
+      const userId = 0;
+      const message = MessageFactory.create();
+
+      actions$ = of({
+        type: ConversationActions.sendPrivateMessage.type,
+        userId,
+        message,
+      });
+
+      effects.sendPrivateMessage$.subscribe();
+      expect(conversationService.sendPrivateMessage).toHaveBeenCalledWith(
+        userId,
+        message.text
+      );
     });
   });
 });

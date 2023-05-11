@@ -25,25 +25,27 @@ import { Conversation, User } from '@chatterly/shared/data-access';
 import {
   findEl,
   MessageFactory,
-  ParamMapFactory,
+  ParamsFactory,
   setFieldValue,
   UserFactory,
 } from '@chatterly/frontend/shared/spec-utils';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { of } from 'rxjs';
+import { Params } from '@angular/router';
+import { RouterReducerState } from '@ngrx/router-store';
+import { selectRouteParams } from '@chatterly/frontend/ngrx-routing/data-access';
 
 describe('FrontendHomeFeatureMessageComponent', () => {
   let component: FrontendHomeFeatureMessageComponent;
   let fixture: ComponentFixture<FrontendHomeFeatureMessageComponent>;
   let mockConversationStore: MockStore<ConversationState>;
   let mockAuthStore: MockStore<AuthState>;
+  let mockRouteStore: MockStore<RouterReducerState>;
   let mockConversationSelector: MemoizedSelector<
     ConversationState,
     Conversation
   >;
   let mockLoadingSelector: MemoizedSelector<ConversationState, boolean>;
   let mockAuthUserSelector: MemoizedSelector<AuthState, User>;
-  let route: ActivatedRoute;
+  let mockParamsSelector: MemoizedSelector<RouterReducerState, Params>;
 
   const userMock = UserFactory.create();
 
@@ -64,7 +66,7 @@ describe('FrontendHomeFeatureMessageComponent', () => {
     component = fixture.componentInstance;
     mockConversationStore = TestBed.inject(MockStore<ConversationState>);
     mockAuthStore = TestBed.inject(MockStore<AuthState>);
-    route = TestBed.inject(ActivatedRoute);
+    mockRouteStore = TestBed.inject(MockStore<RouterReducerState>);
 
     mockLoadingSelector = mockConversationStore.overrideSelector(
       selectConversationLoading,
@@ -79,6 +81,13 @@ describe('FrontendHomeFeatureMessageComponent', () => {
       }
     );
     mockAuthUserSelector = mockAuthStore.overrideSelector(selectUser, userMock);
+    mockParamsSelector = mockRouteStore.overrideSelector(
+      selectRouteParams,
+      ParamsFactory.create({
+        type: 'private',
+        id: userMock.id.toString(),
+      })
+    );
   });
 
   it('should create', () => {
@@ -118,13 +127,13 @@ describe('FrontendHomeFeatureMessageComponent', () => {
   });
 
   describe('Conversation type - PRIVATE', () => {
-    const params: ParamMap = ParamMapFactory.create({
+    const params: Params = ParamsFactory.create({
       type: 'private',
       id: userMock.id.toString(),
     });
 
     beforeEach(() => {
-      jest.spyOn(route, 'paramMap', 'get').mockReturnValue(of(params));
+      mockParamsSelector.setResult(params);
     });
 
     it('should dispatch loadPrivateConversation', () => {
@@ -141,6 +150,7 @@ describe('FrontendHomeFeatureMessageComponent', () => {
         id: 0,
         users: [userMock],
         messages: [message],
+        name: userMock.name,
       });
       mockAuthUserSelector.setResult(UserFactory.create());
       fixture.detectChanges();
