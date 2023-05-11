@@ -1,0 +1,48 @@
+@import 'variables';
+:host {
+  display: flex;
+  flex-direction: column;
+  .message {
+    > .wrapper {
+      margin: 0.35rem 0;
+      display: flex;
+      gap: 0 0.5rem;
+    }
+    img {
+      border-color: transparent;
+    }
+    &.user {
+      align-self: flex-end;
+      > .wrapper > .content {
+        background-color: $main;
+        color: white;
+      }
+      > .wrapper {
+        display: flex;
+        justify-content: end;
+      }
+    }
+    &.other > .wrapper > .content {
+      background-color: $secondary;
+    }
+    .content {
+      padding: 0.8rem 1.5rem;
+      border-radius: 1.2rem;
+      max-width: 25rem;
+      font-size: 0.95rem;
+    }
+    &.no-profile-image {
+      margin-left: 3.35rem;
+    }
+    &.other .time {
+      margin-left: 4rem;
+    }
+    &.user .time {
+      margin-left: 0.6rem;
+    }
+    .time {
+      font-size: 0.9rem;
+      color: $second-grey;
+    }
+  }
+}

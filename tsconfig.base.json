@@ -21,6 +21,12 @@
       ],
       "@chatterly/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
       "@chatterly/api/auth/utils": ["libs/api/auth/utils/src/index.ts"],
+      "@chatterly/api/conversation/data-access": [
+        "libs/api/conversation/data-access/src/index.ts"
+      ],
+      "@chatterly/api/conversation/feature": [
+        "libs/api/conversation/feature/src/index.ts"
+      ],
       "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
       "@chatterly/api/settings/data-access": [
         "libs/api/settings/data-access/src/index.ts"
@@ -61,8 +67,17 @@
       "@chatterly/frontend/home/feature/home": [
         "libs/frontend/home/feature/home/src/index.ts"
       ],
+      "@chatterly/frontend/home/feature/message": [
+        "libs/frontend/home/feature/message/src/index.ts"
+      ],
       "@chatterly/frontend/home/ui/contact": [
         "libs/frontend/home/ui/contact/src/index.ts"
+      ],
+      "@chatterly/frontend/home/ui/message": [
+        "libs/frontend/home/ui/message/src/index.ts"
+      ],
+      "@chatterly/frontend/ngrx-routing/data-access": [
+        "libs/frontend/ngrx-routing/data-access/src/index.ts"
       ],
       "@chatterly/frontend/settings/data-access": [
         "libs/frontend/settings/data-access/src/index.ts"
@@ -126,6 +141,9 @@
       ],
       "@chatterly/frontend/sidebar/feature/sidebar": [
         "libs/frontend/sidebar/feature/sidebar/src/index.ts"
+      ],
+      "@chatterly/frontend/user/data-access": [
+        "libs/frontend/user/data-access/src/index.ts"
       ],
       "@chatterly/shared/data-access": ["libs/shared/data-access/src/index.ts"]
     }

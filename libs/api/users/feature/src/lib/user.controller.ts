@@ -55,4 +55,9 @@ export class UserController {
   getUsersByPartialName(@Param('name') name: string) {
     return this.userService.getUsersByPartialName(name);
   }
+
+  @Get(':id')
+  async getUserInfo(@Param() params) {
+    return await this.userService.getUserById(params.id);
+  }
 }
