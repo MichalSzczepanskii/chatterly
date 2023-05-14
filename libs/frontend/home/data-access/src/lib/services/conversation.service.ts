@@ -21,4 +21,8 @@ export class ConversationService {
       message: text,
     });
   }
+
+  getConversations() {
+    return this.http.get<Conversation[]>(`${this.apiUrl}/api/conversations`);
+  }
 }

@@ -78,6 +78,7 @@ export class FrontendHomeFeatureMessageComponent implements OnInit {
         author: user,
         createdAt: new Date(),
       };
+      console.log(message.createdAt);
       this.store.dispatch(sendPrivateMessage({ message, userId: +receiverId }));
       this.form.reset();
     });

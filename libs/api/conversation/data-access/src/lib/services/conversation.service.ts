@@ -4,13 +4,15 @@ import { Conversation } from '../entities/conversation.entity';
 import { Repository } from 'typeorm';
 import { User, UserService } from '@chatterly/api/users/data-access';
 import { Message } from '../entities/message.entity';
+import { MessageService } from './message.service';
 
 @Injectable()
 export class ConversationService {
   constructor(
     @InjectRepository(Conversation)
     private conversationRepository: Repository<Conversation>,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) {}
 
   getConversationByParticipantsQueryBuilder(participantIds: number[]) {
