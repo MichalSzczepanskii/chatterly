@@ -1,4 +1,4 @@
-import { initialState, reducer } from './contact.reducer';
+import { contactReducer, initialContactState } from './contact.reducer';
 import * as ContactActions from './contact.actions';
 import { ConversationFactory } from '@chatterly/frontend/shared/spec-utils';
 import { ApiError } from '@chatterly/shared/data-access';
@@ -8,17 +8,20 @@ describe('Contact Reducer', () => {
     it('should return the previous state', () => {
       const action = {} as any;
 
-      const result = reducer(initialState, action);
+      const result = contactReducer(initialContactState, action);
 
-      expect(result).toBe(initialState);
+      expect(result).toBe(initialContactState);
     });
   });
 
   describe('loadContacts action', () => {
     it('should set loading to true', () => {
-      const result = reducer(initialState, ContactActions.loadContacts);
+      const result = contactReducer(
+        initialContactState,
+        ContactActions.loadContacts
+      );
       const expectedState = {
-        ...initialState,
+        ...initialContactState,
         loading: true,
       };
       expect(result).toEqual(expectedState);
@@ -31,21 +34,27 @@ describe('Contact Reducer', () => {
     it('should set loading to false and set contacts with specified contacts', () => {
       const action = ContactActions.loadContactsSuccess({ conversations });
       const expectedState = {
-        ...initialState,
+        ...initialContactState,
         contacts: conversations,
       };
-      const result = reducer({ ...initialState, loading: true }, action);
+      const result = contactReducer(
+        { ...initialContactState, loading: true },
+        action
+      );
       expect(result).toEqual(expectedState);
     });
 
     it('should clear error property', () => {
       const action = ContactActions.loadContactsSuccess({ conversations });
       const expectedState = {
-        ...initialState,
+        ...initialContactState,
         contacts: conversations,
         error: null,
       };
-      const result = reducer({ ...initialState, error: 'test' }, action);
+      const result = contactReducer(
+        { ...initialContactState, error: 'test' },
+        action
+      );
       expect(result).toEqual(expectedState);
     });
   });
@@ -60,11 +69,14 @@ describe('Contact Reducer', () => {
       };
       const action = ContactActions.loadContactsFailure({ error });
       const expectedState = {
-        ...initialState,
+        ...initialContactState,
         error: error.error.message,
         loading: false,
       };
-      const result = reducer({ ...initialState, loading: true }, action);
+      const result = contactReducer(
+        { ...initialContactState, loading: true },
+        action
+      );
       expect(result).toEqual(expectedState);
     });
 
@@ -72,10 +84,10 @@ describe('Contact Reducer', () => {
       const error: ApiError = { error: { statusCode: 404 } };
       const action = ContactActions.loadContactsFailure({ error });
       const expectedState = {
-        ...initialState,
+        ...initialContactState,
         error: 'error',
       };
-      const result = reducer(initialState, action);
+      const result = contactReducer(initialContactState, action);
       expect(result).toEqual(expectedState);
     });
   });
