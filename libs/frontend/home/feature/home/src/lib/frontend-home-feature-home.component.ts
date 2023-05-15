@@ -20,6 +20,7 @@ import {
 } from '@chatterly/frontend/home/data-access';
 import { Conversation, User } from '@chatterly/shared/data-access';
 import { AuthState, selectUser } from '@chatterly/frontend/shared/data-access';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'chatterly-frontend-home-feature-home',
@@ -63,16 +64,30 @@ export class FrontendHomeFeatureHomeComponent implements OnInit {
       switchMap(user =>
         this.contactStore.select(selectContacts).pipe(
           map(contacts =>
-            contacts.map(contact => {
-              const contactsCopy = Object.assign({}, contact);
-              contactsCopy.users = contactsCopy.users.filter(
-                participant => participant.id !== user?.id
-              );
-              return contactsCopy;
-            })
-          )
+            this.filterOutLoggedUserFromConversations(contacts, user)
+          ),
+          map(this.sortConversationsFromNewest)
         )
       )
+    );
+  }
+
+  private filterOutLoggedUserFromConversations(
+    contacts: Conversation[],
+    user: User | null
+  ) {
+    return contacts.map(contact => {
+      const contactsCopy = Object.assign({}, contact);
+      contactsCopy.users = contactsCopy.users.filter(
+        participant => participant.id !== user?.id
+      );
+      return contactsCopy;
+    });
+  }
+
+  private sortConversationsFromNewest(contacts: Conversation[]) {
+    return contacts.sort((a, b) =>
+      dayjs(b.messages[0].createdAt).diff(dayjs(a.messages[0].createdAt))
     );
   }
 }

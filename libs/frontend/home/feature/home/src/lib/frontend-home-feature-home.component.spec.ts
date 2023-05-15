@@ -23,6 +23,7 @@ import {
 import { By } from '@angular/platform-browser';
 import {
   ConversationFactory,
+  MessageFactory,
   UserFactory,
 } from '@chatterly/frontend/shared/spec-utils';
 import { LoaderComponent } from '@chatterly/frontend/shared/ui/loader';
@@ -30,6 +31,7 @@ import { ContactComponent } from '@chatterly/frontend/home/ui/contact';
 import { MockComponent, MockModule } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthState, selectUser } from '@chatterly/frontend/shared/data-access';
+import * as dayjs from 'dayjs';
 
 describe('FrontendHomeFeatureHomeComponent', () => {
   let component: FrontendHomeFeatureHomeComponent;
@@ -167,8 +169,18 @@ describe('FrontendHomeFeatureHomeComponent', () => {
   });
 
   it('should display contacts when loaded', () => {
-    const contactsCount = 5;
-    const conversations = ConversationFactory.createMany(contactsCount);
+    const sortedDates = [
+      '2023-05-15 11:00',
+      '2023-05-14 11:00',
+      '2023-05-13 11:00',
+      '2023-05-12 11:00',
+      '2023-05-12 10:00',
+    ];
+    const conversations = sortedDates.map(el =>
+      ConversationFactory.create({
+        messages: [MessageFactory.create({ createdAt: dayjs(el).toDate() })],
+      })
+    );
     userSearchStore.overrideSelector(selectUserSearchLoading, false);
     contactStore.overrideSelector(selectContactsLoading, false);
     contactStore.overrideSelector(selectContacts, conversations);
@@ -179,7 +191,7 @@ describe('FrontendHomeFeatureHomeComponent', () => {
       By.directive(ContactComponent)
     );
     expect(loader).toBeFalsy();
-    expect(contacts.length).toEqual(contactsCount);
+    expect(contacts.length).toEqual(sortedDates.length);
     contacts.forEach((contact, index) => {
       const user = contact.componentInstance.user;
       const message = contact.componentInstance.lastMessage;
@@ -202,9 +214,41 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     fixture.detectChanges();
     component.contacts$.subscribe(contacts => {
       for (const contact of contacts) {
-        console.log(contact.users);
         expect(contact.users).not.toContain(loggedUser);
       }
+      done();
+    });
+  });
+
+  it('should sort contacts by last message createdAt field', done => {
+    const dates = [
+      '2023-05-13 11:00',
+      '2023-05-14 11:00',
+      '2023-05-15 11:00',
+      '2023-05-12 10:00',
+      '2023-05-12 11:00',
+    ];
+    const sortedDates = [
+      '2023-05-15 11:00',
+      '2023-05-14 11:00',
+      '2023-05-13 11:00',
+      '2023-05-12 11:00',
+      '2023-05-12 10:00',
+    ];
+    const conversations = dates.map(el =>
+      ConversationFactory.create({
+        messages: [MessageFactory.create({ createdAt: dayjs(el).toDate() })],
+      })
+    );
+    contactStore.overrideSelector(selectContacts, conversations);
+    authStore.overrideSelector(selectUser, UserFactory.create());
+    fixture.detectChanges();
+    component.contacts$.subscribe(contacts => {
+      contacts.forEach((contact, index) => {
+        expect(contact.messages[0].createdAt).toEqual(
+          dayjs(sortedDates[index]).toDate()
+        );
+      });
       done();
     });
   });
