@@ -24,4 +24,11 @@ export class MessageService {
     message.text = body.content;
     return this.messageRepository.save(message);
   }
+
+  getLatestMessageQueryBuilder() {
+    return this.messageRepository
+      .createQueryBuilder('message')
+      .orderBy('message.createdAt', 'DESC')
+      .limit(1);
+  }
 }

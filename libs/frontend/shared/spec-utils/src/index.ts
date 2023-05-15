@@ -6,3 +6,5 @@ export * from './lib/factories/user-factory';
 export * from './lib/factories/message-factory';
 export * from './lib/factories/param-map-factory';
 export * from './lib/factories/params-factory';
+export * from './lib/factories/conversation-factory';
+export * from './lib/factories/api-error-factory';

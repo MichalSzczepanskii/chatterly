@@ -9,23 +9,36 @@ import {
 import { FrontendHomeFeatureHomeComponent } from './frontend-home-feature-home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { User } from '@chatterly/api/users/data-access';
 import {
+  ContactState,
+  FrontendHomeDataAccessModule,
+  loadContacts,
   loadUsersSearch,
+  selectContacts,
+  selectContactsLoading,
   selectUserSearchLoading,
   selectUserSearchUsers,
+  UserSearchState,
 } from '@chatterly/frontend/home/data-access';
 import { By } from '@angular/platform-browser';
-import { UserFactory } from '@chatterly/frontend/shared/spec-utils';
+import {
+  ConversationFactory,
+  MessageFactory,
+  UserFactory,
+} from '@chatterly/frontend/shared/spec-utils';
 import { LoaderComponent } from '@chatterly/frontend/shared/ui/loader';
 import { ContactComponent } from '@chatterly/frontend/home/ui/contact';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockModule } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthState, selectUser } from '@chatterly/frontend/shared/data-access';
+import * as dayjs from 'dayjs';
 
 describe('FrontendHomeFeatureHomeComponent', () => {
   let component: FrontendHomeFeatureHomeComponent;
   let fixture: ComponentFixture<FrontendHomeFeatureHomeComponent>;
-  let store: MockStore<{ users: User[]; loading: boolean }>;
-  const initialState = { users: [], loading: false };
+  let userSearchStore: MockStore<UserSearchState>;
+  let contactStore: MockStore<ContactState>;
+  let authStore: MockStore<AuthState>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,11 +47,15 @@ describe('FrontendHomeFeatureHomeComponent', () => {
         ReactiveFormsModule,
         MockComponent(LoaderComponent),
         MockComponent(ContactComponent),
+        MockModule(FrontendHomeDataAccessModule),
+        RouterTestingModule,
       ],
-      providers: [provideMockStore({ initialState })],
+      providers: [provideMockStore()],
     }).compileComponents();
 
-    store = TestBed.inject(MockStore);
+    userSearchStore = TestBed.inject(MockStore<UserSearchState>);
+    contactStore = TestBed.inject(MockStore<ContactState>);
+    authStore = TestBed.inject(MockStore<AuthState>);
 
     fixture = TestBed.createComponent(FrontendHomeFeatureHomeComponent);
     component = fixture.componentInstance;
@@ -49,31 +66,35 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     jest.clearAllTimers();
   });
 
+  afterEach(() => {
+    userSearchStore.resetSelectors();
+  });
+
   it('should create', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   it('should dispatch loadUserSearch action after 400ms of typing a keyword', fakeAsync(() => {
-    jest.spyOn(store, 'dispatch');
+    jest.spyOn(userSearchStore, 'dispatch');
     const keyword = 'test';
     fixture.detectChanges();
     component.searchForm.patchValue({ keyword });
     tick(400);
     discardPeriodicTasks();
-    expect(store.dispatch).toHaveBeenCalledWith(
+    expect(userSearchStore.dispatch).toHaveBeenCalledWith(
       loadUsersSearch({ name: keyword })
     );
   }));
 
   it('should not dispatch loadUserSearch action before 400ms of typing a keyword', fakeAsync(() => {
-    jest.spyOn(store, 'dispatch');
+    jest.spyOn(userSearchStore, 'dispatch');
     const keyword = 'test';
     fixture.detectChanges();
     component.searchForm.patchValue({ keyword });
     tick(300);
     discardPeriodicTasks();
-    expect(store.dispatch).not.toHaveBeenCalledWith(
+    expect(userSearchStore.dispatch).not.toHaveBeenCalledWith(
       loadUsersSearch({ name: keyword })
     );
   }));
@@ -83,11 +104,11 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     fixture.detectChanges();
     component.searchForm.patchValue({ keyword });
     tick(400);
-    jest.spyOn(store, 'dispatch');
+    jest.spyOn(userSearchStore, 'dispatch');
     component.searchForm.patchValue({ keyword });
     tick(400);
     discardPeriodicTasks();
-    expect(store.dispatch).not.toHaveBeenCalledWith(
+    expect(userSearchStore.dispatch).not.toHaveBeenCalledWith(
       loadUsersSearch({ name: keyword })
     );
   }));
@@ -96,17 +117,18 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     fixture.detectChanges();
     component.searchForm.patchValue({ keyword: 'test' });
     tick(400);
-    jest.spyOn(store, 'dispatch');
+    jest.spyOn(userSearchStore, 'dispatch');
     component.searchForm.patchValue({ keyword: '' });
     tick(400);
     discardPeriodicTasks();
-    expect(store.dispatch).not.toHaveBeenCalledWith(
+    expect(userSearchStore.dispatch).not.toHaveBeenCalledWith(
       loadUsersSearch({ name: '' })
     );
   }));
 
   it('should display loader when loading is true', () => {
-    store.overrideSelector(selectUserSearchLoading, true);
+    contactStore.overrideSelector(selectContactsLoading, false);
+    userSearchStore.overrideSelector(selectUserSearchLoading, true);
     fixture.detectChanges();
     const loader = fixture.debugElement.query(By.directive(LoaderComponent));
     const contacts = fixture.debugElement.queryAll(By.css('chatterly-contact'));
@@ -116,8 +138,9 @@ describe('FrontendHomeFeatureHomeComponent', () => {
 
   it('should display searched users', () => {
     const mockUsers = UserFactory.createMany(5);
-    store.overrideSelector(selectUserSearchLoading, false);
-    store.overrideSelector(selectUserSearchUsers, mockUsers);
+    contactStore.overrideSelector(selectContactsLoading, false);
+    userSearchStore.overrideSelector(selectUserSearchLoading, false);
+    userSearchStore.overrideSelector(selectUserSearchUsers, mockUsers);
     fixture.detectChanges();
     const loader = fixture.debugElement.query(By.directive(LoaderComponent));
     const contacts = fixture.debugElement.queryAll(
@@ -128,6 +151,105 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     contacts.forEach(contact => {
       const user = contact.componentInstance.user;
       expect(mockUsers).toContain(user);
+    });
+  });
+
+  it('should dispatch loadContacts on init', () => {
+    jest.spyOn(contactStore, 'dispatch');
+    fixture.detectChanges();
+    expect(contactStore.dispatch).toHaveBeenCalledWith(loadContacts());
+  });
+
+  it('should display loader on contactList when loading on contactState is true', () => {
+    userSearchStore.overrideSelector(selectUserSearchLoading, false);
+    contactStore.overrideSelector(selectContactsLoading, true);
+    fixture.detectChanges();
+    const loader = fixture.debugElement.query(By.directive(LoaderComponent));
+    expect(loader).toBeTruthy();
+  });
+
+  it('should display contacts when loaded', () => {
+    const sortedDates = [
+      '2023-05-15 11:00',
+      '2023-05-14 11:00',
+      '2023-05-13 11:00',
+      '2023-05-12 11:00',
+      '2023-05-12 10:00',
+    ];
+    const conversations = sortedDates.map(el =>
+      ConversationFactory.create({
+        messages: [MessageFactory.create({ createdAt: dayjs(el).toDate() })],
+      })
+    );
+    userSearchStore.overrideSelector(selectUserSearchLoading, false);
+    contactStore.overrideSelector(selectContactsLoading, false);
+    contactStore.overrideSelector(selectContacts, conversations);
+    authStore.overrideSelector(selectUser, UserFactory.create());
+    fixture.detectChanges();
+    const loader = fixture.debugElement.query(By.directive(LoaderComponent));
+    const contacts = fixture.debugElement.queryAll(
+      By.directive(ContactComponent)
+    );
+    expect(loader).toBeFalsy();
+    expect(contacts.length).toEqual(sortedDates.length);
+    contacts.forEach((contact, index) => {
+      const user = contact.componentInstance.user;
+      const message = contact.componentInstance.lastMessage;
+      expect(conversations[index].users).toContain(user);
+      expect(conversations[index].messages).toContain(message);
+    });
+  });
+
+  it('should filter out current user from contact users', done => {
+    const contactsCount = 5;
+    const loggedUser = UserFactory.create();
+    const conversations = Array.from({ length: contactsCount }, (el, index) =>
+      ConversationFactory.create({
+        id: index,
+        users: [loggedUser, UserFactory.create()],
+      })
+    );
+    contactStore.overrideSelector(selectContacts, conversations);
+    authStore.overrideSelector(selectUser, loggedUser);
+    fixture.detectChanges();
+    component.contacts$.subscribe(contacts => {
+      for (const contact of contacts) {
+        expect(contact.users).not.toContain(loggedUser);
+      }
+      done();
+    });
+  });
+
+  it('should sort contacts by last message createdAt field', done => {
+    const dates = [
+      '2023-05-13 11:00',
+      '2023-05-14 11:00',
+      '2023-05-15 11:00',
+      '2023-05-12 10:00',
+      '2023-05-12 11:00',
+    ];
+    const sortedDates = [
+      '2023-05-15 11:00',
+      '2023-05-14 11:00',
+      '2023-05-13 11:00',
+      '2023-05-12 11:00',
+      '2023-05-12 10:00',
+    ];
+    const conversations = dates.map(el =>
+      ConversationFactory.create({
+        messages: [MessageFactory.create({ createdAt: dayjs(el).toDate() })],
+      })
+    );
+    contactStore.overrideSelector(selectContacts, conversations);
+    authStore.overrideSelector(selectUser, UserFactory.create());
+    fixture.detectChanges();
+    component.contacts$.subscribe(contacts => {
+      contacts.forEach((contact, index) => {
+        expect(contact.messages[0].createdAt).toEqual(
+          dayjs(sortedDates[index]).toDate()
+        );
+      });
+      done();
     });
   });
 });

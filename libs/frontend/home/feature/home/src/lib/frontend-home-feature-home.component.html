@@ -14,15 +14,22 @@
       </form>
     </header>
     <div class="contact-list">
-      <ng-container *ngIf="contactLoading | async; else contactList">
-        <div class="loader">
-          <chatterly-loader></chatterly-loader>
-        </div>
+      <ng-container *ngIf="(contactLoading$ | async) === false; else loader">
+        <ng-container *ngFor="let contact of contacts$ | async">
+          <chatterly-contact
+            [user]="contact.users[0]"
+            [lastMessage]="contact.messages[0]"></chatterly-contact>
+        </ng-container>
       </ng-container>
-      <ng-template #contactList>
+      <ng-container *ngIf="(userSearchLoading$ | async) === false; else loader">
         <ng-container *ngFor="let contact of searchedUsers | async">
           <chatterly-contact [user]="contact"></chatterly-contact>
         </ng-container>
+      </ng-container>
+      <ng-template #loader>
+        <div class="loader">
+          <chatterly-loader></chatterly-loader>
+        </div>
       </ng-template>
     </div>
   </div>

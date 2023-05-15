@@ -118,6 +118,9 @@
       "@chatterly/frontend/shared/ui/control-errors": [
         "libs/frontend/shared/ui/control-errors/src/index.ts"
       ],
+      "@chatterly/frontend/shared/ui/date-ago": [
+        "libs/frontend/shared/ui/date-ago/src/index.ts"
+      ],
       "@chatterly/frontend/shared/ui/loader": [
         "libs/frontend/shared/ui/loader/src/index.ts"
       ],

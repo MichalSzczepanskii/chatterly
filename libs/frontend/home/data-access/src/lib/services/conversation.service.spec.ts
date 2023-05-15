@@ -6,6 +6,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { Conversation } from '@chatterly/shared/data-access';
+import { ConversationFactory } from '@chatterly/frontend/shared/spec-utils';
 
 describe('ConversationService', () => {
   const apiUrl = process.env['NX_API_URL'];
@@ -34,6 +35,22 @@ describe('ConversationService', () => {
 
       const req = httpTestingController.expectOne(
         `${apiUrl}/api/conversations/user/${userId}`
+      );
+      expect(req.request.method).toEqual('GET');
+      req.flush(testData);
+      httpTestingController.verify();
+    });
+  });
+
+  describe('#getConversations', () => {
+    it('should make a get request', () => {
+      const testData = ConversationFactory.createMany(5);
+      service
+        .getConversations()
+        .subscribe(result => expect(result).toEqual(testData));
+
+      const req = httpTestingController.expectOne(
+        `${apiUrl}/api/conversations`
       );
       expect(req.request.method).toEqual('GET');
       req.flush(testData);

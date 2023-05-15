@@ -50,12 +50,7 @@ export class ApiConversationFeatureController {
       await this.conversationService.getConversationByParticipantsWithRelations(
         [req.user.userId, params.userId]
       );
-    if (conversation) {
-      const user = conversation.users.filter(
-        user => user.id !== req.user.userId
-      );
-      return { ...conversation, name: user[0].name };
-    }
+    if (conversation) return this.getPrivateConversationName(conversation, req);
     const participants =
       await this.conversationService.getUndefinedConversationParticipants([
         params.userId,
@@ -70,6 +65,16 @@ export class ApiConversationFeatureController {
   @Get()
   async getLoggedUserConversations(@Req() req) {
     const { userId } = req.user;
-    return await this.conversationService.getUserConversation(userId);
+    const conversations = await this.conversationService.getUserConversation(
+      userId
+    );
+    return conversations.map(conversation =>
+      this.getPrivateConversationName(conversation, req)
+    );
+  }
+
+  private getPrivateConversationName(conversation: Conversation, req) {
+    const user = conversation.users.filter(user => user.id !== req.user.userId);
+    return { ...conversation, name: user[0].name };
   }
 }

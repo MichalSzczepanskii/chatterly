@@ -1,14 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  switchMap,
+} from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
+  ContactState,
+  loadContacts,
   loadUsersSearch,
+  selectContacts,
+  selectContactsLoading,
   selectUserSearchLoading,
   selectUserSearchUsers,
   UserSearchState,
 } from '@chatterly/frontend/home/data-access';
-import { User } from '@chatterly/shared/data-access';
+import { Conversation, User } from '@chatterly/shared/data-access';
+import { AuthState, selectUser } from '@chatterly/frontend/shared/data-access';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'chatterly-frontend-home-feature-home',
@@ -18,10 +30,14 @@ import { User } from '@chatterly/shared/data-access';
 export class FrontendHomeFeatureHomeComponent implements OnInit {
   searchForm!: FormGroup;
   searchedUsers!: Observable<User[]>;
-  contactLoading!: Observable<boolean>;
+  userSearchLoading$!: Observable<boolean>;
+  contactLoading$!: Observable<boolean>;
+  contacts$!: Observable<Conversation[]>;
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<UserSearchState>
+    private userSearchStore: Store<UserSearchState>,
+    private contactStore: Store<ContactState>,
+    private authStore: Store<AuthState>
   ) {}
 
   ngOnInit() {
@@ -29,15 +45,49 @@ export class FrontendHomeFeatureHomeComponent implements OnInit {
       keyword: [],
     });
 
+    this.contactStore.dispatch(loadContacts());
+
     this.searchForm
       .get('keyword')
       ?.valueChanges.pipe(debounceTime(400), distinctUntilChanged())
       .subscribe(keyword => {
         if (!keyword) return;
-        this.store.dispatch(loadUsersSearch({ name: keyword }));
+        this.userSearchStore.dispatch(loadUsersSearch({ name: keyword }));
       });
 
-    this.searchedUsers = this.store.select(selectUserSearchUsers);
-    this.contactLoading = this.store.select(selectUserSearchLoading);
+    this.searchedUsers = this.userSearchStore.select(selectUserSearchUsers);
+    this.userSearchLoading$ = this.userSearchStore.select(
+      selectUserSearchLoading
+    );
+    this.contactLoading$ = this.contactStore.select(selectContactsLoading);
+    this.contacts$ = this.authStore.select(selectUser).pipe(
+      switchMap(user =>
+        this.contactStore.select(selectContacts).pipe(
+          map(contacts =>
+            this.filterOutLoggedUserFromConversations(contacts, user)
+          ),
+          map(this.sortConversationsFromNewest)
+        )
+      )
+    );
+  }
+
+  private filterOutLoggedUserFromConversations(
+    contacts: Conversation[],
+    user: User | null
+  ) {
+    return contacts.map(contact => {
+      const contactsCopy = Object.assign({}, contact);
+      contactsCopy.users = contactsCopy.users.filter(
+        participant => participant.id !== user?.id
+      );
+      return contactsCopy;
+    });
+  }
+
+  private sortConversationsFromNewest(contacts: Conversation[]) {
+    return contacts.sort((a, b) =>
+      dayjs(b.messages[0].createdAt).diff(dayjs(a.messages[0].createdAt))
+    );
   }
 }

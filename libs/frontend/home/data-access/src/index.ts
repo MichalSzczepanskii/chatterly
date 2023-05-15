@@ -5,3 +5,6 @@ export * from './lib/+state/user-search/user-search.actions';
 export * from './lib/+state/conversation/conversation.selectors';
 export * from './lib/+state/conversation/conversation.reducer';
 export * from './lib/+state/conversation/conversation.actions';
+export * from './lib/+state/contact/contact.reducer';
+export * from './lib/+state/contact/contact.actions';
+export * from './lib/+state/contact/contact.selectors';

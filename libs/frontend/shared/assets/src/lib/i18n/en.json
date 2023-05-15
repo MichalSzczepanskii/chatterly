@@ -72,5 +72,9 @@
   },
   "save": "Save",
   "cancel": "Cancel",
-  "change": "Change"
+  "change": "Change",
+  "time": {
+    "minutesAgo": "{{minutes}} minutes ago",
+    "secondsAgo": "{{seconds}} seconds ago"
+  }
 }
