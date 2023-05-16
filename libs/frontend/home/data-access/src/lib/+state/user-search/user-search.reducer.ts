@@ -5,13 +5,13 @@ import { User } from '@chatterly/shared/data-access';
 export const userSearchFeatureKey = 'userSearch';
 
 export interface UserSearchState {
-  users: User[];
+  users: User[] | null;
   loading: boolean;
   error?: string;
 }
 
 export const initialState: UserSearchState = {
-  users: [],
+  users: null,
   loading: false,
 };
 
@@ -28,5 +28,9 @@ export const reducer = createReducer(
     ...state,
     error,
     loading: false,
+  })),
+  on(UserSearchActions.clearUserSearch, state => ({
+    ...state,
+    users: null,
   }))
 );

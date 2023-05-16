@@ -51,4 +51,13 @@ describe('UserSearch Reducer', () => {
       expect(result.loading).toBe(false);
     });
   });
+
+  describe('ClearUserSearch', () => {
+    it('should set users array to null', () => {
+      const users = UserFactory.createMany(5);
+      const action = UserSearchActions.clearUserSearch();
+      const result = reducer({ ...initialState, users }, action);
+      expect(result.users).toEqual(null);
+    });
+  });
 });
