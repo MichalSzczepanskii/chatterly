@@ -5,8 +5,12 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable, switchMap, take } from 'rxjs';
-import { AuthState, selectToken } from '@chatterly/frontend/shared/data-access';
+import { catchError, Observable, of, switchMap, take } from 'rxjs';
+import {
+  AuthState,
+  logout,
+  selectToken,
+} from '@chatterly/frontend/shared/data-access';
 import { Store } from '@ngrx/store';
 
 @Injectable()
@@ -24,7 +28,12 @@ export class AuthInterceptor implements HttpInterceptor {
           const clonedRequest = request.clone({
             headers: request.headers.set('Authorization', `Bearer ${token}`),
           });
-          return next.handle(clonedRequest);
+          return next.handle(clonedRequest).pipe(
+            catchError(err => {
+              if (err.status === 401) this.authStore.dispatch(logout());
+              return of(err);
+            })
+          );
         } else return next.handle(request);
       })
     );
