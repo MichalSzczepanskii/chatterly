@@ -10,6 +10,7 @@ import { FrontendHomeFeatureHomeComponent } from './frontend-home-feature-home.c
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
+  clearUserSearch,
   ContactState,
   FrontendHomeDataAccessModule,
   loadContacts,
@@ -113,18 +114,31 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     );
   }));
 
-  it('should not dispatch loadUserSearch if keyword was removed', fakeAsync(() => {
-    fixture.detectChanges();
-    component.searchForm.patchValue({ keyword: 'test' });
-    tick(400);
-    jest.spyOn(userSearchStore, 'dispatch');
-    component.searchForm.patchValue({ keyword: '' });
-    tick(400);
-    discardPeriodicTasks();
-    expect(userSearchStore.dispatch).not.toHaveBeenCalledWith(
-      loadUsersSearch({ name: '' })
-    );
-  }));
+  describe('keyword was removed', () => {
+    beforeEach(fakeAsync(() => {
+      fixture.detectChanges();
+      component.searchForm.patchValue({ keyword: 'test' });
+      tick(400);
+      jest.spyOn(userSearchStore, 'dispatch');
+      jest.spyOn(contactStore, 'dispatch');
+      component.searchForm.patchValue({ keyword: '' });
+      tick(400);
+      discardPeriodicTasks();
+    }));
+
+    it('should not dispatch loadUserSearch', fakeAsync(() => {
+      expect(userSearchStore.dispatch).not.toHaveBeenCalledWith(
+        loadUsersSearch({ name: '' })
+      );
+    }));
+
+    it('should dispatch clearUserSearch', fakeAsync(() => {
+      expect(userSearchStore.dispatch).toHaveBeenCalledWith(clearUserSearch());
+    }));
+    it('should dispatch loadContacts', () => {
+      expect(contactStore.dispatch).toHaveBeenCalledWith(loadContacts());
+    });
+  });
 
   it('should display loader when loading is true', () => {
     contactStore.overrideSelector(selectContactsLoading, false);
@@ -136,9 +150,12 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     expect(contacts.length).toEqual(0);
   });
 
-  it('should display searched users', () => {
+  it('should display searched users and do not display started conversations', () => {
     const mockUsers = UserFactory.createMany(5);
+    const mockContacts = ConversationFactory.createMany(5);
     contactStore.overrideSelector(selectContactsLoading, false);
+    contactStore.overrideSelector(selectContacts, mockContacts);
+    authStore.overrideSelector(selectUser, UserFactory.create());
     userSearchStore.overrideSelector(selectUserSearchLoading, false);
     userSearchStore.overrideSelector(selectUserSearchUsers, mockUsers);
     fixture.detectChanges();
@@ -151,6 +168,7 @@ describe('FrontendHomeFeatureHomeComponent', () => {
     contacts.forEach(contact => {
       const user = contact.componentInstance.user;
       expect(mockUsers).toContain(user);
+      expect(mockContacts).not.toContain(user);
     });
   });
 

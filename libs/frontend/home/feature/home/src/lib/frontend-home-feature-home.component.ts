@@ -9,6 +9,7 @@ import {
 } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
+  clearUserSearch,
   ContactState,
   loadContacts,
   loadUsersSearch,
@@ -29,7 +30,7 @@ import * as dayjs from 'dayjs';
 })
 export class FrontendHomeFeatureHomeComponent implements OnInit {
   searchForm!: FormGroup;
-  searchedUsers!: Observable<User[]>;
+  searchedUsers$!: Observable<User[] | null>;
   userSearchLoading$!: Observable<boolean>;
   contactLoading$!: Observable<boolean>;
   contacts$!: Observable<Conversation[]>;
@@ -45,17 +46,10 @@ export class FrontendHomeFeatureHomeComponent implements OnInit {
       keyword: [],
     });
 
-    this.contactStore.dispatch(loadContacts());
+    this.loadStartedConversations();
+    this.searchFieldHandler();
 
-    this.searchForm
-      .get('keyword')
-      ?.valueChanges.pipe(debounceTime(400), distinctUntilChanged())
-      .subscribe(keyword => {
-        if (!keyword) return;
-        this.userSearchStore.dispatch(loadUsersSearch({ name: keyword }));
-      });
-
-    this.searchedUsers = this.userSearchStore.select(selectUserSearchUsers);
+    this.searchedUsers$ = this.userSearchStore.select(selectUserSearchUsers);
     this.userSearchLoading$ = this.userSearchStore.select(
       selectUserSearchLoading
     );
@@ -70,6 +64,24 @@ export class FrontendHomeFeatureHomeComponent implements OnInit {
         )
       )
     );
+  }
+
+  private loadStartedConversations() {
+    this.contactStore.dispatch(loadContacts());
+  }
+
+  private searchFieldHandler() {
+    this.searchForm
+      .get('keyword')
+      ?.valueChanges.pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(keyword => {
+        if (!keyword) {
+          this.userSearchStore.dispatch(clearUserSearch());
+          this.loadStartedConversations();
+          return;
+        }
+        this.userSearchStore.dispatch(loadUsersSearch({ name: keyword }));
+      });
   }
 
   private filterOutLoggedUserFromConversations(

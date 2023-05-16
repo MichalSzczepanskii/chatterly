@@ -11,7 +11,7 @@ export class UserFactory {
     };
   }
 
-  static createMany(count: number) {
+  static createMany(count: number): User[] {
     const users = [];
     for (let i = 1; i <= count; i++) {
       users.push(UserFactory.create({ id: i }));

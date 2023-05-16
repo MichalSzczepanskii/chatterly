@@ -15,3 +15,5 @@ export const userSearchFailure = createAction(
   '[UserSearch] UserSearch failure',
   props<{ error: string }>()
 );
+
+export const clearUserSearch = createAction('[UserSearch] Clear UserSearch');
