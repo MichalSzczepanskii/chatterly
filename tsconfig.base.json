@@ -28,6 +28,9 @@
         "libs/api/conversation/feature/src/index.ts"
       ],
       "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
+      "@chatterly/api/events/data-access": [
+        "libs/api/events/data-access/src/index.ts"
+      ],
       "@chatterly/api/events/feature": ["libs/api/events/feature/src/index.ts"],
       "@chatterly/api/events/utils": ["libs/api/events/utils/src/index.ts"],
       "@chatterly/api/settings/data-access": [
@@ -37,6 +40,9 @@
         "libs/api/settings/feature/src/index.ts"
       ],
       "@chatterly/api/settings/utils": ["libs/api/settings/utils/src/index.ts"],
+      "@chatterly/api/shared/data-access": [
+        "libs/api/shared/data-access/src/index.ts"
+      ],
       "@chatterly/api/shared/utils": ["libs/api/shared/utils/src/index.ts"],
       "@chatterly/api/users/data-access": [
         "libs/api/users/data-access/src/index.ts"
