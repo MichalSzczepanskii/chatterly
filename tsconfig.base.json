@@ -28,6 +28,8 @@
         "libs/api/conversation/feature/src/index.ts"
       ],
       "@chatterly/api/core-module": ["libs/api/core/feature/src/index.ts"],
+      "@chatterly/api/events/feature": ["libs/api/events/feature/src/index.ts"],
+      "@chatterly/api/events/utils": ["libs/api/events/utils/src/index.ts"],
       "@chatterly/api/settings/data-access": [
         "libs/api/settings/data-access/src/index.ts"
       ],
