@@ -7,6 +7,7 @@ import { ApiUsersFeatureModule } from '@chatterly/api/users/feature';
 import { ApiAuthFeatureModule } from '@chatterly/api/auth/feature';
 import { ApiSettingsFeatureModule } from '@chatterly/api/settings/feature';
 import { ApiConversationFeatureModule } from '@chatterly/api/conversation/feature';
+import { ApiEventsFeatureModule } from '@chatterly/api/events/feature';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ApiConversationFeatureModule } from '@chatterly/api/conversation/featur
     ApiAuthFeatureModule,
     ApiSettingsFeatureModule,
     ApiConversationFeatureModule,
+    ApiEventsFeatureModule,
   ],
 })
 export class ApiCoreFeatureModule {}
